@@ -15,6 +15,9 @@ Les résultats cités proviennent des sorties réelles des outils (fichiers dans
 | ANO-05 | 19/11/2026 | QR-CO-02 | TA-28 (Schemathesis, ST103, ST108) | mineure | Corrigée |
 | ANO-06 | 19/11/2026 | QR-CO-02 | TA-28 (Schemathesis, ST202) | — | Faux positif justifié |
 | DT-01 | 19/11/2026 | BR-01, QR-RE-02 | `tools/break_rules.py --suite api` | majeure (défaut de test) | Corrigée |
+| ANO-07 | 19/11/2026 | FR-07, QR-CO-01, QR-US-02 | E2E-03, E2E-04 (projet mobile) | majeure | Corrigée |
+| ENV-01 | 19/11/2026 | QR-CO-01 | E2E en parallèle (Windows + Docker Desktop) | environnement | Contournée, à confirmer en phase 5 |
+| ENV-02 | 19/11/2026 | QR-CO-01 | Lancement de Firefox (Windows) | environnement | Contournée (Firefox en conteneur) |
 
 ## ANO-01 — Identifiant hors plage : erreur 500
 
@@ -93,3 +96,34 @@ Les résultats cités proviennent des sorties réelles des outils (fichiers dans
   7 mutations sur 7 détectées). **Non-régression** : `make check` vert.
 
 Commit des corrections : commit « phase 3 » (voir `git log`).
+
+## ANO-07 — Back-office inutilisable sur téléphone : boutons recouverts
+
+- **Exigence** : FR-07 (le personnel fait avancer les commandes), QR-CO-01 (projet mobile Pixel 7), QR-US-02.
+- **Tests** : E2E-03 et E2E-04 sur le projet `mobile` (Playwright).
+- **Étapes** : écran de 412 px ; back-office « Commandes » ; toucher « Marquer payée ».
+- **Attendu** : la commande passe à « Payée ». **Obtenu** : le clic n'aboutit pas, la cellule « Passée » recouvre le
+  bouton (« intercepts pointer events »), délai de 30 s dépassé.
+- **Erreur** : tableaux conçus pour un écran large uniquement. **Défaut** : `web/src/index.css`, tableau plus large
+  que l'écran sans défilement. **Défaillance** : un membre du personnel sur téléphone ne peut pas traiter une commande.
+- **Correction** : sous 760 px, chaque tableau défile horizontalement dans son propre cadre.
+- **Confirmation** : E2E-03 et E2E-04 sur `mobile` → PASS. **Non-régression** : projets `chromium` et `mobile` →
+  13 réussis (`reports/junit-e2e.xml`), axe : 0 violation sur les 5 pages.
+
+## ENV-01 — Appels base de données bloqués ~10 s quand les E2E tournent en parallèle (environnement)
+
+- **Constat** : en parallèle, certains appels SQL de l'API (via le port 5433 redirigé par Docker Desktop) attendent
+  10 ou 20 s ; avec un seul worker, aucun blocage.
+- **Mesures qui écartent l'application** : PostgreSQL sans requête ni transaction longue ; pool et threads non
+  saturés ; Argon2 ≈ 0,1 s même à 16 en parallèle ; 1 200 écritures psycopg directes (20 fils) : max 0,03 s ;
+  connexion inactive : 0,01 s ; le processus de l'API n'est jamais figé (battement de cœur continu).
+- **Décision** : E2E sur 1 worker par défaut (`E2E_WORKERS`, `web/playwright.config.ts`). Vérification prévue en
+  phase 5 : E2E en parallèle à l'intérieur du réseau Docker Compose (sans redirection de port).
+
+## ENV-02 — Firefox de Playwright ne démarre pas sous ce Windows (environnement)
+
+- **Constat** : `browserType.launch: spawn UNKNOWN` ; lancement direct : « configuration côte à côte incorrecte »
+  (bibliothèque d'exécution Visual C++ absente ou bloquée). Correction possible : installer le redistribuable
+  Visual C++ (droits administrateur), non fait sans accord.
+- **Contournement** : Firefox exécuté dans l'image Docker officielle de Playwright, contre la pile Docker Compose
+  (phase 5) ; même navigateur, résultat dans un rapport JUnit séparé.

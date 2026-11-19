@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { ApiError } from '../api';
 import { useAuth } from '../auth';
 
 export default function LoginPage() {
@@ -18,23 +19,31 @@ export default function LoginPage() {
       await (mode === 'login' ? login(email, password) : register(email, password));
       navigate(from, { replace: true });
     } catch (err) {
-      setError((err as Error).message);
+      if (err instanceof ApiError && err.status === 401) setError('Email ou mot de passe incorrect.');
+      else if (err instanceof ApiError && err.status === 409) setError('Un compte existe déjà avec cet email.');
+      else if (err instanceof ApiError && err.status === 422) setError('Email invalide ou mot de passe trop court (8 caractères minimum).');
+      else setError('Connexion impossible. Réessayez.');
     }
   };
 
+  const title = mode === 'login' ? 'Se connecter' : 'Créer un compte';
   return (
     <main>
-      <h1>{mode === 'login' ? 'Log in' : 'Create account'}</h1>
+      <h1>{title}</h1>
       <form onSubmit={submit} className="stack">
-        <label>Email <input type="email" required value={email} onChange={e => setEmail(e.target.value)} /></label>
-        <label>Password <input type="password" required minLength={8} value={password} onChange={e => setPassword(e.target.value)} /></label>
+        <label>Email <input type="email" autoComplete="email" required value={email} onChange={e => setEmail(e.target.value)} /></label>
+        <label>
+          Mot de passe{' '}
+          <input type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} required minLength={8}
+            value={password} onChange={e => setPassword(e.target.value)} />
+        </label>
         {error && <p role="alert">{error}</p>}
-        <button type="submit">{mode === 'login' ? 'Log in' : 'Create account'}</button>
+        <button type="submit">{title}</button>
       </form>
-      <button className="link" onClick={() => setMode(mode === 'login' ? 'register' : 'login')}>
-        {mode === 'login' ? 'No account? Create one' : 'Have an account? Log in'}
+      <button type="button" className="link" onClick={() => setMode(mode === 'login' ? 'register' : 'login')}>
+        {mode === 'login' ? 'Pas encore de compte ? En créer un' : 'Déjà un compte ? Se connecter'}
       </button>
-      <p className="muted">Demo: demo@example.com / demo1234</p>
+      <p className="muted">Démonstration : demo@example.com / demo1234</p>
     </main>
   );
 }

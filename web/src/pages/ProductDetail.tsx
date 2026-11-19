@@ -12,27 +12,28 @@ export default function ProductDetail() {
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    getProduct(Number(id)).then(setProduct).catch((e: Error) => setError(e.message));
+    getProduct(Number(id)).then(setProduct).catch(() => setError('Ce produit n’existe pas.'));
   }, [id]);
 
-  if (error) return <main><p role="alert">{error}</p></main>;
-  if (!product) return <main><p>Loading…</p></main>;
+  if (error) return <main><h1>Produit introuvable</h1><p role="alert">{error}</p><Link to="/">Retour au catalogue</Link></main>;
+  if (!product) return <main><p>Chargement…</p></main>;
 
   return (
     <main>
-      <Link to="/">← All products</Link>
+      <Link to="/">← Retour au catalogue</Link>
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p className="price">{money(product.price_cents)}</p>
-      <p className="muted">{product.stock} in stock</p>
+      <p className="muted">{product.stock > 0 ? `${product.stock} en stock` : 'Rupture de stock'}</p>
       <label>
-        Quantity{' '}
-        <input type="number" min={1} max={product.stock} value={qty} onChange={e => setQty(Number(e.target.value))} />
+        Quantité{' '}
+        <input type="number" min={1} max={99} value={qty} onChange={e => setQty(Number(e.target.value))} />
       </label>{' '}
-      <button disabled={product.stock === 0 || qty < 1} onClick={() => { add(product, qty); setAdded(true); }}>
-        Add to cart
+      <button type="button" disabled={product.stock === 0 || qty < 1 || qty > 99}
+        onClick={() => { add(product, qty); setAdded(true); }}>
+        Ajouter au panier
       </button>
-      {added && <p role="status">Added. <Link to="/cart">Go to cart</Link></p>}
+      {added && <p role="status">Ajouté au panier. <Link to="/panier">Voir le panier</Link></p>}
     </main>
   );
 }

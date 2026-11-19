@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Playwright output (the JUnit report goes to ../reports/)
+test-results/
+playwright-report/

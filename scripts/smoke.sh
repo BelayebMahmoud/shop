@@ -2,7 +2,9 @@
 # Smoke test against a running API: make api, then make smoke
 set -euo pipefail
 BASE=${BASE:-http://localhost:8000/api}
-json() { python3 -c "import sys, json; print(json.load(sys.stdin)$1)"; }
+# python3 on Linux/macOS; on Windows `python3` may be a store stub, so fall back to `python`.
+PYTHON=${PYTHON:-$(python3 -c 'print(1)' >/dev/null 2>&1 && echo python3 || echo python)}
+json() { "$PYTHON" -c "import sys, json; print(json.load(sys.stdin)$1)"; }
 
 echo "health:    $(curl -fsS "$BASE/health")"
 echo "products:  $(curl -fsS "$BASE/products?limit=1" | json '["total"]') in catalogue"

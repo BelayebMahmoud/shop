@@ -84,3 +84,21 @@
   TA-18, TA-21, TA-22, TA-25, IT-04, IT-05, IT-11, IT-14 ; TA-20 dépend de l'entrée d'audit n° 1 ; ADMIN_ID codé en
   dur ; attente de 2 s dans TA-13 ; mutations API de BR-02, BR-04, BR-07, Q-08 non encore tentées ; 21 codes
   documentés jamais obtenus.
+
+## Phase 4 — Frontend, E2E, accessibilité, protocole d'utilisabilité (19/11/2026)
+
+- Interface en français : catalogue (recherche, catégorie, prix, en stock, pagination), fiche, panier, connexion,
+  mes commandes (annulation), back-office commandes (seules les transitions permises), produits (erreurs sous le champ,
+  boîte de confirmation accessible), tableau de bord (période, catégorie). L'API reste seule garante des droits.
+- Playwright 1.65.1 (chromium, firefox, mobile Pixel 7) sur le build de production (`vite preview`), base `shop_e2e`
+  reconstruite par `tools/e2e_api.py` ; E2E-01 à E2E-05 et UX-01 (axe sur 5 pages + dialogue + erreurs de champ).
+- Résultat : chromium et mobile → 12 réussis (`reports/junit-e2e.xml`) ; axe : 0 violation serious/critical sur les
+  7 audits (`reports/a11y/`).
+- Anomalie ANO-07 (back-office inutilisable sur téléphone) trouvée par le projet mobile, corrigée, confirmée.
+- Environnement : ENV-01 (blocages ~10 s en parallèle via le port Docker redirigé → 1 worker par défaut, vérification
+  en phase 5 dans le réseau Compose) ; ENV-02 (Firefox ne démarre pas sous ce Windows → Firefox en conteneur en phase 5).
+- Revue indépendante (agent test-reviewer) : aucun bloquant ; 4 majeurs corrigés (E2E-04 vérifie l'API après création
+  et après « Annuler », E2E-05 teste une période passée et début > fin, UX-01 audite des pages remplies et deux états).
+- Protocole `docs/utilisabilite.md` (3 tâches, critères de réussite, consentement, SUS, tableau de résultats vide).
+- `make check` vert (56 / 17 / 168 / 25, couverture services 99,4 %).
+- Points ouverts : Firefox (conteneur, phase 5) ; E2E en parallèle à confirmer (ENV-01) ; sessions d'utilisabilité.
