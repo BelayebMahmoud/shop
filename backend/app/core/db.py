@@ -1,6 +1,6 @@
 from collections.abc import Iterator
 
-from sqlalchemy import create_engine
+from sqlalchemy import BigInteger, create_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 from app.core.config import settings
@@ -10,7 +10,8 @@ SessionLocal = sessionmaker(engine, expire_on_commit=False)
 
 
 class Base(DeclarativeBase):
-    pass
+    # Ids are BIGINT in db/migrations: bind Python ints as BIGINT too, or a large id overflows int4 (ANO-01).
+    type_annotation_map = {int: BigInteger}
 
 
 def get_db() -> Iterator[Session]:

@@ -4,3 +4,4 @@ httpx2==2.16.2
 ruff==0.17.6
 pyyaml==6.0.3
 pytest-cov==7.1.0
+schemathesis==4.33.4

@@ -177,6 +177,7 @@ Cette matrice est la source de `docs/rbac.yaml` (phase 3, TA-20).
 | `PATCH /api/users/{id}/role` | 401 | 403 | 403 | 200 | FR-05, BR-11 |
 | `PATCH /api/users/{id}/deactivate` | 401 | 403 | 403 | 200 | FR-05, BR-11 |
 | `GET /api/audit` | 401 | 403 | 403 (Q-11) | 200 | FR-11 |
+| `GET /api/audit/{id}` | 401 | 403 | 403 | 200 | FR-11 |
 | `PUT`, `DELETE /api/audit/{id}` | 405 | 405 | 405 | 405 | FR-11 |
 
 **Format des erreurs.** Erreurs métier et de droits : `{"detail": {"code": "<CODE>", ...champs utiles}}`
@@ -186,6 +187,8 @@ Cette matrice est la source de `docs/rbac.yaml` (phase 3, TA-20).
 validation (422) : format standard FastAPI, une entrée par champ fautif (`loc`, `msg`, `type`), ce qui permet
 d'afficher l'erreur sous le champ concerné (Chapitre I, utilisabilité). Une erreur 500 ne renvoie jamais de
 détail technique.
+
+**Robustesse des entrées (ANO-01 à ANO-04).** Les identifiants valent au plus 2^53 − 1 (plus grand entier exact pour un client JavaScript) ; montants et stocks tiennent dans un INTEGER ; aucun texte ne contient le caractère NUL ; les entiers suivent JSON Schema (`5.0` accepté, `false` et `"5"` refusés) ; les dates sont au format ISO. Toute entrée hors de ces bornes reçoit 422, jamais 500. Un corps illisible reçoit 400 (documenté). Une méthode non prévue reçoit 405 avec l'en-tête `Allow` complet.
 
 **Pourquoi 422 et non 400 (BR-03).** La fiche 2 admet le code de refus « selon l'API ». FastAPI et Pydantic
 répondent 422 *Unprocessable Content* à un corps bien formé mais invalide, avec le détail par champ ; on garde ce

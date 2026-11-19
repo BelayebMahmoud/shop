@@ -1,0 +1,32 @@
+# Matrice des droits (FR-02, QR-SE-02) — source : docs/conception.md §5.
+# Code attendu pour chaque rôle quand la requête est valide et vise une ressource existante qui lui est accessible.
+# Exécutée par backend/tests/api/test_rbac.py (cas TA-20) : un test par couple route × rôle.
+roles: [ANONYMOUS, CUSTOMER, STAFF, ADMIN]
+routes:
+  - {method: GET,    path: /api/health,                     expected: {ANONYMOUS: 200, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: POST,   path: /api/auth/register,              expected: {ANONYMOUS: 201, CUSTOMER: 201, STAFF: 201, ADMIN: 201}}
+  - {method: POST,   path: /api/auth/login,                 expected: {ANONYMOUS: 200, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: GET,    path: /api/auth/me,                    expected: {ANONYMOUS: 401, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: GET,    path: /api/categories,                 expected: {ANONYMOUS: 200, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: GET,    path: "/api/categories/{id}",          expected: {ANONYMOUS: 200, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: POST,   path: /api/categories,                 expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 201, ADMIN: 201}}
+  - {method: PUT,    path: "/api/categories/{id}",          expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 200, ADMIN: 200}}
+  - {method: DELETE, path: "/api/categories/{id}",          expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 204, ADMIN: 204}}
+  - {method: GET,    path: /api/products,                   expected: {ANONYMOUS: 200, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: GET,    path: "/api/products/{id}",            expected: {ANONYMOUS: 200, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: POST,   path: /api/products,                   expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 201, ADMIN: 201}}
+  - {method: PUT,    path: "/api/products/{id}",            expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 200, ADMIN: 200}}
+  - {method: DELETE, path: "/api/products/{id}",            expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 204, ADMIN: 204}}
+  - {method: POST,   path: /api/orders,                     expected: {ANONYMOUS: 401, CUSTOMER: 201, STAFF: 403, ADMIN: 403}}
+  - {method: GET,    path: /api/orders,                     expected: {ANONYMOUS: 401, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: GET,    path: "/api/orders/{id}",              expected: {ANONYMOUS: 401, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: POST,   path: "/api/orders/{id}/cancel",       expected: {ANONYMOUS: 401, CUSTOMER: 200, STAFF: 200, ADMIN: 200}}
+  - {method: PATCH,  path: "/api/orders/{id}/status",       expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 200, ADMIN: 200}}
+  - {method: GET,    path: /api/dashboard,                  expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 200, ADMIN: 200}}
+  - {method: GET,    path: /api/users,                      expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 403, ADMIN: 200}}
+  - {method: PATCH,  path: "/api/users/{id}/role",          expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 403, ADMIN: 200}}
+  - {method: PATCH,  path: "/api/users/{id}/deactivate",    expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 403, ADMIN: 200}}
+  - {method: GET,    path: /api/audit,                      expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 403, ADMIN: 200}}
+  - {method: GET,    path: "/api/audit/{id}",               expected: {ANONYMOUS: 401, CUSTOMER: 403, STAFF: 403, ADMIN: 200}}
+  - {method: PUT,    path: "/api/audit/{id}",               expected: {ANONYMOUS: 405, CUSTOMER: 405, STAFF: 405, ADMIN: 405}}
+  - {method: DELETE, path: "/api/audit/{id}",               expected: {ANONYMOUS: 405, CUSTOMER: 405, STAFF: 405, ADMIN: 405}}

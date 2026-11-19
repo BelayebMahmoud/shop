@@ -5,9 +5,10 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.api.types import NO_NUL, SPACE, Cents, DbId, Stock, json_int
 from app.services.order_rules import MAX_LINES, MAX_QUANTITY, MIN_LINES, MIN_QUANTITY
 
-EMAIL = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+EMAIL = rf"^[^@{SPACE}\x00]+@[^@{SPACE}\x00]+\.[^@{SPACE}\x00]+$"
 Role = Literal["CUSTOMER", "STAFF", "ADMIN"]
 TargetStatus = Literal["PAID", "SHIPPED", "DELIVERED", "CANCELLED"]
 
@@ -15,7 +16,7 @@ TargetStatus = Literal["PAID", "SHIPPED", "DELIVERED", "CANCELLED"]
 # ---------------------------------------------------------------- users
 class UserCreate(BaseModel):
     email: str = Field(pattern=EMAIL, max_length=254)
-    password: str = Field(min_length=8, max_length=128)
+    password: str = Field(min_length=8, max_length=128, pattern=NO_NUL)
 
 
 class UserOut(BaseModel):
@@ -37,7 +38,7 @@ class RoleChange(BaseModel):
 
 # ---------------------------------------------------------------- catalogue
 class CategoryIn(BaseModel):
-    name: str = Field(min_length=1, max_length=100)
+    name: str = Field(min_length=1, max_length=100, pattern=NO_NUL)
 
 
 class CategoryOut(BaseModel):
@@ -47,12 +48,12 @@ class CategoryOut(BaseModel):
 
 
 class ProductIn(BaseModel):
-    sku: str = Field(min_length=1, max_length=64, pattern=r"^\S+$")
-    name: str = Field(min_length=1, max_length=200)
-    description: str = Field("", max_length=2000)
-    price_cents: int = Field(ge=0, le=100_000_000)
-    stock: int = Field(ge=0, le=1_000_000)
-    category_id: int = Field(ge=1)
+    sku: str = Field(min_length=1, max_length=64, pattern=rf"^[^{SPACE}\x00]+$")
+    name: str = Field(min_length=1, max_length=200, pattern=NO_NUL)
+    description: str = Field("", max_length=2000, pattern=NO_NUL)
+    price_cents: Cents
+    stock: Stock
+    category_id: DbId
 
 
 class ProductOut(BaseModel):
@@ -75,8 +76,8 @@ class ProductPage(BaseModel):
 class OrderItemIn(BaseModel):
     """Any other field sent by the client (a price, for instance) is ignored (BR-02)."""
 
-    product_id: int
-    quantity: int = Field(ge=MIN_QUANTITY, le=MAX_QUANTITY)
+    product_id: DbId
+    quantity: json_int(MIN_QUANTITY, MAX_QUANTITY)  # type: ignore[valid-type]
 
 
 class OrderCreate(BaseModel):

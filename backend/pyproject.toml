@@ -3,7 +3,10 @@ pythonpath = ["."]
 testpaths = ["tests"]
 addopts = "--strict-markers"
 junit_family = "xunit1"  # xunit1 keeps <properties>: requirement IDs for the traceability matrix
-markers = ["req(*ids): requirement IDs covered by the test (docs/exigences.yaml)"]
+markers = [
+  "req(*ids): requirement IDs covered by the test (docs/exigences.yaml)",
+  "case(id): test case ID from docs/cahier-de-test.md, for generated tests",
+]
 
 [tool.ruff]
 line-length = 132

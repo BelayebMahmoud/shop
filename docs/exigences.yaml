@@ -167,7 +167,7 @@ exigences:
     priorite: P0
     source: "cahier §4 (journal d'audit), §6.6"
     scenarios: [SC-FR-11-1, SC-FR-11-2]
-    cas: [IT-09, IT-10, TA-02, TA-15, TA-21, TA-23, TA-24]
+    cas: [IT-09, IT-10, TA-02, TA-15, TA-21, TA-23, TA-24, TA-37]
 
   # ---------------------------------------------------------------- Règles métier
   - id: BR-01
@@ -235,7 +235,7 @@ exigences:
     priorite: P0
     source: "plan phase 1"
     scenarios: [SC-BR-05-1, SC-BR-05-2, SC-BR-05-3]
-    cas: [CT-19, CT-20, CT-21, CT-22, CT-23, CT-24, CT-25, CT-26, CT-27, CT-28, CT-29, CT-30, CT-31, CT-32, CT-33, CT-34, CT-35, CT-36, CT-37, CT-38, CT-39, CT-40, CT-41, CT-53, CT-54, CT-55, TA-15, TA-16, E2E-03]
+    cas: [CT-19, CT-20, CT-21, CT-22, CT-23, CT-24, CT-25, CT-26, CT-27, CT-28, CT-29, CT-30, CT-31, CT-32, CT-33, CT-34, CT-35, CT-36, CT-37, CT-38, CT-39, CT-40, CT-41, CT-53, CT-54, CT-55, TA-15, TA-16, TA-36, E2E-03]
 
   - id: BR-06
     type: BR
@@ -248,7 +248,7 @@ exigences:
     priorite: P0
     source: "plan phase 1"
     scenarios: [SC-BR-06-1, SC-BR-06-2]
-    cas: [CT-22, CT-23, CT-30, CT-34, CT-42, CT-43, CT-56, IT-07, IT-08, TA-14, TA-16]
+    cas: [CT-22, CT-23, CT-30, CT-34, CT-42, CT-43, CT-56, IT-07, IT-08, TA-14, TA-16, TA-36]
 
   - id: BR-07
     type: BR
@@ -370,8 +370,8 @@ exigences:
     priorite: P0
     source: "cahier §6.3 et §7 (tests API), fiche 2 (contrat, robustesse)"
     cible: "Schemathesis, toutes vérifications : 0 échec, 0 réponse 500"
-    methode: "Schemathesis sur /openapi.json"
-    cas: [TA-28]
+    methode: "Schemathesis sur /openapi.json (toutes vérifications) + tests de robustesse"
+    cas: [TA-28, TA-32, TA-33, TA-34, TA-35]
 
   - id: QR-US-01
     type: QR

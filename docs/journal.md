@@ -58,3 +58,29 @@
   la phase 3.
 - Points ouverts : comptage du top 5 par statut vérifié seulement en intégration (IT-11) ; tests MVP à remplacer
   par des cas TA tracés en phase 3.
+
+## Phase 3 — Tests d'intégration et d'API (19/11/2026)
+
+- Intégration (`backend/tests/integration`) : IT-01 à IT-14, une réussite et une erreur par interface de
+  `conception.md` §4, base PostgreSQL de test reconstruite avant chaque test.
+- API (`backend/tests/api`) : TA-01 à TA-37 — table de décision 401/422/404/409/201 avec statut, corps et effet en
+  base ; cycles de vie ; matrice des droits `docs/rbac.yaml` (27 routes × 4 rôles = 108 tests, TA-20) ; isolation
+  entre clients ; concurrence ; robustesse (TA-32 à TA-35).
+- Contrat (`backend/tests/contract`) : Schemathesis 4.33.4, toutes vérifications, 25 opérations (TA-28).
+- Anomalies : Schemathesis a trouvé 2 erreurs 500 (ANO-01 identifiant hors plage, ANO-02 caractère NUL) et 3 écarts
+  de contrat (ANO-03 à ANO-05) ; corrigés, confirmés et suivis d'une non-régression (`docs/anomalies.md`).
+  ANO-06 : exclusion justifiée d'une vérification pour deux règles inter-champs.
+- Défaut de test DT-01 : TA-13 (concurrence) ne pouvait pas échouer ; course désormais forcée. Mutations au niveau
+  API (`tools/break_rules.py --suite api`) : 7 sur 7 détectées.
+- Revue indépendante (rôle test-reviewer) : aucun bloquant ; 3 majeurs corrigés (TA-01 normalisation de l'email,
+  IT-12 borne de fin et 422 HTTP, TA-28 opérations client avec un jeton client) ; lacunes comblées par TA-36
+  (Q-02 et annulation après SHIPPED via l'API) et TA-37 (audit annulation et produits).
+- `make check` vert : lint, check_docs (135 cas), 56 unitaires, 17 intégration, 168 API, 25 contrat ; couverture
+  `app/services` 99,4 % (instructions + branches, seuil 80 % bloquant) ; API : 25/25 opérations, 74/95 codes
+  documentés obtenus (`reports/api-coverage.md`).
+- Fichiers de preuve : `reports/junit-{unit,integration,api,contract}.xml`, `reports/coverage.xml`,
+  `reports/htmlcov/`, `reports/api-coverage.md`, `reports/unit/regles-cassees.txt`, `reports/api/regles-cassees.txt`.
+- Points ouverts (constats mineurs de la revue) : assertions de corps/état à renforcer sur TA-03, TA-07, TA-15,
+  TA-18, TA-21, TA-22, TA-25, IT-04, IT-05, IT-11, IT-14 ; TA-20 dépend de l'entrée d'audit n° 1 ; ADMIN_ID codé en
+  dur ; attente de 2 s dans TA-13 ; mutations API de BR-02, BR-04, BR-07, Q-08 non encore tentées ; 21 codes
+  documentés jamais obtenus.

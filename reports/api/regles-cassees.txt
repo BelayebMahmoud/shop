@@ -1,0 +1,10 @@
+# Rules broken on purpose (api suite: tests/integration tests/api) — 2026-11-19T19:18:00+00:00
+
+BR-01 no row lock on checkout          -> 1 failed, 181 passed in 46.99s | failing cases: TA-13
+BR-08 ownership check removed          -> 2 failed, 180 passed in 48.50s | failing cases: TA-25, TA-26
+FR-09 dashboard opened to CUSTOMER     -> 2 failed, 180 passed in 41.43s | failing cases: TA-17, TA-20
+BR-09 non-empty category check removed -> 1 failed, 181 passed in 47.15s | failing cases: TA-27
+BR-10 ordered product check removed    -> 1 failed, 181 passed in 46.36s | failing cases: TA-30
+BR-11 last ADMIN check off by one      -> 1 failed, 181 passed in 34.89s | failing cases: TA-31
+FR-11 audit of order creation removed  -> 3 failed, 179 passed in 34.59s | failing cases: IT-04, IT-09, TA-20
+after restore: 182 passed in 33.37s

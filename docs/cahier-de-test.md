@@ -138,8 +138,8 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | IT-09 | L'action et son audit sont écrits ensemble | FR-11 | I-5 services ↔ audit | Ana, P1 | création d'une commande | créer, lire le journal | 1 entrée « commande créée » : acteur Ana, cible = id de la commande, horodatage | | | valide |
 | IT-10 | Action échouée = aucune entrée d'audit | FR-11 | I-5 | P2 stock 3 | 4 × P2 | créer (refusée), lire le journal | OUT_OF_STOCK ; aucune entrée « commande créée » | | | échec attendu |
 | IT-11 | Indicateurs du tableau de bord sur un jeu maîtrisé | FR-09 | I-6 tableau de bord ↔ base | jeu de CT-50 + un produit au stock 4 | aucun filtre | calculer les indicateurs | par statut : PLACED 1, PAID 1, SHIPPED 1, DELIVERED 1, CANCELLED 1 ; stock faible contient le produit au stock 4 ; chiffre d'affaires 164,00 € et top 5 calculés sur les commandes PAID, SHIPPED, DELIVERED (décision Q-03) | | | valide |
-| IT-12 | Filtres période et catégorie ; période invalide | FR-09 | I-6 | commandes datées du 01/11 et du 15/11 ; deux catégories | période 10/11–20/11, catégorie A ; puis début > fin | appliquer les filtres | seules les commandes du 15/11 contenant la catégorie A sont comptées ; début > fin : 422 (décision Q-04) | | | valide |
-| IT-13 | Filtres de recherche combinés | FR-10 | I-7 recherche ↔ base | jeu maîtrisé de 30 produits (noms, catégories, prix, stocks connus) | q = « mug », catégorie Cuisine, prix 10,00–20,00, en stock | rechercher | exactement les produits du jeu qui respectent les 4 filtres ; total = leur nombre ; bornes de prix : Q-05 | | | valide |
+| IT-12 | Filtres période et catégorie ; période invalide | FR-09 | I-6 | commandes datées du 01/11, du 15/11, du 20/11 23:59:59 et du 21/11 00:00:00 (UTC) ; deux catégories | période 10/11–20/11, catégorie A ; puis début > fin | appliquer les filtres | seules les commandes du 15/11 contenant la catégorie A sont comptées ; début > fin : 422 (décision Q-04) | | | valide |
+| IT-13 | Filtres de recherche combinés | FR-10 | I-7 recherche ↔ base | jeu maîtrisé de 7 produits (noms, catégories, prix, stocks connus ; bornes de prix incluses) | q = « mug », catégorie Cuisine, prix 10,00–20,00, en stock | rechercher | exactement les produits du jeu qui respectent les 4 filtres ; total = leur nombre ; bornes de prix : Q-05 | | | valide |
 | IT-14 | Paramètres de recherche invalides | FR-10 | I-7 | catalogue | taille de page 0 ; 101 ; prix min > max | rechercher | 422 pour les tailles 0 et 101 ; min > max : 422 (décision Q-05) | | | échec attendu |
 
 ## 3. Tests d'API (TA) — statut + corps + effet réel
@@ -166,7 +166,7 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | TA-18 | Recherche filtrée sur 50 000 produits | FR-10 | jeu de volume (004) + jeu maîtrisé de IT-13 | filtres de IT-13 | `GET /api/products?...` | 200 ; chaque élément respecte les filtres ; `total` = nombre de correspondances (requête SQL de contrôle) ; taille de page respectée | | | valide |
 | TA-19 | Paramètres de recherche invalides | FR-10 | catalogue | `limit=0`, `limit=101`, `min_price_cents=a` | appeler | 422 pour chacun ; jamais 500 | | | échec attendu |
 | TA-20 | Matrice des droits complète | FR-02, QR-SE-02 | un utilisateur par rôle + anonyme | chaque rôle × chaque route de conception.md §5 | appeler chaque couple | code obtenu = code attendu de la matrice, pour 100 % des couples | | | valide |
-| TA-21 | Changement de rôle par l'ADMIN | FR-05, FR-11, BR-11 | Alice ; Bob CUSTOMER | Bob → STAFF | `PATCH /api/users/{id}/role`, puis Bob appelle le tableau de bord | 200 ; Bob a le rôle STAFF ; tableau de bord 200 ; 1 entrée d'audit « rôle changé » | | | valide |
+| TA-21 | Changement de rôle par l'ADMIN | FR-05, FR-11, BR-11 | Alice ; Bob CUSTOMER | Bob → STAFF | `PATCH /api/users/{id}/role`, puis Bob appelle le tableau de bord ; puis Alice passe Zoé (2e ADMIN) en STAFF | 200 ; Bob a le rôle STAFF ; tableau de bord 200 ; 1 entrée d'audit « rôle changé » ; Zoé : 200 (SC-BR-11-1) | | | valide |
 | TA-22 | Compte désactivé | FR-05 | Alice ; Bob actif avec un jeton | désactiver Bob | `PATCH /api/users/{id}/deactivate`, connexion de Bob, appel avec l'ancien jeton | 200 ; connexion 401 ; ancien jeton : 401 (décision Q-08) | | | échec attendu |
 | TA-23 | Journal d'audit non modifiable | FR-11 | au moins une entrée | `PUT` et `DELETE` sur `/api/audit/{id}` | appeler, relire le journal | 405 pour les deux ; entrées inchangées | | | échec attendu |
 | TA-24 | Lecture du journal d'audit | FR-11 | entrées existantes | Alice ; Sam | `GET /api/audit` | Alice : 200 avec les entrées ; Sam : 403 (décision Q-11) | | | valide |
@@ -177,6 +177,12 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | TA-30 | Suppression d'un produit déjà commandé | BR-10 | P1 présent dans une commande d'Ana ; Sam connecté | id de P1 | `DELETE /api/products/{id}`, relire | 409, code PRODUCT_IN_USE ; P1 toujours présent ; la commande d'Ana inchangée | | | échec attendu |
 | TA-31 | Le dernier ADMIN ne peut pas disparaître | BR-11 | Alice seule ADMIN active | Alice → CUSTOMER ; puis désactivation d'Alice | `PATCH /api/users/{id}/role`, `PATCH /api/users/{id}/deactivate`, relire | 409 LAST_ADMIN pour les deux ; Alice reste ADMIN et active | | | échec attendu |
 | TA-29 | Produit inexistant (R3) | FR-06 | Ana connectée | 1 × produit id 999999 | appeler, relire | 404 ; 0 commande ; aucun stock modifié | | | échec attendu |
+| TA-32 | Nombre hors plage : refus précis, jamais 500 | QR-CO-02 | API démarrée | id de chemin 2^63 et 2^53 ; `category_id` et `offset` 2^63 ; `product_id` 2^63 dans une commande | appeler | 422 pour chacun (ANO-01) | | | échec attendu |
+| TA-33 | Caractère NUL : refus précis, jamais 500 | QR-CO-02, FR-01 | API démarrée | `a\x00b` dans l'email de connexion, l'email d'inscription, un nom de catégorie | appeler | 422 pour chacun (ANO-02) | | | échec attendu |
+| TA-34 | Types JSON respectés | QR-CO-02, FR-04, FR-09 | Alice (ADMIN) | stock `false`, `"5"`, `5.0` ; `date_to=0`, `date_to=20261120` | créer un produit ; lire le tableau de bord | `false` et `"5"` : 422 ; `5.0` : 201, stock 5 ; dates non ISO : 422, date ISO : 200 (ANO-03) | | | échec attendu |
+| TA-35 | En-tête `Allow` complet sur 405 | QR-CO-02 | API démarrée | `PATCH` sur `/api/categories`, `/api/products/1`, `/api/audit/1` | appeler | 405 ; `Allow` = GET, POST / DELETE, GET, PUT / GET (ANO-04) | | | échec attendu |
+| TA-36 | Un client n'annule ni une commande PAID ni une commande SHIPPED | BR-05, BR-06 | commande d'Ana 2 × P1 au statut PAID, puis SHIPPED ; stock 8 | — | `POST /api/orders/{id}/cancel` par Ana, relire | PAID : 403 FORBIDDEN (décision Q-02) ; SHIPPED : 409 INVALID_TRANSITION ; statut et stock (8) inchangés | | | échec attendu |
+| TA-37 | Annulation et modifications de produit journalisées | FR-11 | Ana, Sam (STAFF), une commande PLACED d'Ana | annulation par Ana ; création, modification, suppression d'un produit par Sam | appeler, lire le journal | entrées ORDER_CANCELLED (Ana), PRODUCT_CREATED, PRODUCT_UPDATED, PRODUCT_DELETED (Sam) avec la bonne cible | | | valide |
 
 ## 4. Tests de bout en bout (E2E) — Chromium, Firefox, mobile (Pixel 7)
 
@@ -227,7 +233,7 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | --- | --- | --- | --- | --- |
 | Unitaire | CT | 56 | 27 | 29 |
 | Intégration | IT | 14 | 9 | 5 |
-| API | TA | 31 | 13 | 18 |
+| API | TA | 37 | 14 | 23 |
 | E2E | E2E | 5 | 4 | 1 |
 | Sécurité | SEC | 7 | 3 | 4 |
 | Performance | PERF | 3 | 3 | 0 |
@@ -235,7 +241,7 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | Utilisabilité | UX | 3 | 3 | 0 |
 | Maintenabilité | MA | 4 | 4 | 0 |
 | Portabilité | PORT | 2 | 2 | 0 |
-| **Total** | | **129** | | |
+| **Total** | | **135** | | |
 
 Cas dont l'attendu dépend d'une décision Q-xx du 19/11/2026 : CT-41, CT-50, IT-11, IT-12, IT-13, IT-14, TA-11,
 TA-12, TA-22, TA-24, TA-30, TA-31. Comptages produits par `tools/check_docs.py`, pas à la main.

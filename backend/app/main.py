@@ -4,12 +4,13 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from app.api import errors
+from app.api import errors as error_handlers
 from app.api.deps import get_db
+from app.api.responses import errors
 from app.api.routes import admin, auth, catalog, orders
 
 app = FastAPI(title="Gestion commerciale", version="0.2.0")
-errors.install(app)
+error_handlers.install(app)
 
 for router in (
     auth.router,
@@ -23,7 +24,7 @@ for router in (
     app.include_router(router, prefix="/api")
 
 
-@app.get("/api/health", tags=["meta"])
+@app.get("/api/health", tags=["meta"], responses=errors(503))
 def health(db: Session = Depends(get_db)) -> JSONResponse:
     """200 when the database answers, 503 while it is down (QR-RE-01)."""
     try:
