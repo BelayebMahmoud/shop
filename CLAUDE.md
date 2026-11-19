@@ -1,52 +1,56 @@
-# Shop MVP — ISO/IEC 25010 test project
+# Project: Gestion commerciale — ISO/IEC 25010 conformity
 
-A FastAPI + PostgreSQL backend (`backend/`), a React/Vite front end (`web/`) and SQL migrations (`db/migrations/`).
-The project is evaluated on its test and quality evidence for the 8 ISO/IEC 25010 characteristics.
+## Context
+FastAPI + SQLAlchemy + PostgreSQL + React/TypeScript + JWT. Graded on ISO/IEC 25010 conformity.
+Subject: docs/cahier-des-charges.pdf. Course: docs/cours/*.pdf. Tonight's plan: docs/plan-de-la-nuit.md.
+Claude Code kit (skills, subagents, hooks): docs/kit-claude-code.md.
+Deliverable documents (docs/*.md) are written in French. Code, identifiers and commit messages in English.
 
-## The two rules that override everything
+## Golden rule (non-negotiable)
+- Never write a result, number, coverage figure or verdict that did not come from a real run.
+  Numbers come only from files the tools wrote in reports/.
+- If a tool cannot run here: write "non disponible", the procedure and the reason. Never simulate output.
+- Never edit reports/ or docs/preuves/ by hand (a hook and deny rules enforce it; tools run through the shell
+  still write there normally).
+- Reviews by Claude (/security-review, code-review, subagents) are "revue de code", recorded in
+  docs/securite/triage.md or docs/journal.md, never presented as SAST, SCA or DAST tool output.
 
-1. **Oracle rule.** An expected result comes only from the requirement (`docs/exigences.yaml`, `docs/exigences.md`)
-   or from the test case in `docs/cahier-de-test.md`. Never read the expected value from the code. When the rule does
-   not decide a case, write `NON SPÉCIFIÉ` and ask. When a test fails because the code is wrong, never change the
-   expectation: run `/anomalie <test-id>`.
-2. **Golden rule (règle d'or).** Evidence is produced by tools, never written by hand.
-   - `reports/**` and `docs/preuves/**` are written only by tools (pytest, Playwright, Semgrep, Bandit, pip-audit,
-     ZAP, k6, `tools/trace.py`...). A hook blocks every Edit/Write there.
-   - Every number, percentage or verdict in a report must be found in a raw file it links to.
-   - Reviews by Claude (`/security-review`, `code-review`, subagents) are *revue de code*, recorded in
-     `docs/securite/triage.md` or `docs/journal.md`, never presented as SAST, SCA or DAST tool output.
-   - Never accept a security risk on the user's behalf: list the candidates and ask.
+## Oracle
+- Expected results come from the rule (docs/exigences.yaml, docs/exigences.md), never from the code under test.
+- When the rule does not decide a case, write "NON SPÉCIFIÉ" and ask.
+- When a test fails, re-read the rule: either the expectation is wrong (say so) or it is a defect.
+  A defect goes in docs/anomalies.md (/anomalie); fix it, re-run that test (confirmation), then the full suite (regression).
 
-## Layout
+## Traceability
+- Every test carries its requirement IDs: pytest @pytest.mark.req("BR-01"); Playwright "@BR-01" in the title; k6 tag req.
+- Test case IDs: CT-xx unit, IT-xx integration, TA-xx API, E2E-xx, SEC-xx, PERF-xx, REL-xx, UX-xx, PORT-xx.
+- Never invent a requirement ID; propose the missing requirement instead.
 
-| Path | Content |
-| --- | --- |
-| `backend/app/` | FastAPI app: `routers/` (auth, products, orders), `models.py`, `schemas.py`, `security.py` |
-| `backend/tests/` | pytest; `conftest.py` rebuilds the schema of `shop_test` from `db/migrations` before each test |
-| `web/src/` | React pages, Vite proxies `/api` to `:8000` |
-| `docs/` | Deliverables in French: exigences, cahier de test, anomalies, journal, rapports, traçabilité |
-| `reports/` | Raw tool output (JSON, XML, logs) — tool-written only |
-| `.claude/` | Project skills, subagents and hooks (part of the deliverable) |
+## Writing tests
+- Unit tests are F.I.R.S.T. and Arrange-Act-Assert, with valid cases AND expected-failure cases.
+- Techniques: equivalence partitions, boundary values, decision tables, state transitions.
+- API tests check status + body + real effect, in the order identity → shape → existence → business rule. A 500 is always a defect.
+- Never delete, skip or weaken a test or an assertion to make CI pass.
+- Exploratory sessions with the Playwright MCP are not evidence; only .spec.ts files run by Playwright Test count.
 
-## Commands
+## Architecture
+app/api (routes) → app/services (business rules) → app/models (SQLAlchemy). Cyclomatic complexity ≤ 10.
+Configuration only through environment variables. No secret in the code.
 
-- `make db` / `make db-reset` — Postgres 16 in Docker on host port **5433** (user/password/db `shop`); 5432 is taken by a native Windows Postgres.
-- `make api` (port 8000), `make web` (port 5173).
-- `make test` — pytest against `shop_test`; `make check` — the full gate used by `/anomalie` and `/phase-done`.
-- Windows without `make`: run the recipe directly, e.g. `cd backend && .venv/Scripts/python -m pytest -q`.
+## Security
+Active scans (ZAP) only against http://localhost (authorization in docs/securite/autorisation.md).
+Every alert is triaged true / false / to watch with a written reason. Ask me before accepting any risk.
 
-## Tests
+## This machine (Windows 11)
+- Postgres in Docker is on host port **5433**: a native Windows PostgreSQL service holds 5432.
+- Backend virtualenv: backend/.venv/Scripts/ (python, pytest, ruff). Use `python`, not `python3`.
+- `make` may be missing: run the Makefile recipe directly, e.g. `cd backend && .venv/Scripts/python -m pytest -q`.
+- PDFs are read with `pdftotext -layout`.
 
-- pytest: mark each test `@pytest.mark.req("<REQ-ID>")`, test name/id = case ID from the cahier.
-- Playwright: `@<REQ-ID>` in the test title. Exploratory browser sessions (Playwright MCP) are not evidence;
-  only `.spec.ts` files run by Playwright Test count.
-- Arrange-Act-Assert, F.I.R.S.T.: no fixed sleeps, no order dependence, no network beyond localhost.
-- API tests assert status, body **and** the real effect (database state or a follow-up GET). A 500 is a defect.
-- A new test must be seen failing when the rule is broken (`/gen-tests` does this).
+## Claude Code tooling
+Skills: /test-design, /gen-tests, /anomalie, /security-triage, /trace, /phase-done.
+Subagents: test-reviewer (before each phase commit), evidence-auditor (before submission).
 
-## Workflow
-
-- Work phase by phase. Close each with `/phase-done <N>` and wait for "go phase <next>".
-- Skills: `/test-design`, `/gen-tests`, `/anomalie`, `/security-triage`, `/trace`, `/phase-done`.
-- Subagents: `test-reviewer` before each phase commit, `evidence-auditor` before submission.
-- Deliverable documents are written in French; code, identifiers and commit messages in English.
+## End of every phase
+Run `make check`, show its real output, append to docs/journal.md (done, evidence files, gaps),
+then `git commit -m "phase N: ..."`. Then stop and wait for "go phase N+1".

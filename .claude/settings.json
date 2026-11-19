@@ -3,12 +3,20 @@
   "permissions": {
     "allow": [
       "Bash(make *)",
+      "Bash(pytest *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(docker *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
       "Bash(git status *)",
       "Bash(git diff *)",
       "Bash(git log *)",
       "Bash(python tools/trace.py *)"
     ],
     "deny": [
+      "Bash(git push *)",
+      "Bash(rm -rf *)",
       "Edit(reports/**)",
       "Write(reports/**)",
       "Edit(docs/preuves/**)",
