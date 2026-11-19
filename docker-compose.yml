@@ -1,18 +1,40 @@
+# Whole stack (QR-PO-01): docker compose up -d --build --wait
+# Every port and secret comes from .env (copy .env.example). Development defaults keep `make db` working.
 services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: shop
-      POSTGRES_PASSWORD: shop
-      POSTGRES_DB: shop
-    ports: ["5433:5432"]   # host 5433: a native Windows Postgres holds 5432
+      POSTGRES_USER: ${POSTGRES_USER:-shop}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-shop}
+      POSTGRES_DB: ${POSTGRES_DB:-shop}
+    ports: ["${DB_PORT:-5433}:5432"]   # host 5433 by default: a native Windows Postgres may hold 5432
     volumes:
-      - ./db/migrations:/docker-entrypoint-initdb.d:ro   # runs 001, 002 on first start only
+      - ./db/migrations:/docker-entrypoint-initdb.d:ro   # runs 001..004 on first start only
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U shop -d shop"]   # TCP: the init-time server listens on the socket only
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]   # TCP: the init-time server listens on the socket only
       interval: 2s
       timeout: 3s
-      retries: 20
+      retries: 60
+    restart: unless-stopped
+
+  api:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-shop}:${POSTGRES_PASSWORD:-shop}@db:5432/${POSTGRES_DB:-shop}
+      JWT_SECRET: ${JWT_SECRET:-}   # required: the API refuses to start without 32+ characters
+      JWT_EXPIRE_MINUTES: ${JWT_EXPIRE_MINUTES:-30}
+    ports: ["${API_PORT:-8000}:8000"]
+    depends_on:
+      db: { condition: service_healthy }
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    ports: ["${WEB_PORT:-8080}:8080"]
+    depends_on:
+      api: { condition: service_healthy }
+    restart: unless-stopped
+
 volumes:
   pgdata:

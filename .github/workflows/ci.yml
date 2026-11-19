@@ -1,0 +1,115 @@
+# CI ordered from fastest to slowest (fiche 1): quality + SAST -> unit -> integration/API/contract + SCA
+# -> E2E (+ accessibility) -> containers, performance smoke and DAST baseline. Every stage uploads its reports.
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: "3.13"
+  NODE_VERSION: "22"
+
+jobs:
+  quality-sast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }   # gitleaks scans the whole history
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PYTHON_VERSION }}", cache: pip, cache-dependency-path: backend/requirements-dev.txt }
+      - uses: actions/setup-node@v4
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: pip install -r backend/requirements-dev.txt bandit
+      - run: cd web && npm ci
+      - name: Lint and format (ruff, oxlint, tsc) + traceability check
+        run: make lint docs BIN=$(dirname $(which python))
+      - name: SAST — Bandit
+        run: bandit -r backend/app -f json -o reports-bandit.json || true
+      - name: SAST — Semgrep
+        run: docker run --rm -v "$PWD:/src" semgrep/semgrep semgrep scan --config p/owasp-top-ten --config p/python --config p/typescript --json --output /src/reports-semgrep.json /src || true
+      - name: Secrets — gitleaks
+        run: docker run --rm -v "$PWD:/repo" zricethezav/gitleaks detect --source /repo --report-format json --report-path /repo/reports-gitleaks.json || true
+      - uses: actions/upload-artifact@v4
+        with: { name: sast, path: "reports-*.json" }
+
+  unit:
+    needs: quality-sast
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PYTHON_VERSION }}", cache: pip, cache-dependency-path: backend/requirements-dev.txt }
+      - run: pip install -r backend/requirements-dev.txt
+      - run: mkdir -p reports && cd backend && pytest tests/unit -q --cov=app --cov-branch --junitxml=../reports/junit-unit.xml
+      - uses: actions/upload-artifact@v4
+        with: { name: unit, path: reports/ }
+
+  integration-api-sca:
+    needs: unit
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: { POSTGRES_USER: shop, POSTGRES_PASSWORD: shop, POSTGRES_DB: shop }
+        ports: ["5433:5432"]
+        options: --health-cmd "pg_isready -U shop" --health-interval 2s --health-retries 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PYTHON_VERSION }}", cache: pip, cache-dependency-path: backend/requirements-dev.txt }
+      - uses: actions/setup-node@v4
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: pip install -r backend/requirements-dev.txt pip-audit
+      - run: mkdir -p reports && make test-integration test-api test-contract coverage api-coverage BIN=$(dirname $(which python))
+      - name: SCA — pip-audit and npm audit
+        run: |
+          pip-audit -r backend/requirements.txt -f json -o reports/pip-audit.json || true
+          cd web && npm ci && npm audit --omit=dev --json > ../reports/npm-audit.json || true
+      - uses: actions/upload-artifact@v4
+        with: { name: integration-api-sca, path: reports/ }
+
+  e2e:
+    needs: integration-api-sca
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: { POSTGRES_USER: shop, POSTGRES_PASSWORD: shop, POSTGRES_DB: shop }
+        ports: ["5433:5432"]
+        options: --health-cmd "pg_isready -U shop" --health-interval 2s --health-retries 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ env.PYTHON_VERSION }}", cache: pip, cache-dependency-path: backend/requirements-dev.txt }
+      - uses: actions/setup-node@v4
+        with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: python -m venv backend/.venv && backend/.venv/bin/pip install -r backend/requirements-dev.txt
+      - run: cd web && npm ci && npx playwright install --with-deps chromium firefox
+      - run: mkdir -p reports && cd web && E2E_WORKERS=2 npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: e2e, path: reports/ }
+
+  containers-perf-dast:
+    needs: e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir -p reports
+      - name: Clean install of the whole stack (PORT-01)
+        run: KEEP=1 ./scripts/installation-propre.sh
+      - name: Dockerfile lint (Hadolint)
+        run: |
+          docker run --rm -i hadolint/hadolint < backend/Dockerfile > reports/hadolint-backend.txt || true
+          docker run --rm -i hadolint/hadolint < web/Dockerfile > reports/hadolint-web.txt || true
+      - name: Performance smoke (k6, 1 user, 30 s)
+        run: docker run --rm --network host -v "$PWD/perf/k6:/scripts" -e BASE_URL=http://127.0.0.1:8180 grafana/k6 run /scripts/smoke.js || true
+      - name: DAST baseline (ZAP passive scan)
+        run: docker run --rm --network host -v "$PWD/reports:/zap/wrk" ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://127.0.0.1:8180 -J zap-baseline.json || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: containers-perf-dast, path: reports/ }

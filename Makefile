@@ -1,5 +1,5 @@
 .PHONY: db db-reset stack stack-down install-check api web test test-unit test-integration test-api test-contract \
-        coverage api-coverage e2e lint docs check smoke
+        coverage api-coverage e2e e2e-docker lint docs check smoke
 
 # Python tools: the backend virtualenv (Scripts/ on Windows, bin/ elsewhere). Override with BIN=<dir> (CI).
 ifeq ($(OS),Windows_NT)
@@ -20,6 +20,8 @@ stack-down:
 	docker compose down
 install-check: ## PORT-01: clean install from a fresh clone, timed -> reports/portabilite/
 	./scripts/installation-propre.sh
+e2e-docker: ## E2E from the Playwright container against the Compose stack (Firefox, parallel)
+	./scripts/e2e-docker.sh
 api:       ## FastAPI on :8000 (terminal 1)
 	cd backend && $(BIN)/uvicorn app.main:app --reload --port 8000
 web:       ## Vite on :5173, proxies /api to :8000 (terminal 2)

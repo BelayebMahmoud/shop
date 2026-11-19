@@ -4,6 +4,9 @@ import { defineConfig, devices } from '@playwright/test';
 const API_PORT = Number(process.env.E2E_API_PORT ?? 8001);
 const WEB_PORT = Number(process.env.E2E_WEB_PORT ?? 5174);
 const python = process.platform === 'win32' ? '..\\backend\\.venv\\Scripts\\python.exe' : '../backend/.venv/bin/python';
+// E2E_BASE_URL set: test an already running stack (e.g. Docker Compose, from the Playwright container); no web servers.
+const external = process.env.E2E_BASE_URL;
+const junitFile = process.env.E2E_JUNIT ?? '../reports/junit-e2e.xml';
 
 export default defineConfig({
   testDir: './e2e',
@@ -14,10 +17,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: 0, // a flaky test is a defect to fix, not to hide
   timeout: 30_000,
-  reporter: [['list'], ['junit', { outputFile: '../reports/junit-e2e.xml' }]],
+  reporter: [['list'], ['junit', { outputFile: junitFile }]],
   use: {
     // 127.0.0.1, not localhost: on Windows `localhost` tries IPv6 first and each connection waits ~2 s.
-    baseURL: `http://127.0.0.1:${WEB_PORT}`,
+    baseURL: external ?? `http://127.0.0.1:${WEB_PORT}`,
     locale: 'fr-FR',
     trace: 'retain-on-failure',
   },
@@ -26,7 +29,7 @@ export default defineConfig({
     { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
-  webServer: [
+  webServer: external ? [] : [
     {
       command: `${python} ../tools/e2e_api.py`,
       url: `http://127.0.0.1:${API_PORT}/api/health`,
