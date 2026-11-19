@@ -1,0 +1,8 @@
+backend/.venv/
+backend/.env
+web/node_modules/
+web/dist/
+__pycache__/
+.pytest_cache/
+.claude/settings.local.json
+.ruff_cache/
