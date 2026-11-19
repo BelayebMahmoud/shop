@@ -79,7 +79,8 @@ exigences:
     titre: Gestion des utilisateurs
     enonce: >-
       ADMIN liste les utilisateurs, change le rôle d'un utilisateur et désactive un compte. Un compte désactivé
-      ne peut plus se connecter (voir Q-08).
+      ne peut plus se connecter (401) et tout jeton déjà émis est refusé (401) — décision Q-08. Il doit
+      toujours rester au moins un ADMIN actif (BR-11).
     caracteristique: securite
     sous_caracteristiques: [confidentialite, imputabilite]
     priorite: P1
@@ -92,7 +93,7 @@ exigences:
     titre: Commandes côté client
     enonce: >-
       Un CUSTOMER crée une commande (1 à 50 lignes), lit ses propres commandes et annule une commande PLACED
-      qui lui appartient. Une commande relie un utilisateur (N-1) et des produits via ses lignes (N-N).
+      qui lui appartient. Seul un CUSTOMER passe commande ; STAFF et ADMIN reçoivent 403 (décision Q-10). Une commande relie un utilisateur (N-1) et des produits via ses lignes (N-N).
     caracteristique: aptitude_fonctionnelle
     sous_caracteristiques: [completude, exactitude]
     priorite: P0
@@ -130,9 +131,9 @@ exigences:
     type: FR
     titre: Tableau de bord
     enonce: >-
-      STAFF et ADMIN consultent : chiffre d'affaires (Q-03), nombre de commandes par statut, 5 produits les plus
-      vendus (quantités), produits en stock faible (stock < 5). Filtres : période (date de début, date de fin,
-      Q-04) et catégorie.
+      STAFF et ADMIN consultent : chiffre d'affaires (total après remise des commandes PAID, SHIPPED, DELIVERED — Q-03), nombre de commandes par statut, 5 produits les plus
+      vendus (quantités), produits en stock faible (stock < 5). Filtres : période (dates de début et de fin incluses,
+      en UTC ; début > fin -> 422 — Q-04) et catégorie. Le top 5 compte les mêmes commandes que le chiffre d'affaires.
     caracteristique: aptitude_fonctionnelle
     sous_caracteristiques: [completude, pertinence]
     priorite: P0
@@ -145,7 +146,7 @@ exigences:
     titre: Recherche de produits à fort volume
     enonce: >-
       Recherche paginée sur au moins 50 000 produits : texte (nom, insensible à la casse), catégorie,
-      fourchette de prix (Q-05), en stock seulement. Taille de page 1 à 100 (défaut 20) ; le total des
+      fourchette de prix (bornes incluses ; min > max -> 422 — Q-05), en stock seulement. Taille de page 1 à 100 (défaut 20) ; le total des
       résultats est renvoyé.
     caracteristique: aptitude_fonctionnelle
     sous_caracteristiques: [completude, exactitude]
@@ -160,7 +161,7 @@ exigences:
     enonce: >-
       Sont journalisés (qui, quoi, quand, cible) : connexion réussie et échouée ; commande créée, statut changé,
       commande annulée ; produit créé, modifié, supprimé ; rôle changé. L'entrée est écrite dans la même
-      transaction que l'action. Aucune route ne permet de modifier ou supprimer une entrée. Lecture : ADMIN (Q-11).
+      transaction que l'action. Aucune route ne permet de modifier ou supprimer une entrée. Lecture : ADMIN seulement, STAFF -> 403 (décision Q-11).
     caracteristique: securite
     sous_caracteristiques: [non_repudiation, imputabilite]
     priorite: P0
@@ -198,13 +199,15 @@ exigences:
   - id: BR-03
     type: BR
     titre: Bornes de quantité et de lignes
-    enonce: "Quantité de 1 à 99 par ligne et de 1 à 50 lignes par commande ; sinon 422."
+    enonce: >-
+      Quantité de 1 à 99 par ligne et de 1 à 50 lignes par commande ; sinon 422. Les bornes portent sur les lignes
+      envoyées ; un même produit sur plusieurs lignes est ensuite fusionné (décision Q-01).
     caracteristique: aptitude_fonctionnelle
     sous_caracteristiques: [exactitude]
     priorite: P0
     source: "plan phase 1"
     scenarios: [SC-BR-03-1, SC-BR-03-2, SC-BR-03-3]
-    cas: [CT-01, CT-02, CT-03, CT-04, CT-05, CT-06, CT-07, CT-08, CT-09, TA-05]
+    cas: [CT-01, CT-02, CT-03, CT-04, CT-05, CT-06, CT-07, CT-08, CT-09, CT-51, TA-05]
 
   - id: BR-04
     type: BR
@@ -217,7 +220,7 @@ exigences:
     priorite: P0
     source: "plan phase 1"
     scenarios: [SC-BR-04-1, SC-BR-04-2, SC-BR-04-3, SC-BR-04-4, SC-BR-04-5]
-    cas: [CT-10, CT-11, CT-12, CT-13, CT-14, CT-15, CT-16, CT-17, CT-18, IT-06, TA-04]
+    cas: [CT-10, CT-11, CT-12, CT-13, CT-14, CT-15, CT-16, CT-17, CT-18, CT-52, IT-06, TA-04]
 
   - id: BR-05
     type: BR
@@ -225,13 +228,14 @@ exigences:
     enonce: >-
       Les changements de statut suivent le workflow ; tout autre changement -> 409 INVALID_TRANSITION.
       PAID, SHIPPED et DELIVERED ne sont posés que par STAFF ou ADMIN. Un CUSTOMER ne peut annuler que ses
-      propres commandes PLACED.
+      propres commandes PLACED ; un CUSTOMER qui annule sa commande PAID reçoit 403
+      (décision Q-02).
     caracteristique: aptitude_fonctionnelle
     sous_caracteristiques: [exactitude]
     priorite: P0
     source: "plan phase 1"
     scenarios: [SC-BR-05-1, SC-BR-05-2, SC-BR-05-3]
-    cas: [CT-19, CT-20, CT-21, CT-22, CT-23, CT-24, CT-25, CT-26, CT-27, CT-28, CT-29, CT-30, CT-31, CT-32, CT-33, CT-34, CT-35, CT-36, CT-37, CT-38, CT-39, CT-40, CT-41, TA-15, TA-16, E2E-03]
+    cas: [CT-19, CT-20, CT-21, CT-22, CT-23, CT-24, CT-25, CT-26, CT-27, CT-28, CT-29, CT-30, CT-31, CT-32, CT-33, CT-34, CT-35, CT-36, CT-37, CT-38, CT-39, CT-40, CT-41, CT-53, CT-54, CT-55, TA-15, TA-16, E2E-03]
 
   - id: BR-06
     type: BR
@@ -244,13 +248,13 @@ exigences:
     priorite: P0
     source: "plan phase 1"
     scenarios: [SC-BR-06-1, SC-BR-06-2]
-    cas: [CT-22, CT-23, CT-30, CT-34, CT-42, CT-43, IT-07, IT-08, TA-14, TA-16]
+    cas: [CT-22, CT-23, CT-30, CT-34, CT-42, CT-43, CT-56, IT-07, IT-08, TA-14, TA-16]
 
   - id: BR-07
     type: BR
     titre: Unicité
     enonce: >-
-      Email unique sans tenir compte de la casse, SKU unique, nom de catégorie unique (casse : Q-06) ;
+      Email, SKU et nom de catégorie uniques sans tenir compte de la casse (décision Q-06) ;
       un doublon -> 409.
     caracteristique: aptitude_fonctionnelle
     sous_caracteristiques: [exactitude]
@@ -281,6 +285,32 @@ exigences:
     source: "plan phase 1"
     scenarios: [SC-BR-09-1, SC-BR-09-2]
     cas: [TA-08, TA-27]
+
+  - id: BR-10
+    type: BR
+    titre: Produit déjà commandé
+    enonce: >-
+      Un produit qui figure dans au moins une ligne de commande ne peut pas être supprimé : 409 PRODUCT_IN_USE,
+      et le produit reste en place (historique des commandes conservé). Issue de Q-07.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [exactitude]
+    priorite: P1
+    source: "décision Q-07 du 19/11/2026"
+    scenarios: [SC-BR-10-1, SC-BR-10-2]
+    cas: [TA-09, TA-30]
+
+  - id: BR-11
+    type: BR
+    titre: Au moins un ADMIN actif
+    enonce: >-
+      Un changement de rôle ou une désactivation qui ne laisserait aucun ADMIN actif est refusé : 409 LAST_ADMIN.
+      Issue de Q-09.
+    caracteristique: securite
+    sous_caracteristiques: [integrite]
+    priorite: P1
+    source: "décision Q-09 du 19/11/2026"
+    scenarios: [SC-BR-11-1, SC-BR-11-2]
+    cas: [TA-21, TA-31]
 
   # ---------------------------------------------------------------- Exigences de qualité (§6)
   - id: QR-FS-01
@@ -365,7 +395,7 @@ exigences:
     sous_caracteristiques: [reconnaissabilite, facilite_apprentissage, protection_contre_les_erreurs]
     priorite: P1
     source: "cahier §6.4, Chapitre I (qualité en utilisation)"
-    cible: "taux de réussite >= 80 % ; SUS moyen >= 68 (cibles proposées, Q-12)"
+    cible: "taux de réussite >= 80 % ; SUS moyen >= 68 (décision Q-12)"
     methode: "protocole docs/utilisabilite.md, calcul par script"
     cas: [UX-02, UX-03, E2E-04]
 
@@ -465,8 +495,8 @@ exigences:
     methode: "scripts/installation-propre.sh, docker compose up --wait, scripts/smoke.sh"
     cas: [PORT-01, PORT-02]
 
-# ------------------------------------------------------------------ Questions ouvertes (oracle NON SPÉCIFIÉ)
-# Chaque question porte une proposition ; elle ne devient une règle qu'après validation.
+# ------------------------------------------------------------------ Questions tranchées (décisions)
+# Toutes les propositions ont été acceptées par le groupe le 19/11/2026 (début de la phase 2).
 questions:
   - id: Q-01
     exigence: BR-03
@@ -474,47 +504,59 @@ questions:
       Le même produit sur deux lignes : les lignes sont-elles comptées avant fusion, et la borne 99 s'applique-t-elle
       à la quantité fusionnée ?
     proposition: Bornes vérifiées sur les lignes envoyées (avant fusion) ; la fusion ne sert qu'au stock et au stockage.
+    statut: acceptée le 19/11/2026
   - id: Q-02
     exigence: BR-05
     question: Un CUSTOMER qui annule sa propre commande PAID reçoit-il 403 ou 409 ?
     proposition: 403 (le statut cible existe dans le workflow, mais le rôle n'y a pas droit).
+    statut: acceptée le 19/11/2026
   - id: Q-03
     exigence: FR-09
     question: Quelles commandes comptent dans le chiffre d'affaires, et quel montant ?
     proposition: Statuts PAID, SHIPPED et DELIVERED ; montant = total après remise.
+    statut: acceptée le 19/11/2026
   - id: Q-04
     exigence: FR-09
     question: Les bornes de la période sont-elles incluses, et dans quel fuseau horaire ?
     proposition: Dates de début et de fin incluses, en UTC ; début > fin -> 422.
+    statut: acceptée le 19/11/2026
   - id: Q-05
     exigence: FR-10
     question: Les bornes de prix de la recherche sont-elles incluses ? Que faire si min > max ?
     proposition: Bornes incluses ; min > max -> 422.
+    statut: acceptée le 19/11/2026
   - id: Q-06
     exigence: BR-07
     question: L'unicité du SKU et du nom de catégorie ignore-t-elle la casse, comme l'email ?
     proposition: Oui pour les trois.
+    statut: acceptée le 19/11/2026
   - id: Q-07
     exigence: FR-04
     question: Que se passe-t-il si l'on supprime un produit déjà commandé ?
     proposition: Nouvelle règle BR-10 proposée — 409 PRODUCT_IN_USE, pour conserver l'historique des commandes.
+    statut: acceptée le 19/11/2026
   - id: Q-08
     exigence: FR-05
     question: Un compte désactivé peut-il encore utiliser un jeton déjà émis ?
     proposition: Non — connexion refusée (401) et tout jeton existant refusé (401).
+    statut: acceptée le 19/11/2026
   - id: Q-09
     exigence: FR-05
     question: Un ADMIN peut-il se retirer le rôle ADMIN ou désactiver le dernier ADMIN actif ?
     proposition: Nouvelle règle BR-11 proposée — refus 409 s'il ne resterait aucun ADMIN actif.
+    statut: acceptée le 19/11/2026
   - id: Q-10
     exigence: FR-06
     question: STAFF et ADMIN peuvent-ils passer commande ?
     proposition: Non — création de commande réservée au CUSTOMER (403 sinon), comme le dit la portée du plan.
+    statut: acceptée le 19/11/2026
   - id: Q-11
     exigence: FR-11
     question: Qui peut lire le journal d'audit ?
     proposition: ADMIN seulement (STAFF -> 403).
+    statut: acceptée le 19/11/2026
   - id: Q-12
     exigence: QR-US-02
     question: Le plan ne fixe pas de cible chiffrée pour les sessions d'utilisabilité.
     proposition: Réussite des tâches >= 80 % et SUS moyen >= 68 (moyenne usuelle de l'échelle SUS).
+    statut: acceptée le 19/11/2026

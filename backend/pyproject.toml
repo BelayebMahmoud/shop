@@ -1,6 +1,9 @@
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+addopts = "--strict-markers"
+junit_family = "xunit1"  # xunit1 keeps <properties>: requirement IDs for the traceability matrix
+markers = ["req(*ids): requirement IDs covered by the test (docs/exigences.yaml)"]
 
 [tool.ruff]
 line-length = 132

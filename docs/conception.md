@@ -92,7 +92,7 @@ erDiagram
     ORDER_ITEMS {
         bigint order_id PK, FK
         bigint product_id PK, FK
-        int quantity "CHECK 1..99 (BR-03)"
+        int quantity "CHECK > 0 ; 1..99 par ligne envoyée (BR-03, Q-01)"
         int unit_price_cents "prix catalogue figé (BR-02)"
     }
     AUDIT_LOG {
@@ -166,21 +166,23 @@ Cette matrice est la source de `docs/rbac.yaml` (phase 3, TA-20).
 | `GET /api/products`, `GET /api/products/{id}` | 200 | 200 | 200 | 200 | FR-04, FR-10 |
 | `POST /api/products` | 401 | 403 | 201 | 201 | FR-04 |
 | `PUT /api/products/{id}` | 401 | 403 | 200 | 200 | FR-04 |
-| `DELETE /api/products/{id}` | 401 | 403 | 204 | 204 | FR-04 (Q-07) |
-| `POST /api/orders` | 401 | 201 | 403 (Q-10) | 403 (Q-10) | FR-06 |
+| `DELETE /api/products/{id}` | 401 | 403 | 204 | 204 | FR-04, BR-10 |
+| `POST /api/orders` | 401 | 201 | 403 | 403 | FR-06 (Q-10) |
 | `GET /api/orders` | 401 | 200 (les siennes) | 200 (toutes) | 200 (toutes) | FR-06, FR-07 |
 | `GET /api/orders/{id}` | 401 | 200 (sienne) / 404 | 200 | 200 | FR-06, BR-08 |
 | `POST /api/orders/{id}/cancel` | 401 | 200 (sienne, PLACED) / 404 | 200 | 200 | FR-06, BR-05, BR-06 |
 | `PATCH /api/orders/{id}/status` | 401 | 403 | 200 | 200 | FR-07, BR-05 |
 | `GET /api/dashboard` | 401 | 403 | 200 | 200 | FR-09 |
 | `GET /api/users` | 401 | 403 | 403 | 200 | FR-05 |
-| `PATCH /api/users/{id}/role` | 401 | 403 | 403 | 200 | FR-05 |
-| `PATCH /api/users/{id}/deactivate` | 401 | 403 | 403 | 200 | FR-05 |
+| `PATCH /api/users/{id}/role` | 401 | 403 | 403 | 200 | FR-05, BR-11 |
+| `PATCH /api/users/{id}/deactivate` | 401 | 403 | 403 | 200 | FR-05, BR-11 |
 | `GET /api/audit` | 401 | 403 | 403 (Q-11) | 200 | FR-11 |
 | `PUT`, `DELETE /api/audit/{id}` | 405 | 405 | 405 | 405 | FR-11 |
 
-**Format des erreurs.** Erreurs métier et de droits : `{"code": "<CODE>", "message": "<texte>"}` avec les codes
-`OUT_OF_STOCK`, `INVALID_TRANSITION`, `DUPLICATE`, `CATEGORY_NOT_EMPTY`, `NOT_FOUND`, `FORBIDDEN`. Erreurs de
+**Format des erreurs.** Erreurs métier et de droits : `{"detail": {"code": "<CODE>", ...champs utiles}}`
+(format déjà utilisé par le MVP, conservé pour ne pas changer son comportement), avec les codes `OUT_OF_STOCK`,
+`PRODUCT_NOT_FOUND`, `INVALID_TRANSITION`, `DUPLICATE`, `CATEGORY_NOT_EMPTY`, `PRODUCT_IN_USE`, `LAST_ADMIN`,
+`NOT_FOUND`, `FORBIDDEN`. Erreurs de
 validation (422) : format standard FastAPI, une entrée par champ fautif (`loc`, `msg`, `type`), ce qui permet
 d'afficher l'erreur sous le champ concerné (Chapitre I, utilisabilité). Une erreur 500 ne renvoie jamais de
 détail technique.
@@ -188,6 +190,10 @@ détail technique.
 **Pourquoi 422 et non 400 (BR-03).** La fiche 2 admet le code de refus « selon l'API ». FastAPI et Pydantic
 répondent 422 *Unprocessable Content* à un corps bien formé mais invalide, avec le détail par champ ; on garde ce
 comportement standard plutôt que de le surcharger, et le contrat OpenAPI le documente (QR-CO-02).
+
+**Recherche (FR-10).** `GET /api/products?q=&category_id=&min_price_cents=&max_price_cents=&in_stock=&limit=&offset=` ; `limit` de 1 à 100 (défaut 20) ; le texte est cherché sans tenir compte de la casse, les jokers `%` et `_` sont échappés ; index trigramme GIN sur `lower(name)` (migration 004).
+
+**Tableau de bord (FR-09).** `GET /api/dashboard?date_from=&date_to=&category_id=`. Le filtre catégorie retient les commandes qui contiennent au moins un produit de la catégorie (comptes par statut, chiffre d'affaires) ; le top 5 et le stock faible ne portent que sur les produits de la catégorie. La liste « stock faible » est limitée à 50 produits, le total est renvoyé à part.
 
 **Montants.** Stockés en centimes entiers ; la remise est calculée en centimes avec arrondi demi vers le haut
 (BR-04), jamais en virgule flottante.

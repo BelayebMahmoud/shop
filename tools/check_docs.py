@@ -18,9 +18,7 @@ problems = []
 # 1. case rows in the cahier
 rows = {}
 for line in cahier.splitlines():
-    m = re.match(
-        r"\| ((?:CT|IT|TA|E2E|SEC|PERF|REL|UX|MA|PORT)-\d+) \|(.*)\|\s*$", line
-    )
+    m = re.match(r"\| ((?:CT|IT|TA|E2E|SEC|PERF|REL|UX|MA|PORT)-\d+) \|(.*)\|\s*$", line)
     if m:
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if m.group(1) in rows:
@@ -59,9 +57,7 @@ for cid in rows:
     if cid not in listed:
         problems.append(f"{cid}: not referenced by any requirement in exigences.yaml")
 # 5. coverage of characteristics
-chars = collections.Counter(
-    e["caracteristique"] for e in reqs.values() if e["type"] == "QR"
-)
+chars = collections.Counter(e["caracteristique"] for e in reqs.values() if e["type"] == "QR")
 for k in y["caracteristiques"]:
     if not chars[k]:
         problems.append(f"no QR for {k}")
@@ -80,9 +76,7 @@ for lvl in ["CT", "IT", "TA", "E2E", "SEC", "PERF", "REL", "UX", "MA", "PORT"]:
     c = cnt[lvl]
     n = sum(c.values())
     tot += n
-    print(
-        f"{lvl:5} {n:3}  valide {c['valide']:3}  échec attendu {c['échec attendu']:3}"
-    )
+    print(f"{lvl:5} {n:3}  valide {c['valide']:3}  échec attendu {c['échec attendu']:3}")
 print("total", tot)
 print(
     "NON SPÉCIFIÉ:",

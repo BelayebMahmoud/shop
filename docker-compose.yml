@@ -10,7 +10,7 @@ services:
       - ./db/migrations:/docker-entrypoint-initdb.d:ro   # runs 001, 002 on first start only
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U shop -d shop"]
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U shop -d shop"]   # TCP: the init-time server listens on the socket only
       interval: 2s
       timeout: 3s
       retries: 20

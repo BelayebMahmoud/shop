@@ -1,6 +1,6 @@
 from sqlalchemy import text
 
-from app.db import engine
+from app.core.db import engine
 
 
 def stock_of(product_id: int) -> int:
@@ -38,8 +38,9 @@ def test_login_rejects_wrong_password(client):
 def test_checkout_requires_token(client):
     r = client.post("/api/orders", json={"items": [{"product_id": 1, "quantity": 1}]})
     assert r.status_code == 401
-    r = client.post("/api/orders", json={"items": [{"product_id": 1, "quantity": 1}]},
-                    headers={"Authorization": "Bearer not-a-jwt"})
+    r = client.post(
+        "/api/orders", json={"items": [{"product_id": 1, "quantity": 1}]}, headers={"Authorization": "Bearer not-a-jwt"}
+    )
     assert r.status_code == 401
 
 
@@ -56,8 +57,9 @@ def test_checkout_prices_on_server_and_decrements_stock(client, auth_headers):
 
 
 def test_out_of_stock_changes_nothing(client, auth_headers):
-    r = client.post("/api/orders", json={"items": [{"product_id": 1, "quantity": 1}, {"product_id": 8, "quantity": 4}]},
-                    headers=auth_headers)
+    r = client.post(
+        "/api/orders", json={"items": [{"product_id": 1, "quantity": 1}, {"product_id": 8, "quantity": 4}]}, headers=auth_headers
+    )
     assert r.status_code == 409
     assert r.json()["detail"] == {"code": "OUT_OF_STOCK", "product_ids": [8]}
     assert stock_of(1) == 50 and stock_of(8) == 3

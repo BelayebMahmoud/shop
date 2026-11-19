@@ -6,8 +6,8 @@ couverte, préconditions, données d'entrée, étapes, résultat attendu, résul
 à partir des rapports des outils (règle d'or).
 
 Le résultat attendu vient de la règle ([`exigences.yaml`](exigences.yaml)) ou du contrat de
-[`conception.md`](conception.md), jamais du code. **NON SPÉCIFIÉ (Q-xx)** signale un cas que les règles ne
-tranchent pas : la proposition est notée entre crochets, elle n'est pas un oracle tant que Q-xx n'est pas validée.
+[`conception.md`](conception.md), jamais du code. Les questions Q-01 à Q-12 ont été tranchées le 19/11/2026 ;
+un attendu qui en dépend porte la mention « décision Q-xx ».
 
 Conventions : montants en euros (stockés en centimes) ; P1 = 40,00 €, stock 10 ; P2 = 50,00 €, stock 3 ;
 Ana et Bob = CUSTOMER, Sam = STAFF, Alice = ADMIN. Chaque test crée ses propres données.
@@ -26,7 +26,7 @@ Ana et Bob = CUSTOMER, Sam = STAFF, Alice = ADMIN. Chaque test crée ses propres
 | Partition du sous-total | Taux | Représentant | Limites testées | Cas |
 | --- | --- | --- | --- | --- |
 | < 0 (invalide) | erreur | — | -0,01 | CT-18 |
-| 0 à 99,99 € | 0 % | 50,00 | 99,99 | CT-10, CT-11 |
+| 0 à 99,99 € | 0 % | 50,00 | 0,00 ; 99,99 | CT-52, CT-10, CT-11 |
 | 100,00 à 199,99 € | 5 % | 150,00 | 100,00 ; 199,99 | CT-12, CT-13, CT-14 |
 | >= 200,00 € | 10 % | 300,00 | 200,00 | CT-15, CT-16 |
 | Arrondi demi vers le haut | 5 % | 100,10 (5,005 -> 5,01) | — | CT-17 |
@@ -56,8 +56,9 @@ Acteur : STAFF sauf mention. Toute cellule « refus » = 409 INVALID_TRANSITION 
 | DELIVERED | refus (CT-31) | refus (CT-32) | refus (CT-33) | refus (CT-34) |
 | CANCELLED | refus (CT-35) | refus (CT-36) | refus (CT-37) | refus (CT-38) |
 
-Droits (BR-05) : `payer`, `expédier`, `livrer` réservés à STAFF et ADMIN (CUSTOMER → 403, CT-39) ;
-CUSTOMER : `annuler` sur sa propre commande PLACED seulement (CT-40 ; PAID → CT-41, Q-02).
+Droits (BR-05) : `payer`, `expédier`, `livrer` réservés à STAFF et ADMIN (ADMIN : CT-53 ; CUSTOMER → 403,
+CT-39, CT-54, CT-55) ; un CUSTOMER qui annule une commande SHIPPED reçoit 409 (BR-06, CT-56) ;
+CUSTOMER : `annuler` sur sa propre commande PLACED seulement (CT-40 ; PAID → 403, CT-41, décision Q-02).
 
 ## 1. Tests unitaires (CT) — services, sans base ni HTTP
 
@@ -103,7 +104,7 @@ CUSTOMER : `annuler` sur sa propre commande PLACED seulement (CT-40 ; PAID → C
 | CT-38 | Annuler deux fois | BR-05 | CANCELLED ; STAFF | annuler | appliquer | INVALID_TRANSITION ; reste CANCELLED | | | échec attendu |
 | CT-39 | Un client ne peut pas payer | BR-05 | commande PLACED d'Ana ; acteur Ana | payer | appliquer | refus de droit (403) ; reste PLACED | | | échec attendu |
 | CT-40 | Un client annule sa commande PLACED | BR-05 | commande PLACED d'Ana ; acteur Ana | annuler | appliquer | statut CANCELLED | | | valide |
-| CT-41 | Un client annule sa commande PAID | BR-05 | commande PAID d'Ana ; acteur Ana | annuler | appliquer | refus ; reste PAID — code NON SPÉCIFIÉ (Q-02) [proposé : 403] | | | échec attendu |
+| CT-41 | Un client annule sa commande PAID | BR-05 | commande PAID d'Ana ; acteur Ana | annuler | appliquer | refus ; reste PAID — code 403 (décision Q-02) | | | échec attendu |
 | CT-42 | L'annulation remet chaque ligne en stock | BR-06 | commande PLACED : 2 × P1, 1 × P2 ; stocks après commande 8 et 2 | annuler | appliquer, lire les mouvements de stock | +2 sur P1, +1 sur P2 (stocks 10 et 3) | | | valide |
 | CT-43 | Pas de remise en stock après expédition | BR-06 | commande SHIPPED : 2 × P1 ; stock P1 = 8 | annuler | appliquer | INVALID_TRANSITION ; aucun mouvement de stock (P1 = 8) | | | échec attendu |
 | CT-44 | Quantité égale au stock acceptée | BR-01 | P2 stock 3 | 1 ligne 3 × P2 | vérifier le stock | accepté ; stock restant 0 | | | valide |
@@ -112,7 +113,13 @@ CUSTOMER : `annuler` sur sa propre commande PLACED seulement (CT-40 ; PAID → C
 | CT-47 | Le prix client est ignoré | BR-02 | catalogue : P1 = 40,00 € | ligne 1 × P1 avec prix client 0,01 € | construire les lignes | prix unitaire 40,00 € ; sous-total 40,00 € | | | valide |
 | CT-48 | Seuil du stock faible | FR-09 | produits aux stocks 4 et 5 | liste des produits | calculer « stock faible » | produit au stock 4 listé, produit au stock 5 non listé | | | valide |
 | CT-49 | Top 5 des produits vendus | FR-09 | 6 produits vendus en quantités 9, 8, 7, 6, 5, 4 (sans égalité) | lignes de commandes comptées (Q-03) | calculer le top 5 | les 5 premiers dans l'ordre 9, 8, 7, 6, 5 ; le 6e absent | | | valide |
-| CT-50 | Statuts comptés dans le chiffre d'affaires | FR-09 | commandes : PLACED 50,00 ; PAID 114,00 ; SHIPPED 20,00 ; DELIVERED 30,00 ; CANCELLED 80,00 | commandes | calculer le chiffre d'affaires | NON SPÉCIFIÉ (Q-03) [proposé : 164,00 €] | | | valide |
+| CT-50 | Statuts comptés dans le chiffre d'affaires | FR-09 | commandes : PLACED 50,00 ; PAID 114,00 ; SHIPPED 20,00 ; DELIVERED 30,00 ; CANCELLED 80,00 | commandes | calculer le chiffre d'affaires | 164,00 € (décision Q-03) | | | valide |
+| CT-51 | Bornes contrôlées avant la fusion des doublons | BR-03 | aucune | 2 lignes du même produit, quantité 99 chacune | valider puis fusionner | accepté ; une seule ligne de quantité 198 (décision Q-01) | | | valide |
+| CT-52 | Pas de remise, limite basse | BR-04 | aucune | sous-total 0,00 € | calculer la remise | remise 0,00 € ; total 0,00 € | | | valide |
+| CT-53 | L'ADMIN a les mêmes droits que STAFF | BR-05 | commandes dans chaque état de départ ; acteur ADMIN | payer, expédier, livrer, annuler (PLACED, PAID) | appliquer les 5 transitions autorisées | les 5 transitions sont acceptées | | | valide |
+| CT-54 | Un client ne peut pas expédier | BR-05 | commande PAID d'Ana ; acteur Ana | expédier | appliquer | refus de droit (403) ; reste PAID | | | échec attendu |
+| CT-55 | Un client ne peut pas livrer | BR-05 | commande SHIPPED d'Ana ; acteur Ana | livrer | appliquer | refus de droit (403) ; reste SHIPPED | | | échec attendu |
+| CT-56 | Un client n'annule pas une commande expédiée | BR-06 | commande SHIPPED d'Ana ; acteur Ana | annuler | appliquer | INVALID_TRANSITION (409, BR-06 : impossible après SHIPPED) ; aucun mouvement de stock | | | échec attendu |
 
 ## 2. Tests d'intégration (IT) — une réussite et une erreur par interface (conception.md §4)
 
@@ -130,10 +137,10 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | IT-08 | Annulation refusée après expédition, base inchangée | BR-06 | I-4 | commande SHIPPED 2 × P1 ; stock 8 | annuler (Sam) | annuler, relire | INVALID_TRANSITION ; statut SHIPPED ; stock 8 | | | échec attendu |
 | IT-09 | L'action et son audit sont écrits ensemble | FR-11 | I-5 services ↔ audit | Ana, P1 | création d'une commande | créer, lire le journal | 1 entrée « commande créée » : acteur Ana, cible = id de la commande, horodatage | | | valide |
 | IT-10 | Action échouée = aucune entrée d'audit | FR-11 | I-5 | P2 stock 3 | 4 × P2 | créer (refusée), lire le journal | OUT_OF_STOCK ; aucune entrée « commande créée » | | | échec attendu |
-| IT-11 | Indicateurs du tableau de bord sur un jeu maîtrisé | FR-09 | I-6 tableau de bord ↔ base | jeu de CT-50 + un produit au stock 4 | aucun filtre | calculer les indicateurs | par statut : PLACED 1, PAID 1, SHIPPED 1, DELIVERED 1, CANCELLED 1 ; stock faible contient le produit au stock 4 ; chiffre d'affaires et top 5 : NON SPÉCIFIÉ (Q-03) | | | valide |
-| IT-12 | Filtres période et catégorie ; période invalide | FR-09 | I-6 | commandes datées du 01/11 et du 15/11 ; deux catégories | période 10/11–20/11, catégorie A ; puis début > fin | appliquer les filtres | seules les commandes du 15/11 contenant la catégorie A sont comptées ; début > fin : NON SPÉCIFIÉ (Q-04) [proposé : 422] | | | valide |
+| IT-11 | Indicateurs du tableau de bord sur un jeu maîtrisé | FR-09 | I-6 tableau de bord ↔ base | jeu de CT-50 + un produit au stock 4 | aucun filtre | calculer les indicateurs | par statut : PLACED 1, PAID 1, SHIPPED 1, DELIVERED 1, CANCELLED 1 ; stock faible contient le produit au stock 4 ; chiffre d'affaires 164,00 € et top 5 calculés sur les commandes PAID, SHIPPED, DELIVERED (décision Q-03) | | | valide |
+| IT-12 | Filtres période et catégorie ; période invalide | FR-09 | I-6 | commandes datées du 01/11 et du 15/11 ; deux catégories | période 10/11–20/11, catégorie A ; puis début > fin | appliquer les filtres | seules les commandes du 15/11 contenant la catégorie A sont comptées ; début > fin : 422 (décision Q-04) | | | valide |
 | IT-13 | Filtres de recherche combinés | FR-10 | I-7 recherche ↔ base | jeu maîtrisé de 30 produits (noms, catégories, prix, stocks connus) | q = « mug », catégorie Cuisine, prix 10,00–20,00, en stock | rechercher | exactement les produits du jeu qui respectent les 4 filtres ; total = leur nombre ; bornes de prix : Q-05 | | | valide |
-| IT-14 | Paramètres de recherche invalides | FR-10 | I-7 | catalogue | taille de page 0 ; 101 ; prix min > max | rechercher | 422 pour les tailles 0 et 101 ; min > max : NON SPÉCIFIÉ (Q-05) [proposé : 422] | | | échec attendu |
+| IT-14 | Paramètres de recherche invalides | FR-10 | I-7 | catalogue | taille de page 0 ; 101 ; prix min > max | rechercher | 422 pour les tailles 0 et 101 ; min > max : 422 (décision Q-05) | | | échec attendu |
 
 ## 3. Tests d'API (TA) — statut + corps + effet réel
 
@@ -147,7 +154,7 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | TA-06 | Stock insuffisant (R4) | BR-01, FR-06 | Ana ; P2 stock 3 | 4 × P2 | appeler, relire | 409, code OUT_OF_STOCK ; 0 commande ; stock 3 | | | échec attendu |
 | TA-07 | Prix client ignoré | BR-02, FR-06 | Ana ; P1 = 40,00 € | 1 × P1 avec `unit_price` 0,01 | appeler | 201 ; ligne à 40,00 € ; total 40,00 € | | | valide |
 | TA-08 | Cycle de vie d'une catégorie | FR-03, BR-09 | Sam connecté | catégorie « Test » | POST, GET, PUT (renommer), DELETE, GET | 201, 200, 200, 204, 404 | | | valide |
-| TA-09 | Cycle de vie d'un produit | FR-04 | Sam ; une catégorie | produit valide | POST, GET, PUT (prix 42,00), DELETE, GET | 201, 200, 200 (prix 42,00 relu), 204, 404 | | | valide |
+| TA-09 | Cycle de vie d'un produit | FR-04, BR-10 | Sam ; une catégorie | produit valide | POST, GET, PUT (prix 42,00), DELETE, GET | 201, 200, 200 (prix 42,00 relu), 204, 404 | | | valide |
 | TA-10 | Email déjà pris, autre casse | BR-07 | ana@example.com inscrite | ANA@Example.com | `POST /api/auth/register` | 409 ; un seul compte en base | | | échec attendu |
 | TA-11 | SKU déjà pris | BR-07 | P1 existe | nouveau produit SKU `P1-TEST` (casse : Q-06) | `POST /api/products` | 409 ; un seul produit `P1-TEST` | | | échec attendu |
 | TA-12 | Nom de catégorie déjà pris | BR-07 | catégorie « Papeterie » | « Papeterie » (casse : Q-06) | `POST /api/categories` | 409 ; une seule catégorie | | | échec attendu |
@@ -157,16 +164,18 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | TA-16 | Transition interdite par l'API | FR-07, BR-05, BR-06 | commande SHIPPED ; Sam | statut CANCELLED | appeler, relire | 409 INVALID_TRANSITION ; statut SHIPPED | | | échec attendu |
 | TA-17 | Tableau de bord : droits et filtres | FR-09 | jeu de IT-11 | Sam avec filtres valides ; Ana | `GET /api/dashboard` | Sam : 200 et indicateurs de IT-11 ; Ana : 403 | | | valide |
 | TA-18 | Recherche filtrée sur 50 000 produits | FR-10 | jeu de volume (004) + jeu maîtrisé de IT-13 | filtres de IT-13 | `GET /api/products?...` | 200 ; chaque élément respecte les filtres ; `total` = nombre de correspondances (requête SQL de contrôle) ; taille de page respectée | | | valide |
-| TA-19 | Paramètres de recherche invalides | FR-10 | catalogue | `size=0`, `size=101`, `min_price=a` | appeler | 422 pour chacun ; jamais 500 | | | échec attendu |
+| TA-19 | Paramètres de recherche invalides | FR-10 | catalogue | `limit=0`, `limit=101`, `min_price_cents=a` | appeler | 422 pour chacun ; jamais 500 | | | échec attendu |
 | TA-20 | Matrice des droits complète | FR-02, QR-SE-02 | un utilisateur par rôle + anonyme | chaque rôle × chaque route de conception.md §5 | appeler chaque couple | code obtenu = code attendu de la matrice, pour 100 % des couples | | | valide |
-| TA-21 | Changement de rôle par l'ADMIN | FR-05, FR-11 | Alice ; Bob CUSTOMER | Bob → STAFF | `PATCH /api/users/{id}/role`, puis Bob appelle le tableau de bord | 200 ; Bob a le rôle STAFF ; tableau de bord 200 ; 1 entrée d'audit « rôle changé » | | | valide |
-| TA-22 | Compte désactivé | FR-05 | Alice ; Bob actif avec un jeton | désactiver Bob | `PATCH /api/users/{id}/deactivate`, connexion de Bob, appel avec l'ancien jeton | 200 ; connexion 401 ; ancien jeton : NON SPÉCIFIÉ (Q-08) [proposé : 401] | | | échec attendu |
+| TA-21 | Changement de rôle par l'ADMIN | FR-05, FR-11, BR-11 | Alice ; Bob CUSTOMER | Bob → STAFF | `PATCH /api/users/{id}/role`, puis Bob appelle le tableau de bord | 200 ; Bob a le rôle STAFF ; tableau de bord 200 ; 1 entrée d'audit « rôle changé » | | | valide |
+| TA-22 | Compte désactivé | FR-05 | Alice ; Bob actif avec un jeton | désactiver Bob | `PATCH /api/users/{id}/deactivate`, connexion de Bob, appel avec l'ancien jeton | 200 ; connexion 401 ; ancien jeton : 401 (décision Q-08) | | | échec attendu |
 | TA-23 | Journal d'audit non modifiable | FR-11 | au moins une entrée | `PUT` et `DELETE` sur `/api/audit/{id}` | appeler, relire le journal | 405 pour les deux ; entrées inchangées | | | échec attendu |
-| TA-24 | Lecture du journal d'audit | FR-11 | entrées existantes | Alice ; Sam | `GET /api/audit` | Alice : 200 avec les entrées ; Sam : NON SPÉCIFIÉ (Q-11) [proposé : 403] | | | valide |
+| TA-24 | Lecture du journal d'audit | FR-11 | entrées existantes | Alice ; Sam | `GET /api/audit` | Alice : 200 avec les entrées ; Sam : 403 (décision Q-11) | | | valide |
 | TA-25 | Un client ne lit pas la commande d'un autre | BR-08 | commande d'Ana ; Bob connecté | id de la commande d'Ana | `GET /api/orders/{id}` par Bob | 404 | | | échec attendu |
 | TA-26 | Un client n'annule pas la commande d'un autre | BR-08 | commande PLACED d'Ana 2 × P1 ; stock 8 | id de la commande d'Ana | `POST /api/orders/{id}/cancel` par Bob, relire | 404 ; statut PLACED ; stock 8 | | | échec attendu |
 | TA-27 | Suppression d'une catégorie non vide | BR-09 | « Papeterie » contient P1 | — | `DELETE /api/categories/{id}`, relire | 409 ; catégorie et P1 toujours présents | | | échec attendu |
 | TA-28 | Contrat OpenAPI et robustesse | QR-CO-02 | API démarrée | `/openapi.json` | Schemathesis, toutes vérifications | 0 violation du contrat ; 0 réponse 500 | | | valide |
+| TA-30 | Suppression d'un produit déjà commandé | BR-10 | P1 présent dans une commande d'Ana ; Sam connecté | id de P1 | `DELETE /api/products/{id}`, relire | 409, code PRODUCT_IN_USE ; P1 toujours présent ; la commande d'Ana inchangée | | | échec attendu |
+| TA-31 | Le dernier ADMIN ne peut pas disparaître | BR-11 | Alice seule ADMIN active | Alice → CUSTOMER ; puis désactivation d'Alice | `PATCH /api/users/{id}/role`, `PATCH /api/users/{id}/deactivate`, relire | 409 LAST_ADMIN pour les deux ; Alice reste ADMIN et active | | | échec attendu |
 | TA-29 | Produit inexistant (R3) | FR-06 | Ana connectée | 1 × produit id 999999 | appeler, relire | 404 ; 0 commande ; aucun stock modifié | | | échec attendu |
 
 ## 4. Tests de bout en bout (E2E) — Chromium, Firefox, mobile (Pixel 7)
@@ -216,9 +225,9 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 
 | Niveau | Préfixe | Nombre de cas | Valides | Échec attendu |
 | --- | --- | --- | --- | --- |
-| Unitaire | CT | 50 | 24 | 26 |
+| Unitaire | CT | 56 | 27 | 29 |
 | Intégration | IT | 14 | 9 | 5 |
-| API | TA | 29 | 13 | 16 |
+| API | TA | 31 | 13 | 18 |
 | E2E | E2E | 5 | 4 | 1 |
 | Sécurité | SEC | 7 | 3 | 4 |
 | Performance | PERF | 3 | 3 | 0 |
@@ -226,8 +235,7 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | Utilisabilité | UX | 3 | 3 | 0 |
 | Maintenabilité | MA | 4 | 4 | 0 |
 | Portabilité | PORT | 2 | 2 | 0 |
-| **Total** | | **121** | | |
+| **Total** | | **129** | | |
 
-Cas dont une partie du résultat attendu est NON SPÉCIFIÉ : CT-41, CT-50, IT-11, IT-12, IT-14, TA-22, TA-24.
-Cas dont les données doivent éviter une zone non décidée : IT-13 (bornes de prix, Q-05), TA-11 et TA-12 (casse,
-Q-06). Comptages produits par script de vérification des documents, pas à la main.
+Cas dont l'attendu dépend d'une décision Q-xx du 19/11/2026 : CT-41, CT-50, IT-11, IT-12, IT-13, IT-14, TA-11,
+TA-12, TA-22, TA-24, TA-30, TA-31. Comptages produits par `tools/check_docs.py`, pas à la main.
