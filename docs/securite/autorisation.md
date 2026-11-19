@@ -18,4 +18,7 @@ sécurité décrits ci-dessous, et seulement eux.
 
 | Nom | Rôle | Date | Signature |
 | --- | --- | --- | --- |
-| | Responsable du groupe projet | | |
+| *(à compléter à la main)* | Responsable du groupe projet | 20/11/2026 | *(à compléter à la main)* |
+
+Accord écrit donné par le responsable du groupe le 20/11/2026 à 00:33, dans la session de travail, avant tout scan
+dynamique (« Signed, accept both »). Les scans DAST ont été lancés après cet accord (voir `docs/journal.md`).

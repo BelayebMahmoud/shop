@@ -25,8 +25,9 @@ for line in cahier.splitlines():
             problems.append(f"duplicate case {m.group(1)}")
         rows[m.group(1)] = cells
 for cid, cells in rows.items():
-    if cells[-3] or cells[-2]:
-        problems.append(f"{cid}: obtenu/verdict not empty")
+    # Obtenu/verdict are empty until tools/fill_cahier.py copies them from the generated matrix (phase 9).
+    if cells[-2] not in ("", "PASS", "FAIL", "NOT RUN", "PARTIAL") or (cells[-3] and not cells[-2]):
+        problems.append(f"{cid}: obtenu/verdict not written by tools/fill_cahier.py")
     if cells[-1] not in ("valide", "échec attendu"):
         problems.append(f"{cid}: type '{cells[-1]}'")
     for rid in re.findall(r"\b(?:FR|BR)-\d\d\b|\bQR-[A-Z]{2}-\d\d\b", cells[2]):

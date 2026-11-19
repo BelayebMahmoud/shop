@@ -9,8 +9,25 @@ from app.api.deps import get_db
 from app.api.responses import errors
 from app.api.routes import admin, auth, catalog, orders
 
-app = FastAPI(title="Gestion commerciale", version="0.2.0")
+app = FastAPI(title="Gestion commerciale", version="0.2.0", responses=errors(503))  # every route: DB down -> 503
 error_handlers.install(app)
+
+# The API is also reachable directly (port 8000), not only through nginx: it sets its own security headers
+# (ZAP 10021 X-Content-Type-Options, 90004 Cross-Origin-Resource-Policy — docs/securite/triage.md).
+SECURITY_HEADERS = {
+    "X-Content-Type-Options": "nosniff",
+    "Cross-Origin-Resource-Policy": "same-origin",
+    "Referrer-Policy": "no-referrer",
+}
+
+
+@app.middleware("http")
+async def security_headers(request, call_next):
+    response = await call_next(request)
+    for name, value in SECURITY_HEADERS.items():
+        response.headers.setdefault(name, value)
+    return response
+
 
 for router in (
     auth.router,

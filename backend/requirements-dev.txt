@@ -6,3 +6,7 @@ pyyaml==6.0.3
 pytest-cov==7.1.0
 schemathesis==4.33.4
 defusedxml==0.7.1
+hypothesis==6.170.16
+radon==6.0.1
+xenon==0.9.3
+import-linter==2.17

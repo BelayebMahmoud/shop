@@ -38,18 +38,14 @@ def _filter_orders(stmt: Select, date_from: date | None, date_to: date | None, c
     return stmt
 
 
-def compute(db: Session, date_from: date | None, date_to: date | None, category_id: int | None) -> Dashboard:
-    if date_from is not None and date_to is not None and date_from > date_to:
-        raise InvalidInput("DATE_RANGE")
-
-    by_status = db.execute(
-        _filter_orders(select(Order.status, func.count(), func.sum(Order.total_cents)), date_from, date_to, category_id).group_by(
-            Order.status
-        )
-    ).all()
+def _counts_and_revenue(db: Session, date_from, date_to, category_id) -> tuple[dict[str, int], int]:
+    stmt = _filter_orders(select(Order.status, func.count(), func.sum(Order.total_cents)), date_from, date_to, category_id)
+    by_status = db.execute(stmt.group_by(Order.status)).all()
     counts = dict.fromkeys(STATUSES, 0) | {status: n for status, n, _ in by_status}
-    revenue = revenue_cents((status, int(total)) for status, _, total in by_status)
+    return counts, revenue_cents((status, int(total)) for status, _, total in by_status)
 
+
+def _top_sold(db: Session, date_from, date_to, category_id) -> list[tuple[int, str, int]]:
     sold_stmt = (
         select(OrderItem.product_id, Product.name, func.sum(OrderItem.quantity))
         .join(Order, Order.id == OrderItem.order_id)
@@ -61,11 +57,22 @@ def compute(db: Session, date_from: date | None, date_to: date | None, category_
     if category_id is not None:
         sold_stmt = sold_stmt.where(Product.category_id == category_id)
     sold = {pid: (name, int(qty)) for pid, name, qty in db.execute(sold_stmt).all()}
-    top = [(pid, sold[pid][0], qty) for pid, qty in top_products({pid: v[1] for pid, v in sold.items()})]
+    return [(pid, sold[pid][0], qty) for pid, qty in top_products({pid: v[1] for pid, v in sold.items()})]
 
+
+def _low_stock(db: Session, category_id) -> tuple[list[Product], int]:
     low_stmt = select(Product).where(Product.stock < LOW_STOCK_BELOW)
     if category_id is not None:
         low_stmt = low_stmt.where(Product.category_id == category_id)
-    low_total = db.scalar(select(func.count()).select_from(low_stmt.subquery()))
-    low = list(db.scalars(low_stmt.order_by(Product.stock, Product.id).limit(LOW_STOCK_LIST_LIMIT)).all())
+    total = db.scalar(select(func.count()).select_from(low_stmt.subquery()))
+    return list(db.scalars(low_stmt.order_by(Product.stock, Product.id).limit(LOW_STOCK_LIST_LIMIT)).all()), total
+
+
+def compute(db: Session, date_from: date | None, date_to: date | None, category_id: int | None) -> Dashboard:
+    """FR-09 indicators. Split into single-purpose helpers to keep each under complexity 10 (ANO-08)."""
+    if date_from is not None and date_to is not None and date_from > date_to:
+        raise InvalidInput("DATE_RANGE")
+    counts, revenue = _counts_and_revenue(db, date_from, date_to, category_id)
+    top = _top_sold(db, date_from, date_to, category_id)
+    low, low_total = _low_stock(db, category_id)
     return Dashboard(revenue, counts, top, low, low_total)

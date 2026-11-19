@@ -130,3 +130,37 @@
 - Attaques manuelles : SEC-01, SEC-03, SEC-04 (7 tests) et SEC-02 (3 navigateurs) réussies.
 - En attente : signature de `docs/securite/autorisation.md` pour lancer ZAP (DAST) ; décision du groupe sur les
   licences LGPL-3.0 et MPL-2.0 (L1, L2).
+
+## Phase 6 — Sécurité, partie 2 : DAST (20/11/2026, 00:33–00:45)
+
+- Accord du responsable (00:33) consigné dans `docs/securite/autorisation.md` ; licences L1 et L2 acceptées.
+- ZAP depuis le réseau Compose : baseline (passif) puis API scan (actif, jeton ADMIN). Avant : baseline 3 Low ;
+  API 1 High (40018), 2 Low. Corrections : en-têtes COOP/COEP/CORP (nginx), nosniff et CORP posés par l'API.
+  Après : baseline 0 Low ; API : la seule alerte restante (40018 SQL Injection, heuristique) est prouvée faux
+  positif par le test SEC-01-zap-40018 (charges booléennes enregistrées telles quelles).
+- Amélioration de fiabilité : base indisponible → 503 DATABASE_UNAVAILABLE avec Retry-After (au lieu de 500),
+  documenté sur toutes les routes.
+- Critère de sortie TP3 tenu : 0 High non traitée, 0 Medium, 0 Low ; triage complet dans `docs/securite/triage.md`.
+
+## Phases 7 et 8 — préparation en parallèle (00:45–01:00)
+
+- k6 (`perf/k6/smoke.js`, `load.js`, `search.js`) lancé dans le réseau Compose par `tools/perf_run.py` (échantillons
+  `docker stats`, description de la machine). Smoke : 113 requêtes, 0 erreur, p95 64 ms.
+- Fiabilité : REL-03 (panne PostgreSQL réelle entre deux écritures), REL-04 (double soumission), contrat 503 —
+  3 tests réussis ; REL-01 et REL-02 sur la pile via `tools/reliability.py`.
+- Maintenabilité : propriété Hypothesis sur BR-04 (4 000 cas, réussie) ; ANO-08 (complexité 11 → corrigée, maximum
+  désormais ≤ 10) ; import-linter : 2 contrats tenus ; mutmut prêt (`scripts/mutation.sh`, dans Docker).
+- Phase 9 préparée : `tools/trace.py` (matrice générée), `tools/fill_cahier.py` ; phase 10 : `docs/demo.md`.
+
+## Phase 7 — Performance et fiabilité (20/11/2026, 00:44–00:58) — mesures sur la pile Compose
+
+- PERF-02 (20 utilisateurs, 5 min, 22 417 requêtes) : p95 liste 77 ms, détail 49 ms, 0 erreur → cibles tenues.
+- PERF-03 (recherche filtrée, 50 008 produits, 20 utilisateurs, 2 min) : p95 64 ms, 0 erreur.
+- REL-01 (redémarrage de PostgreSQL sous charge) : reprise en 3,15 s ; /api/health en 503 pendant la panne ;
+  0 réponse 500 ; 1 784 commandes acquittées toutes retrouvées ; 5 contrôles de cohérence à 0.
+- REL-02 (arrêt brutal du processus de l'API) : relancé par la politique `restart` en 3,27 s ; 502 du proxy pendant
+  2,35 s seulement ; 0 réponse 500 ; 1 774/1 774 commandes retrouvées ; cohérence à 0.
+- Preuves : `reports/perf/*.json`, `reports/perf/ressources-*.csv`, `reports/perf/environnement.txt`,
+  `reports/reliability/rel-0{1,2}.json` (+ chronologies brutes).
+- Utilisabilité : séances reportées au 20/11/2026 (décision du groupe) → UX-02/UX-03 « en attente ».
+- `make check` vert : 58 unitaires, 17 intégration, 168 API, 8 sécurité, 3 fiabilité, 25 contrat ; couverture 99,4 %.

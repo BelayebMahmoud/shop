@@ -19,6 +19,7 @@ Les résultats cités proviennent des sorties réelles des outils (fichiers dans
 | ENV-01 | 19/11/2026 | QR-CO-01 | E2E en parallèle (Windows + Docker Desktop) | environnement | Cause confirmée (redirection de port), résolue en conteneur |
 | ENV-02 | 19/11/2026 | QR-CO-01 | Lancement de Firefox (Windows) | environnement | Contournée : Firefox en conteneur, 100 % PASS |
 | DT-02 | 19/11/2026 | QR-SE-02, QR-US-01 | E2E dans Docker (base de 50 000 produits) | mineure (défaut de test) | Corrigée |
+| ANO-08 | 20/11/2026 | QR-MA-02 | radon / xenon (MA-03) | mineure | Corrigée |
 
 ## ANO-01 — Identifiant hors plage : erreur 500
 
@@ -143,3 +144,16 @@ Commit des corrections : commit « phase 3 » (voir `git log`).
   projet à l'autre).
 - **Correction** : UX-01 recherche son produit avant l'audit ; le SKU est tiré de la *fin* du nom (identifiant unique).
 - **Confirmation** : `scripts/e2e-docker.sh` → 20 réussis, 0 échec.
+
+## ANO-08 — Complexité cyclomatique au-dessus de la cible dans le tableau de bord
+
+- **Exigence** : QR-MA-02 (complexité cyclomatique <= 10). **Test** : MA-03 (radon, xenon `--max-absolute B`).
+- **Obtenu** : `app/services/dashboard.py`, fonction `compute` : complexité 11 (rang C) — seul bloc sur 126 au-dessus
+  de la cible (`reports/maintenabilite/radon-cc.json`, première exécution).
+- **Erreur** : trois calculs indépendants (statuts et chiffre d'affaires, top 5, stock faible) écrits dans une seule
+  fonction. **Défaut** : `compute` concentrait tous les filtres. **Défaillance** : aucune pour l'utilisateur ; coût de
+  maintenance (analysabilité, modifiabilité).
+- **Correction** : trois fonctions à responsabilité unique (`_counts_and_revenue`, `_top_sold`, `_low_stock`).
+- **Confirmation** : radon → 129 blocs, moyenne 1,83 ; xenon → code de sortie 0 (aucun bloc au-delà du rang B) ;
+  import-linter : 2 contrats tenus. **Non-régression** : IT-11, IT-12, TA-17 et les suites unitaires, d'intégration
+  et d'API → 101 réussis ; `make check` complet en fin de phase.

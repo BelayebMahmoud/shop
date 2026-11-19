@@ -14,3 +14,24 @@ extend-exclude = [".venv"]
 
 [tool.ruff.lint]
 select = ["E", "F"]  # pyflakes + pycodestyle; widen in a later phase
+
+[tool.importlinter]  # QR-MA-02: app/api -> app/services -> app/models, never the reverse
+root_package = "app"
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Layers: api above services above models"
+type = "layers"
+layers = ["app.api", "app.services", "app.models"]
+
+[[tool.importlinter.contracts]]
+name = "Services and models do not depend on the web framework"
+type = "forbidden"
+source_modules = ["app.services", "app.models"]
+forbidden_modules = ["fastapi", "starlette", "app.main"]
+
+[tool.mutmut]  # MA-02: mutation testing of the business rules, run in Docker (scripts/mutation.sh)
+paths_to_mutate = ["app/services/pricing.py", "app/services/order_rules.py", "app/services/workflow.py", "app/services/dashboard_rules.py"]
+tests_dir = ["tests/unit"]
+pytest_add_cli_args = ["-p", "no:cacheprovider", "-q"]
+also_copy = ["app", "tests"]

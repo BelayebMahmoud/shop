@@ -1,0 +1,6 @@
+Date (UTC): 2026-11-19T23:50:01+00:00
+Host: DESKTOP-SVTSHJH — Windows 11 (AMD64)
+Host CPU: Intel64 Family 6 Model 186 Stepping 2, GenuineIntel
+Docker: 29.9.3 — 12 CPU, 8173408256 bytes RAM for Docker, Docker Desktop
+k6 image: grafana/k6@sha256:3d8e5c7f1d53ec59408c2ffbd9943602a0985ffcbd4a2430ec00f3ffca89796e
+Target: Docker Compose stack (db, api, web), k6 container on the same network, BASE_URL=http://web:8080

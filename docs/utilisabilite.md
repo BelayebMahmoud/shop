@@ -82,7 +82,12 @@ moyenne des scores des participants.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | P1 | | | | | | | | | | |
 
-## 7. Résultats (calculés par script en phase 8 — vide à ce stade)
+## 7. Résultats — **en attente**
+
+> **Statut au 20/11/2026 : sessions en attente.** Décision du groupe (20/11/2026, 01:00) : les séances avec les
+> participants ont lieu le 20/11/2026, avant la remise. Les cas UX-02 et UX-03 sont donc au verdict **NOT RUN** dans
+> la matrice ; aucun résultat n'est affiché tant que les séances n'ont pas eu lieu. Après les séances : saisir les notes
+> brutes (§ 6), calculer les indicateurs par script, compléter le tableau ci-dessous et les problèmes (§ 8).
 
 | Indicateur | T1 | T2 | T3 | Global | Cible | Atteinte |
 | --- | --- | --- | --- | --- | --- | --- |

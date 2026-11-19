@@ -36,17 +36,27 @@ faites par Claude Code ne figurent pas ici comme résultats d'outil.
 Inventaire (SBOM CycloneDX, Syft) : `reports/sca/sbom-api.cdx.json` (995 composants) et
 `reports/sca/sbom-web.cdx.json` (1 282 composants), dépendances transitives et paquets système inclus.
 
-## 3. DAST
+## 3. DAST (OWASP ZAP, pile locale autorisée)
 
-En attente de la signature de [`autorisation.md`](autorisation.md) : aucun scan dynamique n'est lancé avant.
-Prévu : ZAP baseline (passif) sur `http://web:8080`, puis ZAP API scan (actif) sur le contrat OpenAPI, depuis le
-réseau Docker Compose, puis tri ici, correction et nouveau scan.
+Autorisation : [`autorisation.md`](autorisation.md), accord du 20/11/2026 à 00:33. Scans lancés depuis le réseau
+Docker Compose, cibles `http://web:8080` (baseline, passif) et `http://api:8000/openapi.json` (API scan, actif, jeton
+ADMIN pour atteindre la logique métier). Rapports avant correction : `reports/dast/zap-*-avant.json` ; après :
+`reports/dast/zap-*.json` (HTML lisibles à côté).
 
-Attaques manuelles automatisées (fiche 4, déjà exécutées sur la base de test) : SEC-01 injection SQL, SEC-03
-contrôle d'accès, SEC-04 session (`reports/junit-security.xml`, 7 réussis) ; SEC-02 XSS stocké
-(`reports/junit-e2e-docker.xml`, réussi sur chromium, firefox et mobile).
+| # | Scan | Alerte ZAP (id) | Risque (confiance) | URL / paramètre | Vraie / fausse | Justification | Décision | Statut après relance |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Z1 | baseline | Cross-Origin-Embedder/Opener/Resource-Policy absents (90004) | Low (Medium) | `http://web:8080` | vraie | En-têtes d'isolation absents ; toutes les ressources sont de même origine | corriger : COOP, COEP, CORP dans `nginx.conf` | absente |
+| Z2 | API | X-Content-Type-Options absent (10021) | Low (Medium) | `http://api:8000/…` (accès direct, sans nginx) | vraie | L'API est aussi joignable sur le port 8000 sans passer par nginx | corriger : en-têtes ajoutés par l'API elle-même | absente |
+| Z3 | API | Cross-Origin-Resource-Policy absent (90004) | Low (Medium) | `http://api:8000/…` | vraie | idem Z2 | corriger : `Cross-Origin-Resource-Policy: same-origin` | absente |
+| Z4 | API | **SQL Injection (40018)** | **High (Medium)** | `PUT /api/categories/{id}` puis `POST /api/categories`, paramètre `name` (`ZAP AND 1=1 -- `, `ZAP OR 1=1 -- `) | **fausse** | Heuristique « réponses différentes » : ZAP renomme une catégorie avec sa charge, la réponse renvoie ce texte, puis une autre charge donne une réponse différente (texte différent, ou 409 nom déjà pris). Toutes les requêtes passent par l'ORM avec paramètres liés ; Bandit et Semgrep n'ont trouvé aucun SQL construit à la main. **Preuve exécutée** : test SEC-01-zap-40018 — les deux charges booléennes renvoient 200 et sont enregistrées telles quelles (`reports/junit-security.xml`) ; SEC-01 (3 charges dans la recherche) : table intacte. | justifier (faux positif prouvé par test), conserver le test de non-régression | toujours signalée par l'heuristique (2 instances), **justifiée** |
+| Z5 | baseline | Modern Web Application (10109), Storable and Cacheable Content (10049) | Informational | `http://web:8080` | — | Informations : application monopage ; fichiers statiques versionnés mis en cache volontairement | aucune | informations |
+| Z6 | API | Client Error response code (100000), Authentication Request Identified (10111), Non-Storable Content (10049) | Informational | — | — | Réponses 4xx attendues aux attaques ; route de connexion identifiée | aucune | informations |
 
-## 4. Bilan provisoire (avant DAST)
+Attaques manuelles automatisées (fiche 4) : SEC-01 injection SQL (recherche et catégories), SEC-03 contrôle d'accès,
+SEC-04 session (`reports/junit-security.xml`) ; SEC-02 XSS stocké (`reports/junit-e2e-docker.xml`, chromium,
+firefox, mobile) — toutes refusées comme attendu.
+
+## 4. Bilan
 
 | Famille | Avant | Après relance |
 | --- | --- | --- |
@@ -54,10 +64,13 @@ contrôle d'accès, SEC-04 session (`reports/junit-security.xml`, 7 réussis) ; 
 | SAST (Bandit), secrets (gitleaks) | 0 | 0 |
 | SCA dépendances (pip-audit, npm audit, Trivy fs) | 0 | 0 |
 | SCA images (Trivy) | api : 53 High, 112 Medium, 68 Low, 7 Unknown ; web : 3 Critical, 65 High, 103 Medium, 46 Low | 0 sur les deux images |
+| DAST baseline (ZAP) | 3 Low, 2 informations | 0 Low, 2 informations |
+| DAST API (ZAP) | 1 High, 2 Low, 3 informations | 1 High **faux positif prouvé** (Z4), 0 Low, 3 informations |
 
 Preuves « avant » : images reconstruites depuis le commit `80e8c79` (état avant correction) et analysées de nouveau
 avec les mêmes outils — `reports/sca/trivy-image-api-avant.json`, `reports/sca/trivy-image-web-avant.json`,
 `reports/sast/semgrep-avant.json`. Preuves « après » : les mêmes noms sans le suffixe `-avant`.
 
-Risques proposés à l'acceptation, **en attente de la décision du groupe** : L1 et L2 (licences). Aucun risque de
-sécurité n'est accepté à ce stade.
+**Critère de sortie (TP3)** : 0 High non traitée — la seule High restante (Z4) est un faux positif démontré par un
+test exécuté ; 0 Medium ; aucune Low restante. Risques acceptés par le groupe le 20/11/2026 : L1 et L2 (licences
+LGPL-3.0 et MPL-2.0, usage conforme). Aucun risque de sécurité accepté.

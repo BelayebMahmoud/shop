@@ -77,3 +77,17 @@ def test_token_issued_before_a_role_change_carries_the_new_role(client, make, ne
     assert client.get("/api/dashboard", headers=bob.headers).status_code == 200
     assert client.patch(f"/api/users/{bob.id}/role", json={"role": new_role}, headers=alice.headers).status_code == 200
     assert client.get("/api/dashboard", headers=bob.headers).status_code == 403  # same token, current role applies
+
+
+@pytest.mark.req("QR-SE-02", "FR-03")
+@pytest.mark.parametrize("payloads", [pytest.param(["ZAP AND 1=1 -- ", "ZAP AND 1=2 -- "], id="SEC-01-zap-40018")])
+def test_boolean_sql_payloads_in_category_name_are_stored_as_text(client, make, payloads):
+    """ZAP alert 40018 on PUT /api/categories/{id} (docs/securite/triage.md): both payloads must behave identically."""
+    sam = make.user("STAFF")
+    category = make.category("Avant ZAP")
+    answers = []
+    for payload in payloads:
+        r = client.put(f"/api/categories/{category.id}", json={"name": payload}, headers=sam.headers)
+        answers.append((r.status_code, r.json()["name"]))
+        assert client.get(f"/api/categories/{category.id}").json()["name"] == payload  # stored literally
+    assert answers == [(200, payloads[0]), (200, payloads[1])]  # same behaviour for "true" and "false"

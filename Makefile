@@ -1,5 +1,5 @@
 .PHONY: db db-reset stack stack-down install-check api web test test-unit test-integration test-api test-security test-contract \
-        coverage api-coverage e2e e2e-docker lint docs check smoke
+        coverage api-coverage e2e e2e-docker lint docs check smoke test-reliability perf reliability \n        security quality mutation trace
 
 # Python tools: the backend virtualenv (Scripts/ on Windows, bin/ elsewhere). Override with BIN=<dir> (CI).
 ifeq ($(OS),Windows_NT)
@@ -28,7 +28,7 @@ web:       ## Vite on :5173, proxies /api to :8000 (terminal 2)
 	cd web && npm run dev
 
 # Fastest to slowest (fiche 1): unit -> integration -> API -> contract. Coverage accumulates across the suites.
-test: test-unit test-integration test-api test-security test-contract coverage api-coverage  ## all backend suites + reports
+test: test-unit test-integration test-api test-security test-reliability test-contract coverage api-coverage  ## all backend suites + reports
 
 test-unit: ## unit tests (no database) -> reports/junit-unit.xml; unit-only coverage of app/services
 	cd backend && $(BIN)/pytest tests/unit -q $(COV) --cov-report= --junitxml=$(REPORTS)/junit-unit.xml
@@ -43,6 +43,9 @@ test-api:  ## TA cases (incl. permissions matrix) -> reports/junit-api.xml
 
 test-security: ## SEC-01, SEC-03, SEC-04 manual attacks, automated -> reports/junit-security.xml
 	cd backend && $(BIN)/pytest tests/security -q $(COV) --cov-append --cov-report= --junitxml=$(REPORTS)/junit-security.xml
+
+test-reliability: ## REL-03, REL-04, 503 contract -> reports/junit-reliability.xml
+	cd backend && $(BIN)/pytest tests/reliability -q $(COV) --cov-append --cov-report= --junitxml=$(REPORTS)/junit-reliability.xml
 
 test-contract: ## TA-28 Schemathesis on /openapi.json, all checks -> reports/junit-contract.xml
 	cd backend && $(BIN)/pytest tests/contract -q -p no:logging $(COV) --cov-append --cov-report= \
@@ -68,3 +71,20 @@ docs:      ## traceability between exigences.yaml, exigences.md and cahier-de-te
 check: lint docs test  ## full gate used by /anomalie and /phase-done (E2E separately: make e2e)
 smoke:     ## curl checks against the running API
 	./scripts/smoke.sh
+
+# ---------------------------------------------------------------- measured layers (need `make stack` first)
+perf:      ## PERF-01..03: k6 smoke, load (5 min), search (2 min) on the Compose network -> reports/perf/
+	$(BIN)/python tools/perf_run.py smoke && $(BIN)/python tools/perf_run.py load && $(BIN)/python tools/perf_run.py search
+reliability: ## REL-01 (restart PostgreSQL under load), REL-02 (kill the API) -> reports/reliability/
+	$(BIN)/python tools/reliability.py rel-01 && $(BIN)/python tools/reliability.py rel-02
+security:  ## summary of SAST/SCA/DAST raw reports -> reports/securite-synthese.md (scans: docs/securite/triage.md)
+	$(BIN)/python tools/security_summary.py --out reports/securite-synthese.md
+quality:   ## MA-03, MA-04: complexity (radon, xenon <= B) and layer contracts (import-linter) -> reports/maintenabilite/
+	$(BIN)/python tools/capture.py --out reports/maintenabilite/radon-cc.json -- $(BIN)/python -m radon cc -s -j backend/app
+	$(BIN)/python tools/capture.py --out reports/maintenabilite/radon-cc.txt -- $(BIN)/python -m radon cc -s -a backend/app
+	$(BIN)/python -m xenon --max-absolute B --max-modules A --max-average A backend/app
+	cd backend && $(BIN)/lint-imports --no-cache
+mutation:  ## MA-02: mutmut in Docker, 15-minute time box -> reports/maintenabilite/mutmut-*
+	./scripts/mutation.sh 900
+trace:     ## traceability matrix from all reports -> docs/tracabilite/; fills the cahier's obtained/verdict columns
+	$(BIN)/python tools/trace.py --requirements docs/exigences.yaml --reports reports --out docs/tracabilite; 	  status=$$?; $(BIN)/python tools/fill_cahier.py; exit $$status

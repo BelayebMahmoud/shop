@@ -4,6 +4,7 @@ import logging
 
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
+from sqlalchemy.exc import InterfaceError, OperationalError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.api import route_table
@@ -33,6 +34,17 @@ def install(app: FastAPI) -> None:
             found = route_table.match(app, request.url.path)
             headers["Allow"] = ", ".join(sorted(found[1])) if found else ""
         return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail}, headers=headers)
+
+    @app.exception_handler(OperationalError)
+    @app.exception_handler(InterfaceError)
+    async def database_unavailable(_: Request, exc: Exception) -> JSONResponse:
+        # QR-RE-01: while PostgreSQL is down or restarting, answer 503 (temporary, retry) rather than 500.
+        log.warning("database unavailable: %s", type(exc).__name__)
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={"detail": {"code": "DATABASE_UNAVAILABLE"}},
+            headers={"Retry-After": "5"},
+        )
 
     @app.exception_handler(Exception)
     async def unexpected(_: Request, exc: Exception) -> JSONResponse:

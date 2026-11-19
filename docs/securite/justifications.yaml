@@ -1,0 +1,10 @@
+# Faux positifs justifiés par écrit dans docs/securite/triage.md (décisions, pas des résultats).
+# tools/trace.py les retire du décompte des alertes bloquantes ; tout autre constat High/Medium reste bloquant.
+semgrep:
+  - rule: dangerous-subprocess-use-tainted-env-args
+    path: tools/capture.py
+    triage: S20
+zap:
+  - pluginid: "40018"
+    triage: Z4
+    preuve: "reports/junit-security.xml (SEC-01-zap-40018)"

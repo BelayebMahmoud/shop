@@ -1,0 +1,49 @@
+{
+  "requests": 4050,
+  "status_counts": {
+    "health 200": 445,
+    "order 201": 1774,
+    "list 200": 1774,
+    "order 502": 24,
+    "list 502": 24,
+    "health 502": 9
+  },
+  "health_first_not_200": "2026-11-19T23:54:48.044+00:00",
+  "health_back_to_200": "2026-11-19T23:54:50.389+00:00",
+  "recovery_seconds_from_fault": 3.27,
+  "outage_seen_by_client_seconds": 2.35,
+  "health_codes_during_outage": [
+    200,
+    502
+  ],
+  "http_500_outside_outage_window": 0,
+  "http_500_total": 0,
+  "window": [
+    "2026-11-19T23:54:48.044+00:00",
+    "2026-11-19T23:54:50.389+00:00"
+  ],
+  "case": "REL-02",
+  "steps": [
+    {
+      "time": "2026-11-19T23:54:17.113+00:00",
+      "step": "probe started (120 s, product 4)"
+    },
+    {
+      "time": "2026-11-19T23:54:47.121+00:00",
+      "step": "fault injected"
+    },
+    {
+      "time": "2026-11-19T23:54:48.098+00:00",
+      "step": "API process (PID 1) killed; restart policy must bring it back"
+    }
+  ],
+  "orders_acknowledged_201": 1774,
+  "orders_acknowledged_found_in_database": 1774,
+  "consistency": {
+    "orders_without_lines": 0,
+    "orders_with_wrong_subtotal": 0,
+    "orders_with_wrong_total": 0,
+    "negative_stock": 0,
+    "orders_without_audit": 0
+  }
+}
