@@ -32,6 +32,7 @@ test('UX-01 accessibilité : catalogue, fiche produit et panier, avec contenu @Q
     name: `Carnet ${id}`, price_cents: 900, stock: 5, category_id: await createCategory(request, staff, `Cat ${id}`),
   });
   await page.goto('/');
+  await page.getByRole('searchbox', { name: 'Rechercher' }).fill(id); // works on an empty or a 50,000-product catalogue
   await expect(page.getByRole('link', { name: p.name })).toBeVisible(); // the grid has product cards
   await audit(page, info, 'catalogue');
   await page.getByRole('link', { name: p.name }).click();

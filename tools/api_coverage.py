@@ -11,7 +11,6 @@ Usage, from the repository root (backend virtualenv):
 import argparse
 import os
 import sys
-import xml.etree.ElementTree as ET
 from collections import defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
@@ -21,6 +20,7 @@ sys.path.insert(0, str(ROOT / "backend"))
 os.environ.setdefault("JWT_SECRET", "api-coverage-tool-only-0123456789abcdef")  # import only, no token is signed
 
 from app.main import app  # noqa: E402
+from defusedxml import ElementTree as ET  # noqa: E402  (Semgrep: never parse XML with the stdlib parser)
 
 AUTO_CODES = {"422"}  # FastAPI documents 422 on every route with parameters; reported, not required
 

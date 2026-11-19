@@ -13,8 +13,8 @@
     "orientationAngle": 0,
     "orientationType": "landscape-primary"
   },
-  "timestamp": "2026-11-19T22:27:46.627Z",
-  "url": "http://127.0.0.1:5174/back-office/produits",
+  "timestamp": "2026-11-19T22:48:51.215Z",
+  "url": "http://web:8080/back-office/produits",
   "toolOptions": {
     "runOnly": {
       "type": "tag",
@@ -1133,9 +1133,9 @@
             }
           ],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo4f7dt-449707\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwo56be0-832251\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50030\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -1173,9 +1173,9 @@
             }
           ],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo4f7dt-449707\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwo56be0-832251\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50030\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -1353,9 +1353,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo4f7dt-449707\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwo56be0-832251\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50030\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -1371,9 +1371,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo4f7dt-449707\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwo56be0-832251\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50030\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -1625,9 +1625,9 @@
             }
           ],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo4f7dt-449707\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwo56be0-832251\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50030\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -1643,9 +1643,9 @@
             }
           ],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo4f7dt-449707\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwo56be0-832251\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50030\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -2035,9 +2035,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo4f7dt-449707\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwo56be0-832251\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50030\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -2067,9 +2067,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo4f7dt-449707\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwo56be0-832251\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50030\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -2247,9 +2247,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo4f7dt-449707\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwo56be0-832251\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50030\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -2265,9 +2265,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo4f7dt-449707\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwo56be0-832251\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50030\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -2349,9 +2349,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo4f7dt-449707\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwo56be0-832251\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50030\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -2374,9 +2374,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo4f7dt-449707\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwo56be0-832251\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50030\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -3079,15 +3079,15 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#ffffff",
-                "contrastRatio": 21,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "10.0pt (13.3333px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 21"
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
@@ -3129,15 +3129,15 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#f0f0f0",
-                "contrastRatio": 18.42,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "12.0pt (16px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 18.42"
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
@@ -3218,7 +3218,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<label>Filtrer <input type=\"search\" value=\"chromium-0-mwo4f7dt-449707\"></label>",
+          "html": "<label>Filtrer <input type=\"search\" value=\"chromium-1-mwo56be0-832251\"></label>",
           "target": [
             "main > label"
           ]
@@ -3243,7 +3243,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input type=\"search\" value=\"chromium-0-mwo4f7dt-449707\">",
+          "html": "<input type=\"search\" value=\"chromium-1-mwo56be0-832251\">",
           "target": [
             "input[type=\"search\"]"
           ]
@@ -3393,7 +3393,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<td>Agrafeuse-chromium-0-mwo4f7dt-449707</td>",
+          "html": "<td>Agrafeuse-chromium-1-mwo56be0-832251</td>",
           "target": [
             "td:nth-child(1)"
           ]
@@ -3418,7 +3418,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<td>Agrafeuse chromium-0-mwo4f7dt-449707</td>",
+          "html": "<td>Agrafeuse chromium-1-mwo56be0-832251</td>",
           "target": [
             "td:nth-child(2)"
           ]
@@ -3479,23 +3479,23 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#f0f0f0",
-                "contrastRatio": 18.42,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "12.0pt (16px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 18.42"
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo4f7dt-449707\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwo56be0-832251\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50030\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -3518,9 +3518,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo4f7dt-449707\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwo56be0-832251\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50030\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -3993,7 +3993,7 @@
               "data": null,
               "relatedNodes": [
                 {
-                  "html": "<label>Filtrer <input type=\"search\" value=\"chromium-0-mwo4f7dt-449707\"></label>",
+                  "html": "<label>Filtrer <input type=\"search\" value=\"chromium-1-mwo56be0-832251\"></label>",
                   "target": [
                     "main > label"
                   ]
@@ -4004,7 +4004,7 @@
             }
           ],
           "impact": null,
-          "html": "<input type=\"search\" value=\"chromium-0-mwo4f7dt-449707\">",
+          "html": "<input type=\"search\" value=\"chromium-1-mwo56be0-832251\">",
           "target": [
             "input[type=\"search\"]"
           ]
@@ -4118,9 +4118,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo4f7dt-449707\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwo56be0-832251\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50030\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -4136,9 +4136,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo4f7dt-449707\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwo56be0-832251\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50030\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -4348,7 +4348,7 @@
               },
               "relatedNodes": [
                 {
-                  "html": "<label>Filtrer <input type=\"search\" value=\"chromium-0-mwo4f7dt-449707\"></label>",
+                  "html": "<label>Filtrer <input type=\"search\" value=\"chromium-1-mwo56be0-832251\"></label>",
                   "target": [
                     "main > label"
                   ]
@@ -4369,7 +4369,7 @@
             }
           ],
           "impact": null,
-          "html": "<input type=\"search\" value=\"chromium-0-mwo4f7dt-449707\">",
+          "html": "<input type=\"search\" value=\"chromium-1-mwo56be0-832251\">",
           "target": [
             "input[type=\"search\"]"
           ]
@@ -4671,7 +4671,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<option value=\"7\">Cat chromium-0-mwo4f4z7-925500</option>",
+          "html": "<option value=\"7\">Cat chromium-0-mwo54zi0-298448</option>",
           "target": [
             "option[value=\"7\"]"
           ]
@@ -4689,9 +4689,441 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<option value=\"8\">Cat chromium-0-mwo4f7dt-449707</option>",
+          "html": "<option value=\"27\">Cat chromium-0-mwo56bd1-818718</option>",
+          "target": [
+            "option[value=\"27\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"8\">Cat chromium-1-mwo54ziy-730780</option>",
           "target": [
             "option[value=\"8\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"30\">Cat chromium-1-mwo56be0-832251</option>",
+          "target": [
+            "option[value=\"30\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"10\">Cat chromium-2-mwo54zkm-419964</option>",
+          "target": [
+            "option[value=\"10\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"12\">Cat chromium-2-mwo551nq-332135</option>",
+          "target": [
+            "option[value=\"12\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"14\">Cat chromium-2-mwo553en-867257</option>",
+          "target": [
+            "option[value=\"14\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"28\">Cat chromium-2-mwo56bdi-487804</option>",
+          "target": [
+            "option[value=\"28\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"32\">Cat chromium-2-mwo56dee-222696</option>",
+          "target": [
+            "option[value=\"32\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"9\">Cat chromium-3-mwo54zjm-64969</option>",
+          "target": [
+            "option[value=\"9\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"11\">Cat chromium-3-mwo551aq-179755</option>",
+          "target": [
+            "option[value=\"11\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"13\">Cat chromium-3-mwo552rf-112049</option>",
+          "target": [
+            "option[value=\"13\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"29\">Cat chromium-3-mwo56bdp-739985</option>",
+          "target": [
+            "option[value=\"29\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"31\">Cat chromium-3-mwo56cza-334545</option>",
+          "target": [
+            "option[value=\"31\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"15\">Cat firefox-4-mwo555mj-381278</option>",
+          "target": [
+            "option[value=\"15\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"19\">Cat firefox-4-mwo558ut-979569</option>",
+          "target": [
+            "option[value=\"19\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"17\">Cat firefox-5-mwo556y0-577768</option>",
+          "target": [
+            "option[value=\"17\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"18\">Cat firefox-6-mwo557p7-634405</option>",
+          "target": [
+            "option[value=\"18\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"16\">Cat firefox-7-mwo556ar-483424</option>",
+          "target": [
+            "option[value=\"16\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"20\">Cat firefox-7-mwo559zp-293268</option>",
+          "target": [
+            "option[value=\"20\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"24\">Cat mobile-10-mwo55czr-364654</option>",
+          "target": [
+            "option[value=\"24\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"23\">Cat mobile-11-mwo55cs4-571559</option>",
+          "target": [
+            "option[value=\"23\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"22\">Cat mobile-8-mwo55c58-932713</option>",
+          "target": [
+            "option[value=\"22\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"26\">Cat mobile-8-mwo55dth-289796</option>",
+          "target": [
+            "option[value=\"26\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"21\">Cat mobile-9-mwo55bxt-886098</option>",
+          "target": [
+            "option[value=\"21\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"25\">Cat mobile-9-mwo55dfd-474893</option>",
+          "target": [
+            "option[value=\"25\"]"
           ]
         },
         {
@@ -4797,9 +5229,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo4f7dt-449707\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwo56be0-832251\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50030\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -4815,9 +5247,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo4f7dt-449707\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwo56be0-832251\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50030\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]

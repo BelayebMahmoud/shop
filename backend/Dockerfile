@@ -1,17 +1,21 @@
-# API image (QR-PO-01): Python 3.13 slim, dependencies pinned in requirements.txt, non-root user, healthcheck.
-FROM python:3.13-slim
+# API image (QR-PO-01): Python 3.13 on Alpine (fewer OS packages than Debian slim, see SEC-06 triage), dependencies pinned in requirements.txt, non-root user, healthcheck.
+FROM python:3.13-alpine3.24
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
+# Apply Alpine security fixes published after the base image was built (Trivy, SEC-06).
+RUN apk upgrade --no-cache
+
 WORKDIR /app
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+# Runtime needs neither pip nor setuptools: removing them drops their bundled CVEs (Trivy, SEC-06).
+RUN pip install -r requirements.txt && pip uninstall -y setuptools pip
 
 COPY app ./app
-RUN useradd --system --uid 10001 --no-create-home api
+RUN adduser -S -D -H -u 10001 api
 USER 10001
 
 EXPOSE 8000

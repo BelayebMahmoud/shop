@@ -17,11 +17,11 @@ jobs:
   quality-sast:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
         with: { fetch-depth: 0 }   # gitleaks scans the whole history
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
         with: { python-version: "${{ env.PYTHON_VERSION }}", cache: pip, cache-dependency-path: backend/requirements-dev.txt }
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
         with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: web/package-lock.json }
       - run: pip install -r backend/requirements-dev.txt bandit
       - run: cd web && npm ci
@@ -33,19 +33,19 @@ jobs:
         run: docker run --rm -v "$PWD:/src" semgrep/semgrep semgrep scan --config p/owasp-top-ten --config p/python --config p/typescript --json --output /src/reports-semgrep.json /src || true
       - name: Secrets — gitleaks
         run: docker run --rm -v "$PWD:/repo" zricethezav/gitleaks detect --source /repo --report-format json --report-path /repo/reports-gitleaks.json || true
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
         with: { name: sast, path: "reports-*.json" }
 
   unit:
     needs: quality-sast
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
         with: { python-version: "${{ env.PYTHON_VERSION }}", cache: pip, cache-dependency-path: backend/requirements-dev.txt }
       - run: pip install -r backend/requirements-dev.txt
       - run: mkdir -p reports && cd backend && pytest tests/unit -q --cov=app --cov-branch --junitxml=../reports/junit-unit.xml
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
         with: { name: unit, path: reports/ }
 
   integration-api-sca:
@@ -58,10 +58,10 @@ jobs:
         ports: ["5433:5432"]
         options: --health-cmd "pg_isready -U shop" --health-interval 2s --health-retries 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
         with: { python-version: "${{ env.PYTHON_VERSION }}", cache: pip, cache-dependency-path: backend/requirements-dev.txt }
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
         with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: web/package-lock.json }
       - run: pip install -r backend/requirements-dev.txt pip-audit
       - run: mkdir -p reports && make test-integration test-api test-contract coverage api-coverage BIN=$(dirname $(which python))
@@ -69,7 +69,7 @@ jobs:
         run: |
           pip-audit -r backend/requirements.txt -f json -o reports/pip-audit.json || true
           cd web && npm ci && npm audit --omit=dev --json > ../reports/npm-audit.json || true
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
         with: { name: integration-api-sca, path: reports/ }
 
   e2e:
@@ -82,15 +82,15 @@ jobs:
         ports: ["5433:5432"]
         options: --health-cmd "pg_isready -U shop" --health-interval 2s --health-retries 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
         with: { python-version: "${{ env.PYTHON_VERSION }}", cache: pip, cache-dependency-path: backend/requirements-dev.txt }
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
         with: { node-version: "${{ env.NODE_VERSION }}", cache: npm, cache-dependency-path: web/package-lock.json }
       - run: python -m venv backend/.venv && backend/.venv/bin/pip install -r backend/requirements-dev.txt
       - run: cd web && npm ci && npx playwright install --with-deps chromium firefox
       - run: mkdir -p reports && cd web && E2E_WORKERS=2 npx playwright test
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
         if: always()
         with: { name: e2e, path: reports/ }
 
@@ -98,7 +98,7 @@ jobs:
     needs: e2e
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
       - run: mkdir -p reports
       - name: Clean install of the whole stack (PORT-01)
         run: KEEP=1 ./scripts/installation-propre.sh
@@ -110,6 +110,6 @@ jobs:
         run: docker run --rm --network host -v "$PWD/perf/k6:/scripts" -e BASE_URL=http://127.0.0.1:8180 grafana/k6 run /scripts/smoke.js || true
       - name: DAST baseline (ZAP passive scan)
         run: docker run --rm --network host -v "$PWD/reports:/zap/wrk" ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://127.0.0.1:8180 -J zap-baseline.json || true
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
         if: always()
         with: { name: containers-perf-dast, path: reports/ }

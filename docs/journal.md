@@ -102,3 +102,20 @@
 - Protocole `docs/utilisabilite.md` (3 tâches, critères de réussite, consentement, SUS, tableau de résultats vide).
 - `make check` vert (56 / 17 / 168 / 25, couverture services 99,4 %).
 - Points ouverts : Firefox (conteneur, phase 5) ; E2E en parallèle à confirmer (ENV-01) ; sessions d'utilisabilité.
+
+## Phase 5 — Portabilité, conteneurs, CI (19/11/2026, 23:05–23:55)
+
+- Images : API sur `python:3.13-alpine3.24` (utilisateur 10001, healthcheck sur `/api/health`, pip et setuptools
+  retirés de l'image d'exécution) ; web en deux étapes (build Node 22 → nginx non privilégié 1.31.7, en-têtes CSP,
+  nosniff, X-Frame-Options, Referrer-Policy, Permissions-Policy, version du serveur masquée).
+- `docker-compose.yml` : db, api, web avec healthchecks, `depends_on: service_healthy`, `restart: unless-stopped`,
+  ports et secrets venant de `.env` (`.env` ignoré par Git ; l'API refuse de démarrer sans secret de 32 caractères).
+- Installation propre chronométrée (`scripts/installation-propre.sh`) : **27 s**, smoke test réussi, verdict PASS
+  (`reports/portabilite/installation-desktop-svtshjh.log`) ; cache Docker chaud sur ce poste, la seconde machine
+  donnera le temps réel de premier téléchargement.
+- E2E depuis le conteneur Playwright dans le réseau Compose : chromium, firefox, mobile, 4 workers → 20 réussis
+  en 20,9 s ; ENV-01 confirmée et résolue, ENV-02 contournée.
+- Hadolint : 0 constat sur les deux Dockerfile. Trivy (images) : voir le tri de la phase 6.
+- CI `.github/workflows/ci.yml` (ordre fiche 1, actions épinglées par SHA) : **non exécutée** (pas de dépôt distant).
+- Guide `docs/installation.md` et `README.md`.
+- Points ouverts : installation sur une seconde machine (coéquipier) ; exécution de la CI sur GitHub.

@@ -36,7 +36,7 @@ export async function createProduct(
   p: { name: string; price_cents: number; stock: number; category_id: number },
 ) {
   const r = await request.post('/api/products', {
-    data: { sku: p.name.replace(/\W+/g, '-').slice(0, 60), description: '', ...p },
+    data: { sku: p.name.replace(/\W+/g, '-').slice(-60), description: '', ...p }, // the unique uid sits at the end
     headers: auth(token),
   });
   expect(r.status(), await r.text()).toBe(201);

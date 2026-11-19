@@ -16,8 +16,9 @@ Les résultats cités proviennent des sorties réelles des outils (fichiers dans
 | ANO-06 | 19/11/2026 | QR-CO-02 | TA-28 (Schemathesis, ST202) | — | Faux positif justifié |
 | DT-01 | 19/11/2026 | BR-01, QR-RE-02 | `tools/break_rules.py --suite api` | majeure (défaut de test) | Corrigée |
 | ANO-07 | 19/11/2026 | FR-07, QR-CO-01, QR-US-02 | E2E-03, E2E-04 (projet mobile) | majeure | Corrigée |
-| ENV-01 | 19/11/2026 | QR-CO-01 | E2E en parallèle (Windows + Docker Desktop) | environnement | Contournée, à confirmer en phase 5 |
-| ENV-02 | 19/11/2026 | QR-CO-01 | Lancement de Firefox (Windows) | environnement | Contournée (Firefox en conteneur) |
+| ENV-01 | 19/11/2026 | QR-CO-01 | E2E en parallèle (Windows + Docker Desktop) | environnement | Cause confirmée (redirection de port), résolue en conteneur |
+| ENV-02 | 19/11/2026 | QR-CO-01 | Lancement de Firefox (Windows) | environnement | Contournée : Firefox en conteneur, 100 % PASS |
+| DT-02 | 19/11/2026 | QR-SE-02, QR-US-01 | E2E dans Docker (base de 50 000 produits) | mineure (défaut de test) | Corrigée |
 
 ## ANO-01 — Identifiant hors plage : erreur 500
 
@@ -127,3 +128,18 @@ Commit des corrections : commit « phase 3 » (voir `git log`).
   Visual C++ (droits administrateur), non fait sans accord.
 - **Contournement** : Firefox exécuté dans l'image Docker officielle de Playwright, contre la pile Docker Compose
   (phase 5) ; même navigateur, résultat dans un rapport JUnit séparé.
+
+### Suite (phase 5) — ENV-01 et ENV-02 vérifiées
+
+- **ENV-01** : les mêmes tests lancés depuis l'image officielle Playwright **dans le réseau Docker Compose** (sans la
+  redirection de port de Docker Desktop), avec **4 workers en parallèle** : 20 réussis en 20,9 s, aucun blocage
+  (`reports/junit-e2e-docker.xml`). La cause est donc l'accès par le port redirigé, pas l'application.
+- **ENV-02** : Firefox exécuté dans ce même conteneur : E2E-01 à E2E-05 et SEC-02 réussis.
+
+## DT-02 — Deux tests supposaient une base presque vide (défaut de test)
+
+- **Constat** : contre la pile Compose (50 000 produits), UX-01 ne trouvait pas son produit en page 1 du catalogue,
+  et SEC-02 échouait en 409 (SKU en double entre navigateurs : le SKU était tiré du *début* du nom, identique d'un
+  projet à l'autre).
+- **Correction** : UX-01 recherche son produit avant l'audit ; le SKU est tiré de la *fin* du nom (identifiant unique).
+- **Confirmation** : `scripts/e2e-docker.sh` → 20 réussis, 0 échec.

@@ -1,4 +1,4 @@
-.PHONY: db db-reset stack stack-down install-check api web test test-unit test-integration test-api test-contract \
+.PHONY: db db-reset stack stack-down install-check api web test test-unit test-integration test-api test-security test-contract \
         coverage api-coverage e2e e2e-docker lint docs check smoke
 
 # Python tools: the backend virtualenv (Scripts/ on Windows, bin/ elsewhere). Override with BIN=<dir> (CI).
@@ -28,7 +28,7 @@ web:       ## Vite on :5173, proxies /api to :8000 (terminal 2)
 	cd web && npm run dev
 
 # Fastest to slowest (fiche 1): unit -> integration -> API -> contract. Coverage accumulates across the suites.
-test: test-unit test-integration test-api test-contract coverage api-coverage  ## all backend suites + reports
+test: test-unit test-integration test-api test-security test-contract coverage api-coverage  ## all backend suites + reports
 
 test-unit: ## unit tests (no database) -> reports/junit-unit.xml; unit-only coverage of app/services
 	cd backend && $(BIN)/pytest tests/unit -q $(COV) --cov-report= --junitxml=$(REPORTS)/junit-unit.xml
@@ -40,6 +40,9 @@ test-integration: ## IT cases on the shop_test database -> reports/junit-integra
 
 test-api:  ## TA cases (incl. permissions matrix) -> reports/junit-api.xml
 	cd backend && $(BIN)/pytest tests/api -q $(COV) --cov-append --cov-report= --junitxml=$(REPORTS)/junit-api.xml
+
+test-security: ## SEC-01, SEC-03, SEC-04 manual attacks, automated -> reports/junit-security.xml
+	cd backend && $(BIN)/pytest tests/security -q $(COV) --cov-append --cov-report= --junitxml=$(REPORTS)/junit-security.xml
 
 test-contract: ## TA-28 Schemathesis on /openapi.json, all checks -> reports/junit-contract.xml
 	cd backend && $(BIN)/pytest tests/contract -q -p no:logging $(COV) --cov-append --cov-report= \
