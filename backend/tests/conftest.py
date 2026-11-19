@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-os.environ["DATABASE_URL"] = os.getenv("TEST_DATABASE_URL", "postgresql+psycopg://shop:shop@localhost:5432/shop_test")
+os.environ["DATABASE_URL"] = os.getenv("TEST_DATABASE_URL", "postgresql+psycopg://shop:shop@localhost:5433/shop_test")
 os.environ.setdefault("JWT_SECRET", "test-only-secret-0123456789abcdef0123456789")
 
 import pytest  # noqa: E402

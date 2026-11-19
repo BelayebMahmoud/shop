@@ -30,7 +30,7 @@ The project is evaluated on its test and quality evidence for the 8 ISO/IEC 2501
 
 ## Commands
 
-- `make db` / `make db-reset` — Postgres 16 in Docker (user/password/db `shop`).
+- `make db` / `make db-reset` — Postgres 16 in Docker on host port **5433** (user/password/db `shop`); 5432 is taken by a native Windows Postgres.
 - `make api` (port 8000), `make web` (port 5173).
 - `make test` — pytest against `shop_test`; `make check` — the full gate used by `/anomalie` and `/phase-done`.
 - Windows without `make`: run the recipe directly, e.g. `cd backend && .venv/Scripts/python -m pytest -q`.
