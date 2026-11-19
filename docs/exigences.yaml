@@ -1,0 +1,520 @@
+# Référentiel des exigences — Gestion commerciale (ISO/IEC 25010)
+# Source unique de vérité pour l'oracle de test et pour tools/trace.py (phase 9).
+# Champs : id, type (FR | BR | QR), titre, enonce, caracteristique, sous_caracteristiques, priorite (P0 | P1),
+#          source (section du cahier des charges ou du plan), cible (QR seulement), methode (QR seulement),
+#          scenarios (docs/exigences.md), cas (docs/cahier-de-test.md).
+# Montants : les règles sont énoncées en euros ; l'application stocke des centimes (entiers).
+# Les questions ouvertes Q-xx sont listées à la fin (ce que les règles ne décident pas).
+
+version: 1
+domaine: Gestion commerciale (clients, produits, catégories, stock, commandes)
+caracteristiques:
+  aptitude_fonctionnelle: Aptitude fonctionnelle
+  efficacite_performance: Efficacité de performance
+  compatibilite: Compatibilité
+  utilisabilite: Facilité d'utilisation
+  fiabilite: Fiabilité
+  securite: Sécurité
+  maintenabilite: Maintenabilité
+  portabilite: Portabilité
+roles: [CUSTOMER, STAFF, ADMIN]
+
+exigences:
+  # ---------------------------------------------------------------- Exigences fonctionnelles (§4)
+  - id: FR-01
+    type: FR
+    titre: Authentification
+    enonce: >-
+      Un visiteur crée un compte (rôle CUSTOMER) avec un email et un mot de passe de 8 à 128 caractères,
+      se connecte et reçoit un jeton JWT à durée limitée. Toute route protégée sans jeton valide répond 401.
+    caracteristique: securite
+    sous_caracteristiques: [authenticite, confidentialite]
+    priorite: P0
+    source: "cahier §4 (authentification)"
+    scenarios: [SC-FR-01-1, SC-FR-01-2]
+    cas: [TA-01, TA-02, TA-03, IT-01, IT-02, SEC-04, E2E-01]
+
+  - id: FR-02
+    type: FR
+    titre: Rôles et droits différenciés
+    enonce: >-
+      Trois rôles : CUSTOMER, STAFF, ADMIN. Chaque route applique la matrice des droits de docs/conception.md §5 ;
+      un rôle non autorisé reçoit 403. L'interface masque ce qu'un rôle ne peut pas faire, mais l'API reste
+      seule garante des droits.
+    caracteristique: securite
+    sous_caracteristiques: [confidentialite, integrite]
+    priorite: P0
+    source: "cahier §4 (≥ 3 profils), §6.6"
+    scenarios: [SC-FR-02-1, SC-FR-02-2]
+    cas: [TA-20, SEC-03]
+
+  - id: FR-03
+    type: FR
+    titre: CRUD des catégories
+    enonce: >-
+      STAFF et ADMIN créent, lisent, modifient et suppriment des catégories ; la lecture est publique.
+      Une catégorie contient 0 à N produits (1-N).
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [completude]
+    priorite: P0
+    source: "cahier §4 (≥ 4 entités, CRUD complet)"
+    scenarios: [SC-FR-03-1, SC-FR-03-2]
+    cas: [TA-08]
+
+  - id: FR-04
+    type: FR
+    titre: CRUD des produits
+    enonce: >-
+      STAFF et ADMIN créent, lisent, modifient et suppriment des produits (SKU, nom, description, prix, stock,
+      catégorie) ; la lecture est publique. Les erreurs de saisie sont signalées champ par champ (422).
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [completude, exactitude]
+    priorite: P0
+    source: "cahier §4 (≥ 4 entités, CRUD complet)"
+    scenarios: [SC-FR-04-1, SC-FR-04-2]
+    cas: [TA-09, E2E-04]
+
+  - id: FR-05
+    type: FR
+    titre: Gestion des utilisateurs
+    enonce: >-
+      ADMIN liste les utilisateurs, change le rôle d'un utilisateur et désactive un compte. Un compte désactivé
+      ne peut plus se connecter (voir Q-08).
+    caracteristique: securite
+    sous_caracteristiques: [confidentialite, imputabilite]
+    priorite: P1
+    source: "plan phase 1 (portée fonctionnelle)"
+    scenarios: [SC-FR-05-1, SC-FR-05-2]
+    cas: [TA-21, TA-22]
+
+  - id: FR-06
+    type: FR
+    titre: Commandes côté client
+    enonce: >-
+      Un CUSTOMER crée une commande (1 à 50 lignes), lit ses propres commandes et annule une commande PLACED
+      qui lui appartient. Une commande relie un utilisateur (N-1) et des produits via ses lignes (N-N).
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [completude, exactitude]
+    priorite: P0
+    source: "cahier §4 (entités liées), plan phase 1"
+    scenarios: [SC-FR-06-1, SC-FR-06-2]
+    cas: [TA-03, TA-04, TA-05, TA-06, TA-07, TA-14, TA-29, E2E-01]
+
+  - id: FR-07
+    type: FR
+    titre: Commandes côté back-office
+    enonce: >-
+      STAFF et ADMIN lisent toutes les commandes et changent leur statut selon le workflow (BR-05).
+      L'interface n'affiche que les transitions autorisées depuis le statut courant.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [completude, pertinence]
+    priorite: P0
+    source: "plan phase 1 (portée fonctionnelle)"
+    scenarios: [SC-FR-07-1, SC-FR-07-2]
+    cas: [TA-15, TA-16, E2E-03]
+
+  - id: FR-08
+    type: FR
+    titre: Workflow de commande
+    enonce: >-
+      Une commande suit PLACED -> PAID -> SHIPPED -> DELIVERED ; PLACED ou PAID -> CANCELLED. Les règles de
+      transition sont BR-05 et BR-06.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [exactitude]
+    priorite: P0
+    source: "cahier §4 (workflow à statuts)"
+    scenarios: [SC-FR-08-1]
+    cas: [CT-19, CT-20, CT-21, CT-22, CT-23, IT-07]
+
+  - id: FR-09
+    type: FR
+    titre: Tableau de bord
+    enonce: >-
+      STAFF et ADMIN consultent : chiffre d'affaires (Q-03), nombre de commandes par statut, 5 produits les plus
+      vendus (quantités), produits en stock faible (stock < 5). Filtres : période (date de début, date de fin,
+      Q-04) et catégorie.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [completude, pertinence]
+    priorite: P0
+    source: "cahier §4 (tableau de bord, indicateurs agrégés, filtres)"
+    scenarios: [SC-FR-09-1, SC-FR-09-2]
+    cas: [CT-48, CT-49, CT-50, IT-11, IT-12, TA-17, E2E-05]
+
+  - id: FR-10
+    type: FR
+    titre: Recherche de produits à fort volume
+    enonce: >-
+      Recherche paginée sur au moins 50 000 produits : texte (nom, insensible à la casse), catégorie,
+      fourchette de prix (Q-05), en stock seulement. Taille de page 1 à 100 (défaut 20) ; le total des
+      résultats est renvoyé.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [completude, exactitude]
+    priorite: P0
+    source: "cahier §4 (recherche sur une entité à fort volume)"
+    scenarios: [SC-FR-10-1, SC-FR-10-2]
+    cas: [IT-13, IT-14, TA-18, TA-19, SEC-01, PERF-03]
+
+  - id: FR-11
+    type: FR
+    titre: Journal d'audit
+    enonce: >-
+      Sont journalisés (qui, quoi, quand, cible) : connexion réussie et échouée ; commande créée, statut changé,
+      commande annulée ; produit créé, modifié, supprimé ; rôle changé. L'entrée est écrite dans la même
+      transaction que l'action. Aucune route ne permet de modifier ou supprimer une entrée. Lecture : ADMIN (Q-11).
+    caracteristique: securite
+    sous_caracteristiques: [non_repudiation, imputabilite]
+    priorite: P0
+    source: "cahier §4 (journal d'audit), §6.6"
+    scenarios: [SC-FR-11-1, SC-FR-11-2]
+    cas: [IT-09, IT-10, TA-02, TA-15, TA-21, TA-23, TA-24]
+
+  # ---------------------------------------------------------------- Règles métier
+  - id: BR-01
+    type: BR
+    titre: Stock jamais négatif
+    enonce: >-
+      Si la quantité d'une ligne dépasse le stock du produit, la commande est refusée : 409 OUT_OF_STOCK, et rien
+      ne change (ni commande, ni stock). Une quantité égale au stock est acceptée et ramène le stock à 0.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [exactitude]
+    priorite: P0
+    source: "plan phase 1"
+    scenarios: [SC-BR-01-1, SC-BR-01-2]
+    cas: [CT-44, CT-45, CT-46, IT-03, IT-04, TA-04, TA-06, TA-13, E2E-02, REL-04]
+
+  - id: BR-02
+    type: BR
+    titre: Prix unitaire pris au catalogue
+    enonce: >-
+      Le prix unitaire d'une ligne est celui du catalogue au moment de la commande ; tout prix envoyé par le
+      client est ignoré. Une modification ultérieure du prix catalogue ne change pas les commandes existantes.
+    caracteristique: securite
+    sous_caracteristiques: [integrite]
+    priorite: P0
+    source: "plan phase 1"
+    scenarios: [SC-BR-02-1, SC-BR-02-2]
+    cas: [CT-47, IT-05, TA-07]
+
+  - id: BR-03
+    type: BR
+    titre: Bornes de quantité et de lignes
+    enonce: "Quantité de 1 à 99 par ligne et de 1 à 50 lignes par commande ; sinon 422."
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [exactitude]
+    priorite: P0
+    source: "plan phase 1"
+    scenarios: [SC-BR-03-1, SC-BR-03-2, SC-BR-03-3]
+    cas: [CT-01, CT-02, CT-03, CT-04, CT-05, CT-06, CT-07, CT-08, CT-09, TA-05]
+
+  - id: BR-04
+    type: BR
+    titre: Remise sur le sous-total
+    enonce: >-
+      Sous-total < 100,00 EUR -> 0 % ; 100,00 à 199,99 EUR -> 5 % ; >= 200,00 EUR -> 10 %. La remise est
+      arrondie au centime, demi vers le haut. Total = sous-total - remise.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [exactitude]
+    priorite: P0
+    source: "plan phase 1"
+    scenarios: [SC-BR-04-1, SC-BR-04-2, SC-BR-04-3, SC-BR-04-4, SC-BR-04-5]
+    cas: [CT-10, CT-11, CT-12, CT-13, CT-14, CT-15, CT-16, CT-17, CT-18, IT-06, TA-04]
+
+  - id: BR-05
+    type: BR
+    titre: Transitions de statut et droits
+    enonce: >-
+      Les changements de statut suivent le workflow ; tout autre changement -> 409 INVALID_TRANSITION.
+      PAID, SHIPPED et DELIVERED ne sont posés que par STAFF ou ADMIN. Un CUSTOMER ne peut annuler que ses
+      propres commandes PLACED.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [exactitude]
+    priorite: P0
+    source: "plan phase 1"
+    scenarios: [SC-BR-05-1, SC-BR-05-2, SC-BR-05-3]
+    cas: [CT-19, CT-20, CT-21, CT-22, CT-23, CT-24, CT-25, CT-26, CT-27, CT-28, CT-29, CT-30, CT-31, CT-32, CT-33, CT-34, CT-35, CT-36, CT-37, CT-38, CT-39, CT-40, CT-41, TA-15, TA-16, E2E-03]
+
+  - id: BR-06
+    type: BR
+    titre: Annulation et remise en stock
+    enonce: >-
+      Annuler une commande remet en stock la quantité de chacune de ses lignes. L'annulation est impossible après
+      SHIPPED (409 INVALID_TRANSITION).
+    caracteristique: fiabilite
+    sous_caracteristiques: [maturite]
+    priorite: P0
+    source: "plan phase 1"
+    scenarios: [SC-BR-06-1, SC-BR-06-2]
+    cas: [CT-22, CT-23, CT-30, CT-34, CT-42, CT-43, IT-07, IT-08, TA-14, TA-16]
+
+  - id: BR-07
+    type: BR
+    titre: Unicité
+    enonce: >-
+      Email unique sans tenir compte de la casse, SKU unique, nom de catégorie unique (casse : Q-06) ;
+      un doublon -> 409.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [exactitude]
+    priorite: P0
+    source: "plan phase 1"
+    scenarios: [SC-BR-07-1, SC-BR-07-2]
+    cas: [TA-10, TA-11, TA-12]
+
+  - id: BR-08
+    type: BR
+    titre: Isolation des commandes entre clients
+    enonce: >-
+      Un CUSTOMER ne peut ni lire ni modifier la commande d'un autre utilisateur : 404, et rien ne change.
+    caracteristique: securite
+    sous_caracteristiques: [confidentialite, integrite]
+    priorite: P0
+    source: "plan phase 1, fiche 4 (contrôle d'accès)"
+    scenarios: [SC-BR-08-1, SC-BR-08-2]
+    cas: [TA-25, TA-26, SEC-03]
+
+  - id: BR-09
+    type: BR
+    titre: Catégorie non vide
+    enonce: "Une catégorie qui contient encore des produits ne peut pas être supprimée : 409."
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [exactitude]
+    priorite: P0
+    source: "plan phase 1"
+    scenarios: [SC-BR-09-1, SC-BR-09-2]
+    cas: [TA-08, TA-27]
+
+  # ---------------------------------------------------------------- Exigences de qualité (§6)
+  - id: QR-FS-01
+    type: QR
+    titre: Complétude et exactitude fonctionnelles
+    enonce: Toutes les exigences FR et BR de priorité P0 sont tracées vers au moins un test qui passe.
+    caracteristique: aptitude_fonctionnelle
+    sous_caracteristiques: [completude, exactitude, pertinence]
+    priorite: P0
+    source: "cahier §6.1"
+    cible: "100 % des FR/BR P0 au verdict PASS dans la matrice"
+    methode: "pytest (unitaire, intégration, API) + Playwright, matrice générée par tools/trace.py"
+    cas: []
+
+  - id: QR-PE-01
+    type: QR
+    titre: Temps de réponse sous charge
+    enonce: Les routes liste et détail des produits tiennent la charge de 20 utilisateurs simultanés.
+    caracteristique: efficacite_performance
+    sous_caracteristiques: [comportement_temporel, capacite]
+    priorite: P0
+    source: "cahier §6.2"
+    cible: "p95 < 500 ms ; taux d'erreur < 1 % ; 20 utilisateurs virtuels pendant 5 min"
+    methode: "k6 (perf/k6/load.js), seuils dans le script"
+    cas: [PERF-01, PERF-02]
+
+  - id: QR-PE-02
+    type: QR
+    titre: Recherche sur 50 000 produits
+    enonce: La recherche filtrée reste rapide sur 50 000 produits.
+    caracteristique: efficacite_performance
+    sous_caracteristiques: [comportement_temporel, utilisation_des_ressources]
+    priorite: P0
+    source: "cahier §4 et §6.2"
+    cible: "p95 < 800 ms ; taux d'erreur < 1 %"
+    methode: "k6 (perf/k6/search.js) + EXPLAIN ANALYZE + docker stats"
+    cas: [PERF-03]
+
+  - id: QR-CO-01
+    type: QR
+    titre: Fonctionnement sur deux navigateurs
+    enonce: Les parcours E2E passent sur Chromium et Firefox.
+    caracteristique: compatibilite
+    sous_caracteristiques: [coexistence, interoperabilite]
+    priorite: P0
+    source: "cahier §6.3"
+    cible: "E2E-01 à E2E-05 au verdict PASS sur chromium et firefox"
+    methode: "Playwright Test, projets chromium, firefox et mobile"
+    cas: [E2E-01, E2E-02, E2E-03, E2E-04, E2E-05]
+
+  - id: QR-CO-02
+    type: QR
+    titre: Contrat d'interface OpenAPI
+    enonce: L'API respecte son contrat OpenAPI publié et ne répond jamais 500 à une entrée invalide.
+    caracteristique: compatibilite
+    sous_caracteristiques: [interoperabilite]
+    priorite: P0
+    source: "cahier §6.3 et §7 (tests API), fiche 2 (contrat, robustesse)"
+    cible: "Schemathesis, toutes vérifications : 0 échec, 0 réponse 500"
+    methode: "Schemathesis sur /openapi.json"
+    cas: [TA-28]
+
+  - id: QR-US-01
+    type: QR
+    titre: Accessibilité de base
+    enonce: Les 5 pages principales n'ont aucune violation d'accessibilité grave ou critique.
+    caracteristique: utilisabilite
+    sous_caracteristiques: [exploitabilite_accessibilite]
+    priorite: P0
+    source: "cahier §6.4"
+    cible: "axe-core : 0 violation serious ou critical sur 5 pages"
+    methode: "@axe-core/playwright"
+    cas: [UX-01]
+
+  - id: QR-US-02
+    type: QR
+    titre: Parcours utilisateur validé (recette)
+    enonce: >-
+      3 à 5 participants réalisent 3 tâches ; on mesure réussite, temps et satisfaction (SUS). Les erreurs de
+      saisie sont signalées par champ et une suppression demande confirmation.
+    caracteristique: utilisabilite
+    sous_caracteristiques: [reconnaissabilite, facilite_apprentissage, protection_contre_les_erreurs]
+    priorite: P1
+    source: "cahier §6.4, Chapitre I (qualité en utilisation)"
+    cible: "taux de réussite >= 80 % ; SUS moyen >= 68 (cibles proposées, Q-12)"
+    methode: "protocole docs/utilisabilite.md, calcul par script"
+    cas: [UX-02, UX-03, E2E-04]
+
+  - id: QR-RE-01
+    type: QR
+    titre: Reprise après panne de la base
+    enonce: >-
+      Pendant un redémarrage de PostgreSQL sous charge, aucune commande n'est perdue ni à moitié écrite, aucune
+      réponse 500 hors de la fenêtre de panne, et /api/health répond 503 pendant la panne.
+    caracteristique: fiabilite
+    sous_caracteristiques: [disponibilite, tolerance_aux_fautes, recouvrabilite]
+    priorite: P0
+    source: "cahier §6.5"
+    cible: "reprise < 60 s ; 0 commande incohérente"
+    methode: "k6 + scripts/fiabilite, requêtes SQL de cohérence"
+    cas: [REL-01, REL-02]
+
+  - id: QR-RE-02
+    type: QR
+    titre: Atomicité des commandes
+    enonce: >-
+      Une erreur entre deux écritures d'une commande annule tout ; deux commandes simultanées sur les dernières
+      unités ne provoquent jamais de survente.
+    caracteristique: fiabilite
+    sous_caracteristiques: [maturite, tolerance_aux_fautes]
+    priorite: P0
+    source: "cahier §6.5"
+    cible: "0 commande partielle ; exactement un 201 et un 409, stock final 0"
+    methode: "pytest (intégration, fiabilité)"
+    cas: [IT-04, TA-13, REL-03, REL-04]
+
+  - id: QR-SE-01
+    type: QR
+    titre: Absence de faille connue
+    enonce: >-
+      SAST, SCA et DAST ont été exécutés et chaque alerte est triée (vraie, fausse, à surveiller) avec une raison
+      écrite.
+    caracteristique: securite
+    sous_caracteristiques: [confidentialite, integrite, authenticite]
+    priorite: P0
+    source: "cahier §6.6, fiche 4, TP3 §3.1 (critère de sortie retenu en P0)"
+    cible: "0 alerte High ; 0 alerte Medium non justifiée ; alertes Low justifiées"
+    methode: "Semgrep, Bandit, gitleaks, pip-audit, npm audit, Trivy, Syft, OWASP ZAP"
+    cas: [SEC-05, SEC-06, SEC-07]
+
+  - id: QR-SE-02
+    type: QR
+    titre: Contrôle d'accès et attaques manuelles
+    enonce: >-
+      La matrice des droits est respectée sur toutes les routes, et les 4 attaques de la fiche 4 (injection, XSS,
+      contrôle d'accès, session) sont refusées.
+    caracteristique: securite
+    sous_caracteristiques: [confidentialite, integrite, authenticite]
+    priorite: P0
+    source: "cahier §6.6, fiche 4 (cas pratique : quatre attaques)"
+    cible: "matrice des droits 100 % conforme ; SEC-01 à SEC-04 au verdict PASS"
+    methode: "pytest paramétré (docs/rbac.yaml), Playwright"
+    cas: [TA-20, SEC-01, SEC-02, SEC-03, SEC-04]
+
+  - id: QR-MA-01
+    type: QR
+    titre: Couverture et qualité des tests
+    enonce: Les services métier sont couverts par les tests unitaires, en instructions et en branches.
+    caracteristique: maintenabilite
+    sous_caracteristiques: [testabilite]
+    priorite: P0
+    source: "cahier §6.7, fiche 2 (couverture, mutation)"
+    cible: "couverture >= 80 % (instructions et branches) sur app/services ; score de mutation rapporté"
+    methode: "pytest-cov, mutmut (dans Docker), Hypothesis"
+    cas: [MA-01, MA-02]
+
+  - id: QR-MA-02
+    type: QR
+    titre: Code structuré en couches, complexité maîtrisée
+    enonce: >-
+      Le code respecte api -> services -> models sans import inverse, et aucune fonction ne dépasse une
+      complexité cyclomatique de 10.
+    caracteristique: maintenabilite
+    sous_caracteristiques: [modularite, analysabilite, modifiabilite]
+    priorite: P0
+    source: "cahier §6.7"
+    cible: "complexité cyclomatique <= 10 ; 0 violation de contrat import-linter ; ruff sans erreur"
+    methode: "radon, xenon, import-linter, ruff"
+    cas: [MA-03, MA-04]
+
+  - id: QR-PO-01
+    type: QR
+    titre: Installation reproductible
+    enonce: >-
+      Toute la pile (base, API, web) s'installe sur une autre machine avec Docker Compose, configurée uniquement
+      par variables d'environnement.
+    caracteristique: portabilite
+    sous_caracteristiques: [installabilite, adaptabilite, remplacabilite]
+    priorite: P0
+    source: "cahier §6.8"
+    cible: "installation propre < 10 min ; smoke test réussi ; journal d'installation sur une seconde machine"
+    methode: "scripts/installation-propre.sh, docker compose up --wait, scripts/smoke.sh"
+    cas: [PORT-01, PORT-02]
+
+# ------------------------------------------------------------------ Questions ouvertes (oracle NON SPÉCIFIÉ)
+# Chaque question porte une proposition ; elle ne devient une règle qu'après validation.
+questions:
+  - id: Q-01
+    exigence: BR-03
+    question: >-
+      Le même produit sur deux lignes : les lignes sont-elles comptées avant fusion, et la borne 99 s'applique-t-elle
+      à la quantité fusionnée ?
+    proposition: Bornes vérifiées sur les lignes envoyées (avant fusion) ; la fusion ne sert qu'au stock et au stockage.
+  - id: Q-02
+    exigence: BR-05
+    question: Un CUSTOMER qui annule sa propre commande PAID reçoit-il 403 ou 409 ?
+    proposition: 403 (le statut cible existe dans le workflow, mais le rôle n'y a pas droit).
+  - id: Q-03
+    exigence: FR-09
+    question: Quelles commandes comptent dans le chiffre d'affaires, et quel montant ?
+    proposition: Statuts PAID, SHIPPED et DELIVERED ; montant = total après remise.
+  - id: Q-04
+    exigence: FR-09
+    question: Les bornes de la période sont-elles incluses, et dans quel fuseau horaire ?
+    proposition: Dates de début et de fin incluses, en UTC ; début > fin -> 422.
+  - id: Q-05
+    exigence: FR-10
+    question: Les bornes de prix de la recherche sont-elles incluses ? Que faire si min > max ?
+    proposition: Bornes incluses ; min > max -> 422.
+  - id: Q-06
+    exigence: BR-07
+    question: L'unicité du SKU et du nom de catégorie ignore-t-elle la casse, comme l'email ?
+    proposition: Oui pour les trois.
+  - id: Q-07
+    exigence: FR-04
+    question: Que se passe-t-il si l'on supprime un produit déjà commandé ?
+    proposition: Nouvelle règle BR-10 proposée — 409 PRODUCT_IN_USE, pour conserver l'historique des commandes.
+  - id: Q-08
+    exigence: FR-05
+    question: Un compte désactivé peut-il encore utiliser un jeton déjà émis ?
+    proposition: Non — connexion refusée (401) et tout jeton existant refusé (401).
+  - id: Q-09
+    exigence: FR-05
+    question: Un ADMIN peut-il se retirer le rôle ADMIN ou désactiver le dernier ADMIN actif ?
+    proposition: Nouvelle règle BR-11 proposée — refus 409 s'il ne resterait aucun ADMIN actif.
+  - id: Q-10
+    exigence: FR-06
+    question: STAFF et ADMIN peuvent-ils passer commande ?
+    proposition: Non — création de commande réservée au CUSTOMER (403 sinon), comme le dit la portée du plan.
+  - id: Q-11
+    exigence: FR-11
+    question: Qui peut lire le journal d'audit ?
+    proposition: ADMIN seulement (STAFF -> 403).
+  - id: Q-12
+    exigence: QR-US-02
+    question: Le plan ne fixe pas de cible chiffrée pour les sessions d'utilisabilité.
+    proposition: Réussite des tâches >= 80 % et SUS moyen >= 68 (moyenne usuelle de l'échelle SUS).

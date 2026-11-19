@@ -1,4 +1,4 @@
-.PHONY: db db-reset api web test lint check smoke
+.PHONY: db db-reset api web test lint docs check smoke
 
 # The virtualenv keeps its executables in Scripts/ on Windows and bin/ elsewhere.
 ifeq ($(OS),Windows_NT)
@@ -20,6 +20,9 @@ test:      ## pytest against the shop_test database (created automatically)
 lint:      ## ruff on the backend, oxlint + type check on the front end
 	cd backend && $(VENV)/ruff check .
 	cd web && npm run lint && npx tsc -b
-check: lint test  ## full gate used by /anomalie and /phase-done
+docs:      ## traceability between exigences.yaml, exigences.md and cahier-de-test.md
+	backend/$(VENV)/ruff check --config backend/pyproject.toml tools
+	backend/$(VENV)/python tools/check_docs.py docs
+check: lint docs test  ## full gate used by /anomalie and /phase-done
 smoke:     ## curl checks against the running API
 	./scripts/smoke.sh

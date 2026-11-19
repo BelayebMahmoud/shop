@@ -44,7 +44,11 @@ Every alert is triaged true / false / to watch with a written reason. Ask me bef
 ## This machine (Windows 11)
 - Postgres in Docker is on host port **5433**: a native Windows PostgreSQL service holds 5432.
 - Backend virtualenv: backend/.venv/Scripts/ (python, pytest, ruff). Use `python`, not `python3`.
-- `make` may be missing: run the Makefile recipe directly, e.g. `cd backend && .venv/Scripts/python -m pytest -q`.
+- GNU make 4.4.1 is installed per-user (winget `ezwinports.make`). If `make` is not on PATH in a shell, prepend
+  `$LOCALAPPDATA/Microsoft/WinGet/Packages/ezwinports.make_Microsoft.Winget.Source_8wekyb3d8bbwe/bin`.
+- `make check` = lint (ruff, oxlint, tsc) + docs (tools/check_docs.py traceability) + tests.
+- Security exit criterion (accepted in P0, from TP3): 0 High, 0 unjustified Medium, Low justified.
+- Semgrep and mutmut run in Docker containers (not native on Windows).
 - PDFs are read with `pdftotext -layout`.
 
 ## Claude Code tooling
