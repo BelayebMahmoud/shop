@@ -119,3 +119,14 @@
 - CI `.github/workflows/ci.yml` (ordre fiche 1, actions épinglées par SHA) : **non exécutée** (pas de dépôt distant).
 - Guide `docs/installation.md` et `README.md`.
 - Points ouverts : installation sur une seconde machine (coéquipier) ; exécution de la CI sur GitHub.
+
+## Phase 6 — Sécurité, partie 1 : SAST et SCA (19/11/2026, 23:55–00:10)
+
+- SAST : Bandit 0 ; gitleaks 0 (historique complet) ; Semgrep 20 → 1 (17 actions épinglées par SHA, defusedxml,
+  en-tête Host retiré ; 1 faux positif justifié). SCA : pip-audit 0/31 paquets, npm audit 0, Trivy fs 0 (et 27/27
+  contrôles des Dockerfile), SBOM CycloneDX (995 et 1 282 composants), licences inventoriées.
+- Images : Trivy avant (api 53 High, web 3 Critical + 65 High) → après 0 ; décisions remplacer / mettre à jour /
+  corriger, tracées dans `docs/securite/triage.md` ; preuves avant régénérées depuis le commit `80e8c79`.
+- Attaques manuelles : SEC-01, SEC-03, SEC-04 (7 tests) et SEC-02 (3 navigateurs) réussies.
+- En attente : signature de `docs/securite/autorisation.md` pour lancer ZAP (DAST) ; décision du groupe sur les
+  licences LGPL-3.0 et MPL-2.0 (L1, L2).

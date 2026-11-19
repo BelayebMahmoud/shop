@@ -1,0 +1,374 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.76.2"
+  },
+  "ReportID": "01a1f603-d6a7-76c0-a2f3-903cd15037a9",
+  "CreatedAt": "2026-11-19T22:53:29.12744439Z",
+  "ArtifactID": "sha256:231726f0373bac5f77e6f8d25d300e31f2d89912ec90e19914b8e87d6df35225",
+  "ArtifactName": "/repo",
+  "ArtifactType": "repository",
+  "Metadata": {
+    "Branch": "main",
+    "Commit": "d21132aa147912dfdc09fa5651d33b351ab13449",
+    "CommitMsg": "phase 5: containers verified, Firefox and parallel E2E in Docker, hardened images; phase 6 scans started\n\n- clean install 27 s with smoke test (PORT-01); E2E chromium/firefox/mobile, 4 workers, 20 passed in Docker\n- ENV-01 confirmed (Docker Desktop port forwarding), ENV-02 bypassed (Firefox in the Playwright image)\n- images: Alpine bases, nginx 1.31.7, apk upgrade, pip removed from runtime: Trivy 0 vulnerabilities on both\n- SAST (Bandit 0, gitleaks 0, Semgrep 19/20 fixed), SCA (pip-audit 0/31, npm 0, SBOMs), SEC-01..SEC-04 tests\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
+    "Author": "Mahmoud \u003cmahmoudbelayeb@gmail.com\u003e",
+    "Committer": "Mahmoud \u003cmahmoudbelayeb@gmail.com\u003e"
+  },
+  "Results": [
+    {
+      "Target": "backend/requirements.txt",
+      "Class": "lang-pkgs",
+      "Type": "pip",
+      "Packages": [
+        {
+          "Name": "PyJWT",
+          "Identifier": {
+            "PURL": "pkg:pypi/pyjwt@2.15.1",
+            "UID": "c6d2028c19b4955d"
+          },
+          "Version": "2.15.1",
+          "Locations": [
+            {
+              "StartLine": 5,
+              "EndLine": 5
+            }
+          ],
+          "AnalyzedBy": "pip"
+        },
+        {
+          "Name": "SQLAlchemy",
+          "Identifier": {
+            "PURL": "pkg:pypi/sqlalchemy@2.1.9",
+            "UID": "776cfba0a0002a5e"
+          },
+          "Version": "2.1.9",
+          "Locations": [
+            {
+              "StartLine": 3,
+              "EndLine": 3
+            }
+          ],
+          "AnalyzedBy": "pip"
+        },
+        {
+          "Name": "fastapi",
+          "Identifier": {
+            "PURL": "pkg:pypi/fastapi@0.165.0",
+            "UID": "f7f4218910f93611"
+          },
+          "Version": "0.165.0",
+          "Locations": [
+            {
+              "StartLine": 1,
+              "EndLine": 1
+            }
+          ],
+          "AnalyzedBy": "pip"
+        },
+        {
+          "Name": "psycopg",
+          "Identifier": {
+            "PURL": "pkg:pypi/psycopg@3.3.9",
+            "UID": "31d4da205a210ee2"
+          },
+          "Version": "3.3.9",
+          "Locations": [
+            {
+              "StartLine": 4,
+              "EndLine": 4
+            }
+          ],
+          "AnalyzedBy": "pip"
+        },
+        {
+          "Name": "pwdlib",
+          "Identifier": {
+            "PURL": "pkg:pypi/pwdlib@0.4.2",
+            "UID": "97094aa2acf91c78"
+          },
+          "Version": "0.4.2",
+          "Locations": [
+            {
+              "StartLine": 6,
+              "EndLine": 6
+            }
+          ],
+          "AnalyzedBy": "pip"
+        },
+        {
+          "Name": "pydantic-settings",
+          "Identifier": {
+            "PURL": "pkg:pypi/pydantic-settings@2.16.3",
+            "UID": "19de477f13896198"
+          },
+          "Version": "2.16.3",
+          "Locations": [
+            {
+              "StartLine": 7,
+              "EndLine": 7
+            }
+          ],
+          "AnalyzedBy": "pip"
+        },
+        {
+          "Name": "python-multipart",
+          "Identifier": {
+            "PURL": "pkg:pypi/python-multipart@0.0.34",
+            "UID": "3dc89fc21b7ba1aa"
+          },
+          "Version": "0.0.34",
+          "Locations": [
+            {
+              "StartLine": 8,
+              "EndLine": 8
+            }
+          ],
+          "AnalyzedBy": "pip"
+        },
+        {
+          "Name": "uvicorn",
+          "Identifier": {
+            "PURL": "pkg:pypi/uvicorn@0.54.0",
+            "UID": "fd013e3119ab75d8"
+          },
+          "Version": "0.54.0",
+          "Locations": [
+            {
+              "StartLine": 2,
+              "EndLine": 2
+            }
+          ],
+          "AnalyzedBy": "pip"
+        }
+      ]
+    },
+    {
+      "Target": "web/package-lock.json",
+      "Class": "lang-pkgs",
+      "Type": "npm",
+      "Packages": [
+        {
+          "ID": "@types/react@19.3.0",
+          "Name": "@types/react",
+          "Identifier": {
+            "PURL": "pkg:npm/%40types/react@19.3.0",
+            "UID": "a4ce149a548512b1"
+          },
+          "Version": "19.3.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Relationship": "direct",
+          "DependsOn": [
+            "csstype@3.2.4"
+          ],
+          "Locations": [
+            {
+              "StartLine": 756,
+              "EndLine": 765
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@types/react-dom@19.3.0",
+          "Name": "@types/react-dom",
+          "Identifier": {
+            "PURL": "pkg:npm/%40types/react-dom@19.3.0",
+            "UID": "a72aaf993296ce78"
+          },
+          "Version": "19.3.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Relationship": "direct",
+          "DependsOn": [
+            "@types/react@19.3.0"
+          ],
+          "Locations": [
+            {
+              "StartLine": 766,
+              "EndLine": 775
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "react@19.3.1",
+          "Name": "react",
+          "Identifier": {
+            "PURL": "pkg:npm/react@19.3.1",
+            "UID": "5b217f519c7982b"
+          },
+          "Version": "19.3.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Relationship": "direct",
+          "Locations": [
+            {
+              "StartLine": 1619,
+              "EndLine": 1627
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "react-dom@19.3.1",
+          "Name": "react-dom",
+          "Identifier": {
+            "PURL": "pkg:npm/react-dom@19.3.1",
+            "UID": "ee3e68ffa611f4c1"
+          },
+          "Version": "19.3.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Relationship": "direct",
+          "DependsOn": [
+            "react@19.3.1",
+            "scheduler@0.28.0"
+          ],
+          "Locations": [
+            {
+              "StartLine": 1628,
+              "EndLine": 1639
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "react-router@8.5.2",
+          "Name": "react-router",
+          "Identifier": {
+            "PURL": "pkg:npm/react-router@8.5.2",
+            "UID": "13802c79559b2541"
+          },
+          "Version": "8.5.2",
+          "Licenses": [
+            "MIT"
+          ],
+          "Relationship": "direct",
+          "DependsOn": [
+            "@remix-run/route-pattern@0.22.1",
+            "@types/react-dom@19.3.0",
+            "@types/react@19.3.0",
+            "cookie-es@3.1.1",
+            "react-dom@19.3.1",
+            "react@19.3.1"
+          ],
+          "Locations": [
+            {
+              "StartLine": 1640,
+              "EndLine": 1669
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@remix-run/route-pattern@0.22.1",
+          "Name": "@remix-run/route-pattern",
+          "Identifier": {
+            "PURL": "pkg:npm/%40remix-run/route-pattern@0.22.1",
+            "UID": "d44fdfa752db5d0"
+          },
+          "Version": "0.22.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 448,
+              "EndLine": 453
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "cookie-es@3.1.1",
+          "Name": "cookie-es",
+          "Identifier": {
+            "PURL": "pkg:npm/cookie-es@3.1.1",
+            "UID": "6ef405c07c0057a3"
+          },
+          "Version": "3.1.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 1156,
+              "EndLine": 1161
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "csstype@3.2.4",
+          "Name": "csstype",
+          "Identifier": {
+            "PURL": "pkg:npm/csstype@3.2.4",
+            "UID": "8a8ef35ebbe67f5f"
+          },
+          "Version": "3.2.4",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 1162,
+              "EndLine": 1168
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "scheduler@0.28.0",
+          "Name": "scheduler",
+          "Identifier": {
+            "PURL": "pkg:npm/scheduler@0.28.0",
+            "UID": "4f14432fad75f8a7"
+          },
+          "Version": "0.28.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 1705,
+              "EndLine": 1710
+            }
+          ],
+          "AnalyzedBy": "npm"
+        }
+      ]
+    },
+    {
+      "Target": "backend/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 27,
+        "Failures": 0
+      }
+    },
+    {
+      "Target": "web/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 27,
+        "Failures": 0
+      }
+    }
+  ]
+}
