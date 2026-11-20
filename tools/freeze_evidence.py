@@ -93,9 +93,9 @@ def main(version: str) -> int:
         "tools_native": {k: run(v) for k, v in NATIVE.items()},
         "tools_from_reports": from_reports(),
     }
-    (dest / "manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (dest / "manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     lines = [f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.relative_to(dest).as_posix()}" for p in files]
-    (dest / "sha256sums.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (dest / "sha256sums.txt").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     print(f"{len(files)} fichiers gelés dans {dest.relative_to(ROOT)} (commit {manifest['commit_short']})")
     print(json.dumps(manifest["tools_native"] | manifest["tools_from_reports"], indent=1, ensure_ascii=False))
     return 0
