@@ -6,9 +6,15 @@ trois (E2E Playwright, performance k6, contrat ou sécurité) et suit une exigen
 ## Préparation (avant d'entrer dans la salle, 5 min)
 
 ```bash
-docker compose up -d --build --wait          # pile complète, base de démonstration
+docker compose down -v                       # efface la base : données laissées par les E2E et le scan ZAP
+docker compose up -d --build --wait          # pile complète, base de démonstration rechargée par les migrations
 ./scripts/smoke.sh                           # BASE=http://127.0.0.1:8080/api : vérifie la chaîne complète
 ```
+
+Réinitialiser la base après toute campagne E2E ou DAST et avant la soutenance : les tests E2E créent des catégories
+`Cat <navigateur>-…` et le scan actif ZAP enregistre ses charges d'attaque comme noms de catégories (affichées en
+texte, jamais exécutées). Après la réinitialisation, la liste « Catégorie » ne contient que les 6 catégories de la
+migration 003. L'E2E lancé en direct pendant la démonstration en ajoute quelques-unes : ce sont ses données de test.
 
 Ouvrir à l'avance : l'application (http://localhost:8080), `docs/tracabilite/matrice.md`, `docs/conformite.md`,
 `docs/anomalies.md`, un terminal dans le dépôt. Fermer les autres programmes (mesures de performance).
