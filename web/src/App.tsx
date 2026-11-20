@@ -5,6 +5,7 @@ import { useAuth } from './auth';
 import { useCart } from './cart';
 import AdminOrdersPage from './pages/AdminOrdersPage';
 import AdminProductsPage from './pages/AdminProductsPage';
+import AdminUsersPage from './pages/AdminUsersPage';
 import CartPage from './pages/CartPage';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage from './pages/LoginPage';
@@ -29,6 +30,7 @@ function Nav() {
             <NavLink to="/back-office/tableau-de-bord">Tableau de bord</NavLink>
           </>
         )}
+        {can('ADMIN') && <NavLink to="/back-office/utilisateurs">Utilisateurs</NavLink>}
         <span className="spacer" />
         {token ? (
           <>
@@ -75,7 +77,11 @@ export default function App() {
           path="/back-office/tableau-de-bord"
           element={<RequireRole roles={['STAFF', 'ADMIN']}><DashboardPage /></RequireRole>}
         />
-        <Route path="*" element={<main><h1>Page introuvable</h1><Link to="/">Retour au catalogue</Link></main>} />
+        <Route
+          path="/back-office/utilisateurs"
+          element={<RequireRole roles={['ADMIN']}><AdminUsersPage /></RequireRole>}
+        />
+        <Route path="*"element={<main><h1>Page introuvable</h1><Link to="/">Retour au catalogue</Link></main>} />
       </Routes>
     </BrowserRouter>
   );

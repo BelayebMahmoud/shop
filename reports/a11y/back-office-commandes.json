@@ -13,8 +13,8 @@
     "orientationAngle": 0,
     "orientationType": "landscape-primary"
   },
-  "timestamp": "2026-11-20T00:20:36.329Z",
-  "url": "http://127.0.0.1:5174/back-office/commandes",
+  "timestamp": "2026-11-20T09:47:31.689Z",
+  "url": "http://web:8080/back-office/commandes",
   "toolOptions": {
     "runOnly": {
       "type": "tag",
@@ -983,6 +983,86 @@
             }
           ],
           "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 2\">Marquer payée</button>",
+          "target": [
+            "button[aria-label=\"Marquer payée — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-allowed-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "ARIA attributes are used correctly for the defined role"
+            },
+            {
+              "id": "aria-allowed-attr-elm",
+              "data": null,
+              "relatedNodes": [],
+              "message": "ARIA attributes are allowed for this element",
+              "impact": "critical"
+            },
+            {
+              "id": "aria-no-deprecated-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "No deprecated ARIA attributes are used"
+            }
+          ],
+          "none": [
+            {
+              "id": "aria-unsupported-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "ARIA attribute is supported"
+            }
+          ],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Annuler — commande n° 2\">Annuler</button>",
+          "target": [
+            "button[aria-label=\"Annuler — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-allowed-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "ARIA attributes are used correctly for the defined role"
+            },
+            {
+              "id": "aria-allowed-attr-elm",
+              "data": null,
+              "relatedNodes": [],
+              "message": "ARIA attributes are allowed for this element",
+              "impact": "critical"
+            },
+            {
+              "id": "aria-no-deprecated-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "No deprecated ARIA attributes are used"
+            }
+          ],
+          "none": [
+            {
+              "id": "aria-unsupported-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "ARIA attribute is supported"
+            }
+          ],
+          "impact": null,
           "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 1\">Marquer payée</button>",
           "target": [
             "button[aria-label=\"Marquer payée — commande n° 1\"]"
@@ -1080,6 +1160,42 @@
           "html": "<a aria-current=\"page\" class=\"active\" href=\"/back-office/commandes\" data-discover=\"true\">Commandes</a>",
           "target": [
             ".active"
+          ]
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-conditional-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "ARIA attribute is allowed"
+            }
+          ],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 2\">Marquer payée</button>",
+          "target": [
+            "button[aria-label=\"Marquer payée — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-conditional-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "ARIA attribute is allowed"
+            }
+          ],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Annuler — commande n° 2\">Annuler</button>",
+          "target": [
+            "button[aria-label=\"Annuler — commande n° 2\"]"
           ]
         },
         {
@@ -1208,6 +1324,42 @@
           "html": "<a aria-current=\"page\" class=\"active\" href=\"/back-office/commandes\" data-discover=\"true\">Commandes</a>",
           "target": [
             ".active"
+          ]
+        },
+        {
+          "any": [],
+          "all": [],
+          "none": [
+            {
+              "id": "aria-prohibited-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "ARIA attribute is allowed"
+            }
+          ],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 2\">Marquer payée</button>",
+          "target": [
+            "button[aria-label=\"Marquer payée — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [],
+          "all": [],
+          "none": [
+            {
+              "id": "aria-prohibited-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "ARIA attribute is allowed"
+            }
+          ],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Annuler — commande n° 2\">Annuler</button>",
+          "target": [
+            "button[aria-label=\"Annuler — commande n° 2\"]"
           ]
         },
         {
@@ -1355,6 +1507,70 @@
           ],
           "none": [],
           "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 2\">Marquer payée</button>",
+          "target": [
+            "button[aria-label=\"Marquer payée — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-valid-attr-value",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "ARIA attribute values are valid"
+            },
+            {
+              "id": "aria-errormessage",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+            },
+            {
+              "id": "aria-level",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "aria-level values are valid"
+            }
+          ],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Annuler — commande n° 2\">Annuler</button>",
+          "target": [
+            "button[aria-label=\"Annuler — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "aria-valid-attr-value",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "ARIA attribute values are valid"
+            },
+            {
+              "id": "aria-errormessage",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "aria-errormessage exists and references elements visible to screen readers that use a supported aria-errormessage technique"
+            },
+            {
+              "id": "aria-level",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "aria-level values are valid"
+            }
+          ],
+          "none": [],
+          "impact": null,
           "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 1\">Marquer payée</button>",
           "target": [
             "button[aria-label=\"Marquer payée — commande n° 1\"]"
@@ -1459,6 +1675,42 @@
           "all": [],
           "none": [],
           "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 2\">Marquer payée</button>",
+          "target": [
+            "button[aria-label=\"Marquer payée — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "aria-valid-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "ARIA attribute name is valid"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Annuler — commande n° 2\">Annuler</button>",
+          "target": [
+            "button[aria-label=\"Annuler — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "aria-valid-attr",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "ARIA attribute name is valid"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
           "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 1\">Marquer payée</button>",
           "target": [
             "button[aria-label=\"Marquer payée — commande n° 1\"]"
@@ -1521,6 +1773,56 @@
           "html": "<button type=\"button\" class=\"link\">Se déconnecter</button>",
           "target": [
             ".link"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "button-has-visible-text",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "Element has inner text that is visible to screen readers"
+            },
+            {
+              "id": "aria-label",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "aria-label attribute exists and is not empty"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 2\">Marquer payée</button>",
+          "target": [
+            "button[aria-label=\"Marquer payée — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "button-has-visible-text",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "Element has inner text that is visible to screen readers"
+            },
+            {
+              "id": "aria-label",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "aria-label attribute exists and is not empty"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Annuler — commande n° 2\">Annuler</button>",
+          "target": [
+            "button[aria-label=\"Annuler — commande n° 2\"]"
           ]
         },
         {
@@ -1922,15 +2224,15 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#ffffff",
-                "contrastRatio": 21,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "10.0pt (13.3333px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 21"
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
@@ -2111,9 +2413,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<td>1</td>",
+          "html": "<td>2</td>",
           "target": [
-            "td:nth-child(1)"
+            "tr[data-order-id=\"2\"] > td:nth-child(1)"
           ]
         },
         {
@@ -2136,9 +2438,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<td>4</td>",
+          "html": "<td>6</td>",
           "target": [
-            "td:nth-child(2)"
+            "tr[data-order-id=\"2\"] > td:nth-child(2)"
           ]
         },
         {
@@ -2161,9 +2463,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<td>20/11/2026 01:20:35</td>",
+          "html": "<td>20/11/2026 09:47:30</td>",
           "target": [
-            "td:nth-child(3)"
+            "tr[data-order-id=\"2\"] > td:nth-child(3)"
           ]
         },
         {
@@ -2188,7 +2490,7 @@
           "impact": null,
           "html": "<td>15,00&nbsp;€</td>",
           "target": [
-            "td:nth-child(4)"
+            "tr[data-order-id=\"2\"] > td:nth-child(4)"
           ]
         },
         {
@@ -2213,7 +2515,7 @@
           "impact": null,
           "html": "<td data-testid=\"status\">Passée</td>",
           "target": [
-            "td[data-testid=\"status\"]"
+            "tr[data-order-id=\"2\"] > td[data-testid=\"status\"]"
           ]
         },
         {
@@ -2222,15 +2524,190 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#f0f0f0",
-                "contrastRatio": 18.42,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "12.0pt (16px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 18.42"
+              "message": "Element has sufficient color contrast of 18.26"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 2\">Marquer payée</button>",
+          "target": [
+            "button[aria-label=\"Marquer payée — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#000000",
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
+                "fontSize": "12.0pt (16px)",
+                "fontWeight": "normal",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element has sufficient color contrast of 18.26"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Annuler — commande n° 2\">Annuler</button>",
+          "target": [
+            "button[aria-label=\"Annuler — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#1a1a1a",
+                "bgColor": "#ffffff",
+                "contrastRatio": 17.4,
+                "fontSize": "12.0pt (16px)",
+                "fontWeight": "normal",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element has sufficient color contrast of 17.4"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<td>1</td>",
+          "target": [
+            "tr[data-order-id=\"1\"] > td:nth-child(1)"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#1a1a1a",
+                "bgColor": "#ffffff",
+                "contrastRatio": 17.4,
+                "fontSize": "12.0pt (16px)",
+                "fontWeight": "normal",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element has sufficient color contrast of 17.4"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<td>1</td>",
+          "target": [
+            "tr[data-order-id=\"1\"] > td:nth-child(2)"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#1a1a1a",
+                "bgColor": "#ffffff",
+                "contrastRatio": 17.4,
+                "fontSize": "12.0pt (16px)",
+                "fontWeight": "normal",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element has sufficient color contrast of 17.4"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<td>20/11/2026 09:34:20</td>",
+          "target": [
+            "tr[data-order-id=\"1\"] > td:nth-child(3)"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#1a1a1a",
+                "bgColor": "#ffffff",
+                "contrastRatio": 17.4,
+                "fontSize": "12.0pt (16px)",
+                "fontWeight": "normal",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element has sufficient color contrast of 17.4"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<td>12,00&nbsp;€</td>",
+          "target": [
+            "tr[data-order-id=\"1\"] > td:nth-child(4)"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#1a1a1a",
+                "bgColor": "#ffffff",
+                "contrastRatio": 17.4,
+                "fontSize": "12.0pt (16px)",
+                "fontWeight": "normal",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element has sufficient color contrast of 17.4"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<td data-testid=\"status\">Passée</td>",
+          "target": [
+            "tr[data-order-id=\"1\"] > td[data-testid=\"status\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#000000",
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
+                "fontSize": "12.0pt (16px)",
+                "fontWeight": "normal",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
@@ -2247,15 +2724,15 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#f0f0f0",
-                "contrastRatio": 18.42,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "12.0pt (16px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 18.42"
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
@@ -2286,7 +2763,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<span>Commandes 1 à 1</span>",
+          "html": "<span>Commandes 1 à 2</span>",
           "target": [
             ".pager > span"
           ]
@@ -2471,6 +2948,42 @@
       "help": "Elements must have their visible text as part of their accessible name",
       "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=playwright",
       "nodes": [
+        {
+          "any": [
+            {
+              "id": "label-content-name-mismatch",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element contains visible text as part of its accessible name"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 2\">Marquer payée</button>",
+          "target": [
+            "button[aria-label=\"Marquer payée — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "label-content-name-mismatch",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element contains visible text as part of its accessible name"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Annuler — commande n° 2\">Annuler</button>",
+          "target": [
+            "button[aria-label=\"Annuler — commande n° 2\"]"
+          ]
+        },
         {
           "any": [
             {
@@ -2843,6 +3356,42 @@
           "html": "<option value=\"CANCELLED\">Annulée</option>",
           "target": [
             "option[value=\"CANCELLED\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Marquer payée — commande n° 2\">Marquer payée</button>",
+          "target": [
+            "button[aria-label=\"Marquer payée — commande n° 2\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<button type=\"button\" aria-label=\"Annuler — commande n° 2\">Annuler</button>",
+          "target": [
+            "button[aria-label=\"Annuler — commande n° 2\"]"
           ]
         },
         {

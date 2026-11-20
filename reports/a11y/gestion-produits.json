@@ -13,8 +13,8 @@
     "orientationAngle": 0,
     "orientationType": "landscape-primary"
   },
-  "timestamp": "2026-11-20T00:20:37.173Z",
-  "url": "http://127.0.0.1:5174/back-office/produits",
+  "timestamp": "2026-11-20T09:47:33.148Z",
+  "url": "http://web:8080/back-office/produits",
   "toolOptions": {
     "runOnly": {
       "type": "tag",
@@ -984,9 +984,9 @@
             }
           ],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo8ge88-899440\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwospgay-863934\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50011\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -1024,9 +1024,9 @@
             }
           ],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo8ge88-899440\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwospgay-863934\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50011\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -1114,9 +1114,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo8ge88-899440\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwospgay-863934\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50011\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -1132,9 +1132,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo8ge88-899440\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwospgay-863934\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50011\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -1260,9 +1260,9 @@
             }
           ],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo8ge88-899440\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwospgay-863934\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50011\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -1278,9 +1278,9 @@
             }
           ],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo8ge88-899440\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwospgay-863934\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50011\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -1424,9 +1424,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo8ge88-899440\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwospgay-863934\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50011\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -1456,9 +1456,9 @@
           ],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo8ge88-899440\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwospgay-863934\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50011\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -1546,9 +1546,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo8ge88-899440\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwospgay-863934\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50011\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -1564,9 +1564,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo8ge88-899440\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwospgay-863934\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50011\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -1648,9 +1648,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo8ge88-899440\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwospgay-863934\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50011\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -1673,9 +1673,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo8ge88-899440\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwospgay-863934\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50011\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -2278,15 +2278,15 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#ffffff",
-                "contrastRatio": 21,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "10.0pt (13.3333px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 21"
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
@@ -2303,15 +2303,15 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#f0f0f0",
-                "contrastRatio": 18.42,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "12.0pt (16px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 18.42"
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
@@ -2367,7 +2367,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<label>Filtrer <input type=\"search\" value=\"chromium-0-mwo8ge88-899440\"></label>",
+          "html": "<label>Filtrer <input type=\"search\" value=\"chromium-1-mwospgay-863934\"></label>",
           "target": [
             "main > label"
           ]
@@ -2392,7 +2392,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input type=\"search\" value=\"chromium-0-mwo8ge88-899440\">",
+          "html": "<input type=\"search\" value=\"chromium-1-mwospgay-863934\">",
           "target": [
             "input[type=\"search\"]"
           ]
@@ -2542,7 +2542,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<td>Agrafeuse-chromium-0-mwo8ge88-899440</td>",
+          "html": "<td>Agrafeuse-chromium-1-mwospgay-863934</td>",
           "target": [
             "td:nth-child(1)"
           ]
@@ -2567,7 +2567,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<td>Agrafeuse chromium-0-mwo8ge88-899440</td>",
+          "html": "<td>Agrafeuse chromium-1-mwospgay-863934</td>",
           "target": [
             "td:nth-child(2)"
           ]
@@ -2628,23 +2628,23 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#f0f0f0",
-                "contrastRatio": 18.42,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "12.0pt (16px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 18.42"
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo8ge88-899440\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwospgay-863934\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50011\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -2667,9 +2667,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo8ge88-899440\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwospgay-863934\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50011\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -3052,7 +3052,7 @@
               "data": null,
               "relatedNodes": [
                 {
-                  "html": "<label>Filtrer <input type=\"search\" value=\"chromium-0-mwo8ge88-899440\"></label>",
+                  "html": "<label>Filtrer <input type=\"search\" value=\"chromium-1-mwospgay-863934\"></label>",
                   "target": [
                     "main > label"
                   ]
@@ -3063,7 +3063,7 @@
             }
           ],
           "impact": null,
-          "html": "<input type=\"search\" value=\"chromium-0-mwo8ge88-899440\">",
+          "html": "<input type=\"search\" value=\"chromium-1-mwospgay-863934\">",
           "target": [
             "input[type=\"search\"]"
           ]
@@ -3177,9 +3177,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo8ge88-899440\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwospgay-863934\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50011\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -3195,9 +3195,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo8ge88-899440\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwospgay-863934\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50011\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]
@@ -3407,7 +3407,7 @@
               },
               "relatedNodes": [
                 {
-                  "html": "<label>Filtrer <input type=\"search\" value=\"chromium-0-mwo8ge88-899440\"></label>",
+                  "html": "<label>Filtrer <input type=\"search\" value=\"chromium-1-mwospgay-863934\"></label>",
                   "target": [
                     "main > label"
                   ]
@@ -3428,7 +3428,7 @@
             }
           ],
           "impact": null,
-          "html": "<input type=\"search\" value=\"chromium-0-mwo8ge88-899440\">",
+          "html": "<input type=\"search\" value=\"chromium-1-mwospgay-863934\">",
           "target": [
             "input[type=\"search\"]"
           ]
@@ -3730,7 +3730,25 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<option value=\"7\">Cat chromium-0-mwo8gcdn-866532</option>",
+          "html": "<option value=\"8\">Cat chromium-0-mwospgax-396950</option>",
+          "target": [
+            "option[value=\"8\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"7\">Cat chromium-1-mwospgay-863934</option>",
           "target": [
             "option[value=\"7\"]"
           ]
@@ -3748,9 +3766,63 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<option value=\"8\">Cat chromium-0-mwo8ge88-899440</option>",
+          "html": "<option value=\"10\">Cat chromium-2-mwospgbm-895345</option>",
           "target": [
-            "option[value=\"8\"]"
+            "option[value=\"10\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"12\">Cat chromium-2-mwospi9o-566370</option>",
+          "target": [
+            "option[value=\"12\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"9\">Cat chromium-3-mwospgbb-543943</option>",
+          "target": [
+            "option[value=\"9\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"11\">Cat chromium-3-mwosphwe-66573</option>",
+          "target": [
+            "option[value=\"11\"]"
           ]
         },
         {
@@ -3856,9 +3928,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-0-mwo8ge88-899440\">Modifier</button>",
+          "html": "<button type=\"button\" aria-label=\"Modifier Agrafeuse chromium-1-mwospgay-863934\">Modifier</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > button[type=\"button\"]:nth-child(1)"
+            "tr[data-product-id=\"50011\"] > .actions > button[type=\"button\"]:nth-child(1)"
           ]
         },
         {
@@ -3874,9 +3946,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-0-mwo8ge88-899440\">Supprimer</button>",
+          "html": "<button type=\"button\" class=\"danger\" aria-label=\"Supprimer Agrafeuse chromium-1-mwospgay-863934\">Supprimer</button>",
           "target": [
-            "tr[data-product-id=\"10\"] > .actions > .danger[type=\"button\"]"
+            "tr[data-product-id=\"50011\"] > .actions > .danger[type=\"button\"]"
           ]
         }
       ]

@@ -46,7 +46,7 @@ exigences:
     priorite: P0
     source: "cahier §4 (≥ 3 profils), §6.6"
     scenarios: [SC-FR-02-1, SC-FR-02-2]
-    cas: [TA-20, SEC-03]
+    cas: [TA-20, SEC-03, E2E-07]
 
   - id: FR-03
     type: FR
@@ -86,7 +86,7 @@ exigences:
     priorite: P1
     source: "plan phase 1 (portée fonctionnelle)"
     scenarios: [SC-FR-05-1, SC-FR-05-2]
-    cas: [TA-21, TA-22]
+    cas: [TA-21, TA-22, E2E-06]
 
   - id: FR-06
     type: FR
@@ -310,7 +310,7 @@ exigences:
     priorite: P1
     source: "décision Q-09 du 19/11/2026"
     scenarios: [SC-BR-11-1, SC-BR-11-2]
-    cas: [TA-21, TA-31]
+    cas: [TA-21, TA-31, E2E-07]
 
   # ---------------------------------------------------------------- Exigences de qualité (§6)
   - id: QR-FS-01

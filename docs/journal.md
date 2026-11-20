@@ -210,3 +210,20 @@
 - Gel : le premier gel est conservé tel quel sous `docs/preuves/v1.0-rc1/` (`git mv`, contenu et empreintes
   inchangés) ; nouveau gel `docs/preuves/v1.0/` par `tools/freeze_evidence.py`. Matrice : 34 PASS, 2 PARTIAL, 0 FAIL.
 - En attente (inchangé) : UX-02/UX-03 (séances du 20/11) et PORT-02 (seconde machine).
+
+## Après v1.0 — Écran de gestion des utilisateurs (20/11/2026)
+
+- Fait : écran React `/back-office/utilisateurs` réservé à ADMIN (FR-05) — liste filtrable, changement de rôle,
+  désactivation avec boîte de confirmation ; refus 409 LAST_ADMIN affiché en clair (BR-11) ; lien de navigation masqué
+  aux autres rôles (FR-02). Aucune modification du backend : l'écran appelle les routes `/api/users` existantes.
+- Cas conçus depuis les règles : E2E-06 (FR-05, valide) et E2E-07 (BR-11, FR-02, échec attendu), ajoutés au cahier
+  et à `exigences.yaml`.
+- Exécution réelle : `scripts/e2e-docker.sh` (chromium, firefox, mobile) — 30 tests, 26 réussis, 0 échec, 4 ignorés
+  (audits axe limités à chromium) ; E2E-06 et E2E-07 3/3 chacun (`reports/junit-e2e-docker.xml`). `make trace` :
+  34 PASS, 2 PARTIAL, 0 FAIL ; `make docs` : no problems. Contrôle de types et build : `docker compose build web`
+  (`tsc -b && vite build`) réussi ; oxlint 0 erreur, 2 avertissements déjà présents (`auth.tsx`, `cart.tsx`).
+- Écarts : `make lint` et `make e2e` sur le poste non disponibles — `web/node_modules` incomplet après l'échec de
+  `npm ci` (EPERM : un `vite preview` orphelin du 19/11 verrouille un binaire) ; oxlint et tsc lancés dans le
+  conteneur Playwright à la place. Pas d'audit axe de la nouvelle page ni de preuve « règle cassée » pour E2E-06/07
+  (BR-11 est déjà prouvé par TA-31). Les preuves gelées `docs/preuves/v1.0/` ne sont pas modifiées : cet écran
+  entrera dans le prochain gel.

@@ -96,6 +96,12 @@ export const cancelOrder = (id: number) => api<Order>(`/orders/${id}/cancel`, { 
 export const changeStatus = (id: number, status: OrderStatus) =>
   api<Order>(`/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) });
 
+// ---------------------------------------------------------------- users (FR-05, ADMIN only)
+export const getUsers = () => api<User[]>('/users');
+export const changeRole = (id: number, role: Role) =>
+  api<User>(`/users/${id}/role`, { method: 'PATCH', body: JSON.stringify({ role }) });
+export const deactivateUser = (id: number) => api<User>(`/users/${id}/deactivate`, { method: 'PATCH' });
+
 // ---------------------------------------------------------------- dashboard
 export const getDashboard = (f: { dateFrom?: string; dateTo?: string; categoryId?: number }) =>
   api<Dashboard>(`/dashboard${query({ date_from: f.dateFrom, date_to: f.dateTo, category_id: f.categoryId })}`);

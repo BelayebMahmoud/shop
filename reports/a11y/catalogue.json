@@ -13,8 +13,8 @@
     "orientationAngle": 0,
     "orientationType": "landscape-primary"
   },
-  "timestamp": "2026-11-20T00:20:33.456Z",
-  "url": "http://127.0.0.1:5174/",
+  "timestamp": "2026-11-20T09:47:31.595Z",
+  "url": "http://web:8080/",
   "toolOptions": {
     "runOnly": {
       "type": "tag",
@@ -1592,7 +1592,7 @@
                   ]
                 },
                 {
-                  "html": "<h2><a href=\"/produits/9\" data-discover=\"true\">Carnet chromium-0-mwo8gcdn-866532</a></h2>",
+                  "html": "<h2><a href=\"/produits/50010\" data-discover=\"true\">Carnet chromium-0-mwospgax-396950</a></h2>",
                   "target": [
                     "h2"
                   ]
@@ -1790,7 +1790,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<label>Rechercher<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwo8gcdn-866532\"></label>",
+          "html": "<label>Rechercher<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwospgax-396950\"></label>",
           "target": [
             "label:nth-child(1)"
           ]
@@ -1815,7 +1815,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwo8gcdn-866532\">",
+          "html": "<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwospgax-396950\">",
           "target": [
             "input[placeholder=\"Nom du produit\"]"
           ]
@@ -1851,15 +1851,15 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#ffffff",
-                "contrastRatio": 21,
+                "bgColor": "#efefef",
+                "contrastRatio": 18.26,
                 "fontSize": "10.0pt (13.3333px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 21"
+              "message": "Element has sufficient color contrast of 18.26"
             }
           ],
           "all": [],
@@ -2040,9 +2040,9 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<a href=\"/produits/9\" data-discover=\"true\">Carnet chromium-0-mwo8gcdn-866532</a>",
+          "html": "<a href=\"/produits/50010\" data-discover=\"true\">Carnet chromium-0-mwospgax-396950</a>",
           "target": [
-            "a[href$=\"produits/9\"]"
+            "a[href=\"/produits/50010\"]"
           ]
         },
         {
@@ -2188,7 +2188,7 @@
               "data": null,
               "relatedNodes": [
                 {
-                  "html": "<label>Rechercher<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwo8gcdn-866532\"></label>",
+                  "html": "<label>Rechercher<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwospgax-396950\"></label>",
                   "target": [
                     "label:nth-child(1)"
                   ]
@@ -2199,7 +2199,7 @@
             }
           ],
           "impact": null,
-          "html": "<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwo8gcdn-866532\">",
+          "html": "<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwospgax-396950\">",
           "target": [
             "input[placeholder=\"Nom du produit\"]"
           ]
@@ -2414,7 +2414,7 @@
               },
               "relatedNodes": [
                 {
-                  "html": "<label>Rechercher<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwo8gcdn-866532\"></label>",
+                  "html": "<label>Rechercher<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwospgax-396950\"></label>",
                   "target": [
                     "label:nth-child(1)"
                   ]
@@ -2442,7 +2442,7 @@
             }
           ],
           "impact": null,
-          "html": "<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwo8gcdn-866532\">",
+          "html": "<input placeholder=\"Nom du produit\" type=\"search\" value=\"chromium-0-mwospgax-396950\">",
           "target": [
             "input[placeholder=\"Nom du produit\"]"
           ]
@@ -2702,9 +2702,9 @@
             }
           ],
           "impact": null,
-          "html": "<a href=\"/produits/9\" data-discover=\"true\">Carnet chromium-0-mwo8gcdn-866532</a>",
+          "html": "<a href=\"/produits/50010\" data-discover=\"true\">Carnet chromium-0-mwospgax-396950</a>",
           "target": [
-            "a[href$=\"produits/9\"]"
+            "a[href=\"/produits/50010\"]"
           ]
         }
       ]
@@ -2738,7 +2738,7 @@
             }
           ],
           "impact": null,
-          "html": "<ul class=\"grid\"><li class=\"card\"><h2><a href=\"/produits/9\" data-discover=\"true\">Carnet chromium-0-mwo8gcdn-866532</a></h2><p>9,00&nbsp;€</p><p class=\"muted\">5 en stock</p></li></ul>",
+          "html": "<ul class=\"grid\"><li class=\"card\"><h2><a href=\"/produits/50010\" data-discover=\"true\">Carnet chromium-0-mwospgax-396950</a></h2><p>9,00&nbsp;€</p><p class=\"muted\">5 en stock</p></li></ul>",
           "target": [
             "ul"
           ]
@@ -2774,7 +2774,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<li class=\"card\"><h2><a href=\"/produits/9\" data-discover=\"true\">Carnet chromium-0-mwo8gcdn-866532</a></h2><p>9,00&nbsp;€</p><p class=\"muted\">5 en stock</p></li>",
+          "html": "<li class=\"card\"><h2><a href=\"/produits/50010\" data-discover=\"true\">Carnet chromium-0-mwospgax-396950</a></h2><p>9,00&nbsp;€</p><p class=\"muted\">5 en stock</p></li>",
           "target": [
             "li"
           ]
@@ -2903,9 +2903,63 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<option value=\"7\">Cat chromium-0-mwo8gcdn-866532</option>",
+          "html": "<option value=\"8\">Cat chromium-0-mwospgax-396950</option>",
+          "target": [
+            "option[value=\"8\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"7\">Cat chromium-1-mwospgay-863934</option>",
           "target": [
             "option[value=\"7\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"10\">Cat chromium-2-mwospgbm-895345</option>",
+          "target": [
+            "option[value=\"10\"]"
+          ]
+        },
+        {
+          "any": [
+            {
+              "id": "no-focusable-content",
+              "data": null,
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element does not have focusable descendants"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": null,
+          "html": "<option value=\"9\">Cat chromium-3-mwospgbb-543943</option>",
+          "target": [
+            "option[value=\"9\"]"
           ]
         },
         {
