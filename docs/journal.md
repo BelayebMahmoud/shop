@@ -1,6 +1,6 @@
 # Journal de bord
 
-## Phase 0 — Configuration de Claude Code (19/11/2026)
+## Phase 0 — Configuration de Claude Code 
 
 - Ajout de `CLAUDE.md` (règle de l'oracle, règle d'or), `.claude/settings.json` (permissions, plugins, hooks).
 - 3 hooks : protection des preuves (`reports/`, `docs/preuves/`), formatage Python (ruff), reprise de session.
@@ -9,7 +9,7 @@
 - Serveur MCP Playwright déclaré dans `.mcp.json` (exploratoire uniquement, pas une preuve).
 - Points ouverts : `docs/exigences.yaml` et `tools/trace.py` restent à écrire.
 
-## Mise en place + P0 (19/11/2026)
+## Mise en place + P0 
 
 - Documents du sujet copiés : `docs/cahier-des-charges.pdf`, `docs/cours/` (Chapitre I, fiches 1, 2, 4, TP3), `docs/plan-de-la-nuit.md`.
 - `CLAUDE.md` fusionné (plan + kit), permissions du plan ajoutées à `.claude/settings.json`.
@@ -17,7 +17,7 @@
 - P0 : analyse des écarts dans `docs/analyse-p0.md` (aucun code écrit). Fichiers de preuve : aucun.
 - Points ouverts : 3 questions bloquantes (domaine, critère de sortie sécurité, outils sous Windows).
 
-## Phase 1 — Planifier, Analyser, Concevoir (19/11/2026)
+## Phase 1 — Planifier, Analyser, Concevoir 
 
 - Réponses P0 validées : domaine *Gestion commerciale* ; critère de sortie sécurité du TP3 (0 High, 0 Medium non
   justifiée, Low justifiées) ; Semgrep et mutmut en conteneur ; `make` installé (winget, utilisateur).
@@ -31,7 +31,7 @@
 - Écarts : le script a corrigé un comptage fait à la main (CT : 24 valides / 26 échecs attendus).
 - Points ouverts : Q-01 à Q-12 (exigences.yaml) à valider avant la phase 2 ; 7 cas portent un attendu NON SPÉCIFIÉ.
 
-## Phase 2 — Fonctionnalités backend et tests unitaires (19/11/2026)
+## Phase 2 — Fonctionnalités backend et tests unitaires 
 
 - Décisions Q-01 à Q-12 acceptées et intégrées aux règles ; Q-07 et Q-09 ont créé BR-10 et BR-11 (TA-30, TA-31).
 - Refactorisation en couches `app/api` → `app/services` → `app/models` (+ `app/core`), comportement du MVP inchangé :
@@ -59,7 +59,7 @@
 - Points ouverts : comptage du top 5 par statut vérifié seulement en intégration (IT-11) ; tests MVP à remplacer
   par des cas TA tracés en phase 3.
 
-## Phase 3 — Tests d'intégration et d'API (19/11/2026)
+## Phase 3 — Tests d'intégration et d'API 
 
 - Intégration (`backend/tests/integration`) : IT-01 à IT-14, une réussite et une erreur par interface de
   `conception.md` §4, base PostgreSQL de test reconstruite avant chaque test.
@@ -85,7 +85,7 @@
   dur ; attente de 2 s dans TA-13 ; mutations API de BR-02, BR-04, BR-07, Q-08 non encore tentées ; 21 codes
   documentés jamais obtenus.
 
-## Phase 4 — Frontend, E2E, accessibilité, protocole d'utilisabilité (19/11/2026)
+## Phase 4 — Frontend, E2E, accessibilité, protocole d'utilisabilité 
 
 - Interface en français : catalogue (recherche, catégorie, prix, en stock, pagination), fiche, panier, connexion,
   mes commandes (annulation), back-office commandes (seules les transitions permises), produits (erreurs sous le champ,
@@ -103,7 +103,7 @@
 - `make check` vert (56 / 17 / 168 / 25, couverture services 99,4 %).
 - Points ouverts : Firefox (conteneur, phase 5) ; E2E en parallèle à confirmer (ENV-01) ; sessions d'utilisabilité.
 
-## Phase 5 — Portabilité, conteneurs, CI (19/11/2026, 23:05–23:55)
+## Phase 5 — Portabilité, conteneurs, CI 
 
 - Images : API sur `python:3.13-alpine3.24` (utilisateur 10001, healthcheck sur `/api/health`, pip et setuptools
   retirés de l'image d'exécution) ; web en deux étapes (build Node 22 → nginx non privilégié 1.31.7, en-têtes CSP,
@@ -120,7 +120,7 @@
 - Guide `docs/installation.md` et `README.md`.
 - Points ouverts : installation sur une seconde machine (coéquipier) ; exécution de la CI sur GitHub.
 
-## Phase 6 — Sécurité, partie 1 : SAST et SCA (19/11/2026, 23:55–00:10)
+## Phase 6 — Sécurité, partie 1 : SAST et SCA
 
 - SAST : Bandit 0 ; gitleaks 0 (historique complet) ; Semgrep 20 → 1 (17 actions épinglées par SHA, defusedxml,
   en-tête Host retiré ; 1 faux positif justifié). SCA : pip-audit 0/31 paquets, npm audit 0, Trivy fs 0 (et 27/27
@@ -131,7 +131,7 @@
 - En attente : signature de `docs/securite/autorisation.md` pour lancer ZAP (DAST) ; décision du groupe sur les
   licences LGPL-3.0 et MPL-2.0 (L1, L2).
 
-## Phase 6 — Sécurité, partie 2 : DAST (20/11/2026, 00:33–00:45)
+## Phase 6 — Sécurité, partie 2 : DAST 
 
 - Accord du responsable (00:33) consigné dans `docs/securite/autorisation.md` ; licences L1 et L2 acceptées.
 - ZAP depuis le réseau Compose : baseline (passif) puis API scan (actif, jeton ADMIN). Avant : baseline 3 Low ;
@@ -142,7 +142,7 @@
   documenté sur toutes les routes.
 - Critère de sortie TP3 tenu : 0 High non traitée, 0 Medium, 0 Low ; triage complet dans `docs/securite/triage.md`.
 
-## Phases 7 et 8 — préparation en parallèle (00:45–01:00)
+## Phases 7 et 8 — préparation en parallèle 
 
 - k6 (`perf/k6/smoke.js`, `load.js`, `search.js`) lancé dans le réseau Compose par `tools/perf_run.py` (échantillons
   `docker stats`, description de la machine). Smoke : 113 requêtes, 0 erreur, p95 64 ms.
@@ -152,7 +152,7 @@
   désormais ≤ 10) ; import-linter : 2 contrats tenus ; mutmut prêt (`scripts/mutation.sh`, dans Docker).
 - Phase 9 préparée : `tools/trace.py` (matrice générée), `tools/fill_cahier.py` ; phase 10 : `docs/demo.md`.
 
-## Phase 7 — Performance et fiabilité (20/11/2026, 00:44–00:58) — mesures sur la pile Compose
+## Phase 7 — Performance et fiabilité  — mesures sur la pile Compose
 
 - PERF-02 (20 utilisateurs, 5 min, 22 417 requêtes) : p95 liste 77 ms, détail 49 ms, 0 erreur → cibles tenues.
 - PERF-03 (recherche filtrée, 50 008 produits, 20 utilisateurs, 2 min) : p95 64 ms, 0 erreur.
@@ -165,7 +165,7 @@
 - Utilisabilité : séances reportées au 20/11/2026 (décision du groupe) → UX-02/UX-03 « en attente ».
 - `make check` vert : 58 unitaires, 17 intégration, 168 API, 8 sécurité, 3 fiabilité, 25 contrat ; couverture 99,4 %.
 
-## Phase 8 — Maintenabilité et résultats d'utilisabilité (20/11/2026, 00:58–01:40)
+## Phase 8 — Maintenabilité et résultats d'utilisabilité 
 
 - Mutation (mutmut 3.8.1, dans Docker, règles métier) : 102/133 tués (77 %) → assertions précisées (détails des
   erreurs, ligne tarifée, annulation PAID par STAFF, identifiants non triés dans CT-49) → **128/133 (96 %)**.
@@ -178,7 +178,7 @@
   E2E finaux : Docker 20/20 sur 3 navigateurs, poste 14/14.
 - Utilisabilité : séances au 20/11/2026 (en attente). Seconde machine : en attente.
 
-## Phase 9 — Clôture : traçabilité, conformité, rapport de test, gel des preuves (20/11/2026, 01:40–02:20)
+## Phase 9 — Clôture : traçabilité, conformité, rapport de test, gel des preuves 
 
 - Fait : matrice générée (`make trace`) — 36 exigences, 34 PASS, 2 PARTIAL (QR-US-02, QR-PO-01), 0 FAIL ; cahier
   rempli (136 cas) ; `docs/conformite.md` (8 caractéristiques, qualité en utilisation, correspondance 2011 → 2023,
@@ -191,7 +191,7 @@
 - Écarts : UX-02/UX-03 (séances du 20/11) et PORT-02 (seconde machine) en attente ; versions de k6, Trivy et mutmut
   non lues automatiquement par le gel (non écrites dans leurs rapports) — elles figurent dans les journaux de phase.
 
-## Phase 10 — Audit des preuves et version 1.0 (20/11/2026, 06:50–09:10)
+## Phase 10 — Audit des preuves et version 1.0 
 
 - Audit indépendant par le sous-agent `evidence-auditor` (revue de code, pas un résultat d'outil), passe 1 sur le gel
   initial : environ 162 affirmations vérifiées, 17 non étayées ou divergentes. Principales : installation propre et
@@ -211,7 +211,7 @@
   inchangés) ; nouveau gel `docs/preuves/v1.0/` par `tools/freeze_evidence.py`. Matrice : 34 PASS, 2 PARTIAL, 0 FAIL.
 - En attente (inchangé) : UX-02/UX-03 (séances du 20/11) et PORT-02 (seconde machine).
 
-## Après v1.0 — Écran de gestion des utilisateurs (20/11/2026)
+## Après v1.0 — Écran de gestion des utilisateurs 
 
 - Fait : écran React `/back-office/utilisateurs` réservé à ADMIN (FR-05) — liste filtrable, changement de rôle,
   désactivation avec boîte de confirmation ; refus 409 LAST_ADMIN affiché en clair (BR-11) ; lien de navigation masqué
