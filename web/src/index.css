@@ -28,9 +28,15 @@ main { max-width: 1040px; margin: 0 auto; padding: 1.5rem; }
 .kpis section { border: 1px solid var(--line); border-radius: 8px; padding: 1rem; }
 .kpis h2 { font-size: 1rem; margin-top: 0; }
 table { border-collapse: collapse; width: 100%; } td, th { padding: .5rem; border-bottom: 1px solid #e6e6e6; text-align: left; }
-/* ANO-07: on narrow screens a wide table scrolls inside its own box instead of overlapping its buttons. */
+/* ANO-07: on narrow screens a wide table scrolls inside its own box instead of overlapping its buttons.
+   ANO-10: no element may widen the page itself (form fields, long unbroken names). */
+*, *::before, *::after { box-sizing: border-box; }
+input, select, textarea { max-width: 100%; }
+.product-form input, .product-form select, .product-form textarea { width: 100%; }
+td, .card h2 { overflow-wrap: anywhere; }
 @media (max-width: 760px) {
-  table { display: block; overflow-x: auto; }
+  body { overflow-x: hidden; }
+  table { display: block; overflow-x: auto; max-width: 100%; }
   td.actions { flex-wrap: nowrap; }
   main { padding: 1rem; }
 }

@@ -37,3 +37,4 @@ def test_negative_subtotal_is_refused(subtotal):
     with pytest.raises(InvalidInput) as err:
         compute_totals(subtotal)
     assert err.value.code == "NEGATIVE_SUBTOTAL"
+    assert err.value.extra == {"subtotal_cents": subtotal}

@@ -20,6 +20,8 @@ Les résultats cités proviennent des sorties réelles des outils (fichiers dans
 | ENV-02 | 19/11/2026 | QR-CO-01 | Lancement de Firefox (Windows) | environnement | Contournée : Firefox en conteneur, 100 % PASS |
 | DT-02 | 19/11/2026 | QR-SE-02, QR-US-01 | E2E dans Docker (base de 50 000 produits) | mineure (défaut de test) | Corrigée |
 | ANO-08 | 20/11/2026 | QR-MA-02 | radon / xenon (MA-03) | mineure | Corrigée |
+| ANO-09 | 20/11/2026 | FR-07, QR-PE-01, QR-US-01 | UX-01 et E2E-04 (Docker, base de 3 609 commandes) | majeure | Corrigée |
+| ANO-10 | 20/11/2026 | FR-04, QR-CO-01, QR-US-02 | E2E-04 (projet mobile, Linux) | majeure | Corrigée |
 
 ## ANO-01 — Identifiant hors plage : erreur 500
 
@@ -157,3 +159,34 @@ Commit des corrections : commit « phase 3 » (voir `git log`).
 - **Confirmation** : radon → 129 blocs, moyenne 1,83 ; xenon → code de sortie 0 (aucun bloc au-delà du rang B) ;
   import-linter : 2 contrats tenus. **Non-régression** : IT-11, IT-12, TA-17 et les suites unitaires, d'intégration
   et d'API → 101 réussis ; `make check` complet en fin de phase.
+
+## ANO-09 — La liste des commandes du back-office n'était pas paginée
+
+- **Exigence** : FR-07 (le personnel lit toutes les commandes), QR-PE-01, QR-US-01.
+- **Tests** : UX-01 (audit axe du back-office) et E2E-04 sur le projet mobile, dans Docker, contre la base de la pile
+  après les essais de fiabilité (3 609 commandes) : délai de 30 s dépassé.
+- **Étapes** : `GET /api/orders` en STAFF → 3 609 commandes, réponse de 1 Mo ; la page affiche 3 609 lignes avec
+  leurs boutons.
+- **Attendu** : une page lisible et rapide quel que soit l'historique. **Obtenu** : page de plus en plus lente à chaque
+  commande passée.
+- **Erreur** : liste conçue avec quelques commandes de démonstration. **Défaut** : `services/orders.list_orders` sans
+  limite ; filtre de statut appliqué dans le navigateur. **Défaillance** : back-office inutilisable après quelques
+  milliers de commandes.
+- **Correction** : `limit` (50 par défaut, 200 maximum), `offset` et `status` traités par l'API, ordre antichronologique ;
+  pagination « plus récentes / plus anciennes » dans l'interface.
+- **Confirmation** : TA-38 (pagination, filtre, borne 422) ; UX-01 et E2E-04 rejoués dans Docker sur la même base.
+  **Non-régression** : `make check` et E2E complets en fin de phase (voir le journal).
+
+## ANO-10 — Sur téléphone, la page des produits débordait et un champ recouvrait « Supprimer »
+
+- **Exigence** : FR-04, QR-CO-01 (mobile), QR-US-02. **Test** : E2E-04, projet `mobile`, exécuté dans le conteneur
+  Playwright (polices Linux) : `<textarea id="f-description"> … intercepts pointer events` sur « Supprimer ».
+- **Constat (capture de la trace)** : la page défile horizontalement ; un élément plus large que l'écran déplace la mise
+  en page et le champ description du formulaire se trouve sous le doigt à la place du bouton.
+- **Erreur** : dimensions des champs laissées au navigateur ; noms longs sans coupure. **Défaut** :
+  `web/src/index.css` (pas de `box-sizing`, pas de largeur maximale des champs, pas de coupure des mots longs).
+  **Défaillance** : un membre du personnel sur téléphone ne peut pas supprimer un produit.
+- **Correction** : `box-sizing: border-box`, champs limités à 100 % de leur conteneur, coupure des mots longs dans
+  les tableaux et les cartes, la page elle-même ne défile jamais horizontalement.
+- **Confirmation** : E2E-04 `mobile` dans Docker → PASS. **Non-régression** : E2E complets → Docker 20/20 (chromium,
+  firefox, mobile), poste 14/14 (`reports/junit-e2e-docker.xml`, `reports/junit-e2e.xml`).

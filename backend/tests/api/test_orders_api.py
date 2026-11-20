@@ -234,3 +234,20 @@ def test_cancel_and_product_changes_are_audited(client, make, actor_role):
         ("PRODUCT_UPDATED", sam.id, pid),
         ("PRODUCT_DELETED", sam.id, pid),
     }, audit_actions
+
+
+@pytest.mark.req("FR-07")
+@pytest.mark.parametrize("count", [pytest.param(7, id="TA-38")])
+def test_back_office_order_list_is_paginated_and_filtered(client, make, count):
+    """ANO-09: the list returns one page, most recent first, optionally filtered by status — never every order."""
+    ana, sam, p1 = make.user(), make.user("STAFF"), make.product(1_000, 100)
+    created = [make.order(ana, [(p1, 1)]) for _ in range(count)]
+    make.set_status(created[0], "PAID")
+    page1 = client.get("/api/orders?limit=3", headers=sam.headers).json()
+    page2 = client.get("/api/orders?limit=3&offset=3", headers=sam.headers).json()
+    assert [o["id"] for o in page1] == [o.id for o in reversed(created)][:3]  # most recent first
+    assert [o["id"] for o in page2] == [o.id for o in reversed(created)][3:6]
+    paid = client.get("/api/orders?status=PAID", headers=sam.headers).json()
+    assert [o["id"] for o in paid] == [created[0].id]
+    assert client.get("/api/orders?limit=201", headers=sam.headers).status_code == 422
+    assert len(client.get("/api/orders", headers=ana.headers).json()) == count  # default page (50) holds them all

@@ -112,7 +112,7 @@ exigences:
     priorite: P0
     source: "plan phase 1 (portée fonctionnelle)"
     scenarios: [SC-FR-07-1, SC-FR-07-2]
-    cas: [TA-15, TA-16, E2E-03]
+    cas: [TA-15, TA-16, TA-38, E2E-03]
 
   - id: FR-08
     type: FR

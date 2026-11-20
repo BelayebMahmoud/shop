@@ -63,6 +63,7 @@ def test_forbidden_transition_is_refused(current, target):
     with pytest.raises(Conflict) as err:
         check_transition(current, target, STAFF)
     assert err.value.code == "INVALID_TRANSITION"
+    assert err.value.extra == {"current": current, "target": target}
 
 
 @pytest.mark.req("BR-05")
@@ -79,6 +80,7 @@ def test_customer_may_not_apply(current, target):
     with pytest.raises(Forbidden) as err:
         check_transition(current, target, CUSTOMER)
     assert err.value.code == "FORBIDDEN"
+    assert err.value.extra == {"current": current, "target": target}
 
 
 @pytest.mark.req("BR-05")
@@ -99,11 +101,14 @@ def test_admin_has_the_same_rights_as_staff(transitions):
 
 @pytest.mark.req("BR-06")
 @pytest.mark.parametrize(
-    ("lines", "stock_after_order", "expected_stock"),
-    [pytest.param([(P1, 2), (P2, 1)], {P1: 8, P2: 2}, {P1: 10, P2: 3}, id="CT-42")],
+    ("status", "lines", "stock_after_order", "expected_stock"),
+    [
+        pytest.param(PLACED, [(P1, 2), (P2, 1)], {P1: 8, P2: 2}, {P1: 10, P2: 3}, id="CT-42"),
+        pytest.param(PAID, [(P1, 2), (P2, 1)], {P1: 8, P2: 2}, {P1: 10, P2: 3}, id="CT-42-paid-by-staff"),
+    ],
 )
-def test_cancel_puts_every_line_back_in_stock(lines, stock_after_order, expected_stock):
-    back = cancel_restock(PLACED, STAFF, lines)
+def test_cancel_puts_every_line_back_in_stock(status, lines, stock_after_order, expected_stock):
+    back = cancel_restock(status, STAFF, lines)  # STAFF may cancel PLACED and PAID orders (BR-05)
     assert {pid: stock_after_order[pid] + back.get(pid, 0) for pid in stock_after_order} == expected_stock
 
 

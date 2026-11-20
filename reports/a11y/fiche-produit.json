@@ -13,8 +13,8 @@
     "orientationAngle": 0,
     "orientationType": "landscape-primary"
   },
-  "timestamp": "2026-11-19T23:39:24.925Z",
-  "url": "http://web:8080/produits/50088",
+  "timestamp": "2026-11-20T00:20:34.087Z",
+  "url": "http://127.0.0.1:5174/produits/9",
   "toolOptions": {
     "runOnly": {
       "type": "tag",
@@ -1233,7 +1233,7 @@
               "data": null,
               "relatedNodes": [
                 {
-                  "html": "<h1>Carnet chromium-0-mwo6zebp-301393</h1>",
+                  "html": "<h1>Carnet chromium-0-mwo8gcdn-866532</h1>",
                   "target": [
                     "h1"
                   ]
@@ -1431,7 +1431,7 @@
           "all": [],
           "none": [],
           "impact": null,
-          "html": "<h1>Carnet chromium-0-mwo6zebp-301393</h1>",
+          "html": "<h1>Carnet chromium-0-mwo8gcdn-866532</h1>",
           "target": [
             "h1"
           ]
@@ -1542,15 +1542,15 @@
               "id": "color-contrast",
               "data": {
                 "fgColor": "#000000",
-                "bgColor": "#efefef",
-                "contrastRatio": 18.26,
+                "bgColor": "#f0f0f0",
+                "contrastRatio": 18.42,
                 "fontSize": "12.0pt (16px)",
                 "fontWeight": "normal",
                 "expectedContrastRatio": "4.5:1"
               },
               "relatedNodes": [],
               "impact": "serious",
-              "message": "Element has sufficient color contrast of 18.26"
+              "message": "Element has sufficient color contrast of 18.42"
             }
           ],
           "all": [],

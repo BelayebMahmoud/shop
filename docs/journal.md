@@ -164,3 +164,16 @@
   `reports/reliability/rel-0{1,2}.json` (+ chronologies brutes).
 - Utilisabilité : séances reportées au 20/11/2026 (décision du groupe) → UX-02/UX-03 « en attente ».
 - `make check` vert : 58 unitaires, 17 intégration, 168 API, 8 sécurité, 3 fiabilité, 25 contrat ; couverture 99,4 %.
+
+## Phase 8 — Maintenabilité et résultats d'utilisabilité (20/11/2026, 00:58–01:40)
+
+- Mutation (mutmut 3.8.1, dans Docker, règles métier) : 102/133 tués (77 %) → assertions précisées (détails des
+  erreurs, ligne tarifée, annulation PAID par STAFF, identifiants non triés dans CT-49) → **128/133 (96 %)**.
+  5 survivants examinés un par un : équivalents ou inatteignables (arrondi +50/+51 impossible à distinguer pour 5 % et
+  10 % ; statut inconnu interdit par la contrainte CHECK ; doublons de produit interdits par la clé primaire ;
+  ordre des égalités non spécifié par la règle) — `reports/maintenabilite/mutmut-*.{json,txt}`.
+- Propriété Hypothesis BR-04 (4 000 cas) réussie ; complexité ≤ 10 (après ANO-08) ; import-linter 2/2.
+- Anomalies trouvées en rejouant les E2E sur la base chargée par les essais de fiabilité : ANO-09 (liste des
+  commandes non paginée → pagination et filtre côté API, TA-38) et ANO-10 (débordement de page sur téléphone).
+  E2E finaux : Docker 20/20 sur 3 navigateurs, poste 14/14.
+- Utilisabilité : séances au 20/11/2026 (en attente). Seconde machine : en attente.

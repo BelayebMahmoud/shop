@@ -1,10 +1,10 @@
 # Couverture de l'API (route × méthode × code)
 
-Généré par `tools/api_coverage.py` le 2026-11-19T23:58:33+00:00 à partir de `reports/junit-api.xml`, `reports/junit-integration.xml` et du contrat OpenAPI de l'application.
+Généré par `tools/api_coverage.py` le 2026-11-20T00:22:55+00:00 à partir de `reports/junit-api.xml`, `reports/junit-integration.xml` et du contrat OpenAPI de l'application.
 
 - Opérations exercées : 25 / 25
 - Codes documentés obtenus (hors 422 automatique non obtenu) : 74 / 119
-- Appels HTTP enregistrés : 212
+- Appels HTTP enregistrés : 214
 
 | Méthode | Route | Codes documentés : obtenu ? | Codes obtenus non documentés |
 | --- | --- | --- | --- |
@@ -20,7 +20,7 @@ Généré par `tools/api_coverage.py` le 2026-11-19T23:58:33+00:00 à partir de 
 | `PUT` | `/api/categories/{category_id}` | 200 oui, 400 non, 401 oui, 403 oui, 404 non, 409 non, 422 non, 503 non | — |
 | `GET` | `/api/dashboard` | 200 oui, 401 oui, 403 oui, 422 oui, 503 non | — |
 | `GET` | `/api/health` | 200 oui, 503 non | — |
-| `GET` | `/api/orders` | 200 oui, 401 oui, 503 non | — |
+| `GET` | `/api/orders` | 200 oui, 401 oui, 422 oui, 503 non | — |
 | `POST` | `/api/orders` | 201 oui, 400 non, 401 oui, 403 oui, 404 oui, 409 oui, 422 oui, 503 non | — |
 | `GET` | `/api/orders/{order_id}` | 200 oui, 401 oui, 404 oui, 422 oui, 503 non | — |
 | `POST` | `/api/orders/{order_id}/cancel` | 200 oui, 401 oui, 403 oui, 404 oui, 409 oui, 422 non, 503 non | — |

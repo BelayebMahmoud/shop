@@ -33,19 +33,20 @@ def test_valid_order_shape_is_accepted(lines):
 
 @pytest.mark.req("BR-03")
 @pytest.mark.parametrize(
-    ("lines", "code"),
+    ("lines", "code", "details"),
     [
-        pytest.param([Line(P1, 0)], "QUANTITY_RANGE", id="CT-01"),
-        pytest.param([Line(P1, 100)], "QUANTITY_RANGE", id="CT-04"),
-        pytest.param([Line(P1, -1)], "QUANTITY_RANGE", id="CT-05"),
-        pytest.param([], "LINE_COUNT", id="CT-06"),
-        pytest.param(lines_of(51), "LINE_COUNT", id="CT-09"),
+        pytest.param([Line(P1, 0)], "QUANTITY_RANGE", {"min": 1, "max": 99, "product_ids": [P1]}, id="CT-01"),
+        pytest.param([Line(P1, 100)], "QUANTITY_RANGE", {"min": 1, "max": 99, "product_ids": [P1]}, id="CT-04"),
+        pytest.param([Line(P1, -1)], "QUANTITY_RANGE", {"min": 1, "max": 99, "product_ids": [P1]}, id="CT-05"),
+        pytest.param([], "LINE_COUNT", {"min": 1, "max": 50, "received": 0}, id="CT-06"),
+        pytest.param(lines_of(51), "LINE_COUNT", {"min": 1, "max": 50, "received": 51}, id="CT-09"),
     ],
 )
-def test_invalid_order_shape_is_refused(lines, code):
+def test_invalid_order_shape_is_refused(lines, code, details):
     with pytest.raises(InvalidInput) as err:
         validate_lines(lines)
     assert err.value.code == code
+    assert err.value.extra == details  # the bounds of BR-03 and the faulty lines are reported exactly
 
 
 @pytest.mark.req("BR-03")
@@ -90,5 +91,5 @@ def test_client_price_is_ignored(catalogue_price):
     # Act
     priced = price_lines(merge_lines([Line(P1, 1)]), {P1: catalogue_price})
     # Assert: unit price and subtotal are the catalogue's 40.00 EUR
-    assert priced[0].unit_price_cents == 4_000
+    assert (priced[0].product_id, priced[0].quantity, priced[0].unit_price_cents) == (P1, 1, 4_000)
     assert subtotal_cents(priced) == 4_000

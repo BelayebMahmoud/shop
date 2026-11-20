@@ -183,6 +183,7 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | TA-35 | En-tête `Allow` complet sur 405 | QR-CO-02 | API démarrée | `PATCH` sur `/api/categories`, `/api/products/1`, `/api/audit/1` | appeler | 405 ; `Allow` = GET, POST / DELETE, GET, PUT / GET (ANO-04) | | | échec attendu |
 | TA-36 | Un client n'annule ni une commande PAID ni une commande SHIPPED | BR-05, BR-06 | commande d'Ana 2 × P1 au statut PAID, puis SHIPPED ; stock 8 | — | `POST /api/orders/{id}/cancel` par Ana, relire | PAID : 403 FORBIDDEN (décision Q-02) ; SHIPPED : 409 INVALID_TRANSITION ; statut et stock (8) inchangés | | | échec attendu |
 | TA-37 | Annulation et modifications de produit journalisées | FR-11 | Ana, Sam (STAFF), une commande PLACED d'Ana | annulation par Ana ; création, modification, suppression d'un produit par Sam | appeler, lire le journal | entrées ORDER_CANCELLED (Ana), PRODUCT_CREATED, PRODUCT_UPDATED, PRODUCT_DELETED (Sam) avec la bonne cible | | | valide |
+| TA-38 | Liste des commandes paginée et filtrée | FR-07 | 7 commandes d'Ana ; Sam connecté | `limit=3`, `offset=3`, `status=PAID`, `limit=201` | appeler `GET /api/orders` | pages de 3 dans l'ordre antichronologique, sans recouvrement ; filtre PAID : la seule commande payée ; `limit=201` → 422 (ANO-09) | | | valide |
 
 ## 4. Tests de bout en bout (E2E) — Chromium, Firefox, mobile (Pixel 7)
 
@@ -233,7 +234,7 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | --- | --- | --- | --- | --- |
 | Unitaire | CT | 56 | 27 | 29 |
 | Intégration | IT | 14 | 9 | 5 |
-| API | TA | 37 | 14 | 23 |
+| API | TA | 38 | 15 | 23 |
 | E2E | E2E | 5 | 4 | 1 |
 | Sécurité | SEC | 7 | 3 | 4 |
 | Performance | PERF | 3 | 3 | 0 |
@@ -241,7 +242,7 @@ Base PostgreSQL de test jetable, schéma reconstruit avant chaque test.
 | Utilisabilité | UX | 3 | 3 | 0 |
 | Maintenabilité | MA | 4 | 4 | 0 |
 | Portabilité | PORT | 2 | 2 | 0 |
-| **Total** | | **135** | | |
+| **Total** | | **136** | | |
 
 Cas dont l'attendu dépend d'une décision Q-xx du 19/11/2026 : CT-41, CT-50, IT-11, IT-12, IT-13, IT-14, TA-11,
 TA-12, TA-22, TA-24, TA-30, TA-31. Comptages produits par `tools/check_docs.py`, pas à la main.

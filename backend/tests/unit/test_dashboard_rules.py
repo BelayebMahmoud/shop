@@ -17,8 +17,8 @@ def test_low_stock_threshold(listed, not_listed):
     ("sold", "expected"),
     [
         pytest.param(
-            {11: 9, 12: 8, 13: 7, 14: 6, 15: 5, 16: 4},
-            [(11, 9), (12, 8), (13, 7), (14, 6), (15, 5)],
+            {16: 9, 11: 8, 15: 7, 12: 6, 14: 5, 13: 4},  # ids deliberately not in quantity order
+            [(16, 9), (11, 8), (15, 7), (12, 6), (14, 5)],
             id="CT-49",
         )
     ],

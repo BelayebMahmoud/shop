@@ -1,24 +1,92 @@
-<testsuites id="" name="" tests="8" failures="0" skipped="0" errors="0" time="8.319630000000002">
-<testsuite name="accessibilite.spec.ts" timestamp="2026-11-19T23:39:21.045Z" hostname="chromium" tests="2" failures="0" skipped="0" time="11.879" errors="0">
-<testcase name="UX-01 accessibilité : catalogue, fiche produit et panier, avec contenu @QR-US-01" classname="accessibilite.spec.ts" time="4.761">
+<testsuites id="" name="" tests="24" failures="0" skipped="4" errors="0" time="21.493199">
+<testsuite name="accessibilite.spec.ts" timestamp="2026-11-20T00:19:56.721Z" hostname="chromium" tests="2" failures="0" skipped="0" time="11.6" errors="0">
+<testcase name="UX-01 accessibilité : catalogue, fiche produit et panier, avec contenu @QR-US-01" classname="accessibilite.spec.ts" time="4.509">
 </testcase>
-<testcase name="UX-01 accessibilité : back-office (commandes, produits, dialogue, erreurs de champ) @QR-US-01" classname="accessibilite.spec.ts" time="7.118">
-</testcase>
-</testsuite>
-<testsuite name="parcours.spec.ts" timestamp="2026-11-19T23:39:21.045Z" hostname="chromium" tests="5" failures="0" skipped="0" time="12.124" errors="0">
-<testcase name="E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04" classname="parcours.spec.ts" time="2.975">
-</testcase>
-<testcase name="E2E-02 refus pour rupture de stock @BR-01" classname="parcours.spec.ts" time="2.54">
-</testcase>
-<testcase name="E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05" classname="parcours.spec.ts" time="2.104">
-</testcase>
-<testcase name="E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02" classname="parcours.spec.ts" time="2.66">
-</testcase>
-<testcase name="E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09" classname="parcours.spec.ts" time="1.845">
+<testcase name="UX-01 accessibilité : back-office (commandes, produits, dialogue, erreurs de champ) @QR-US-01" classname="accessibilite.spec.ts" time="7.091">
 </testcase>
 </testsuite>
-<testsuite name="securite.spec.ts" timestamp="2026-11-19T23:39:21.045Z" hostname="chromium" tests="1" failures="0" skipped="0" time="1.146" errors="0">
-<testcase name="SEC-02 XSS stocké dans un nom de produit : affiché comme texte, jamais exécuté @QR-SE-02" classname="securite.spec.ts" time="1.146">
+<testsuite name="parcours.spec.ts" timestamp="2026-11-20T00:19:56.721Z" hostname="chromium" tests="5" failures="0" skipped="0" time="11.56" errors="0">
+<testcase name="E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04" classname="parcours.spec.ts" time="2.915">
+</testcase>
+<testcase name="E2E-02 refus pour rupture de stock @BR-01" classname="parcours.spec.ts" time="2.406">
+</testcase>
+<testcase name="E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05" classname="parcours.spec.ts" time="1.992">
+</testcase>
+<testcase name="E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02" classname="parcours.spec.ts" time="2.488">
+</testcase>
+<testcase name="E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09" classname="parcours.spec.ts" time="1.759">
+</testcase>
+</testsuite>
+<testsuite name="securite.spec.ts" timestamp="2026-11-20T00:19:56.721Z" hostname="chromium" tests="1" failures="0" skipped="0" time="1.131" errors="0">
+<testcase name="SEC-02 XSS stocké dans un nom de produit : affiché comme texte, jamais exécuté @QR-SE-02" classname="securite.spec.ts" time="1.131">
+</testcase>
+</testsuite>
+<testsuite name="accessibilite.spec.ts" timestamp="2026-11-20T00:19:56.721Z" hostname="firefox" tests="2" failures="0" skipped="2" time="0.006" errors="0">
+<testcase name="UX-01 accessibilité : catalogue, fiche produit et panier, avec contenu @QR-US-01" classname="accessibilite.spec.ts">
+<properties>
+<property name="skip" value="axe runs once, on desktop chromium">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="UX-01 accessibilité : back-office (commandes, produits, dialogue, erreurs de champ) @QR-US-01" classname="accessibilite.spec.ts">
+<properties>
+<property name="skip" value="axe runs once, on desktop chromium">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="parcours.spec.ts" timestamp="2026-11-20T00:19:56.721Z" hostname="firefox" tests="5" failures="0" skipped="0" time="25.17" errors="0">
+<testcase name="E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04" classname="parcours.spec.ts" time="5.393">
+</testcase>
+<testcase name="E2E-02 refus pour rupture de stock @BR-01" classname="parcours.spec.ts" time="4.677">
+</testcase>
+<testcase name="E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05" classname="parcours.spec.ts" time="4.919">
+</testcase>
+<testcase name="E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02" classname="parcours.spec.ts" time="6.933">
+</testcase>
+<testcase name="E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09" classname="parcours.spec.ts" time="3.248">
+</testcase>
+</testsuite>
+<testsuite name="securite.spec.ts" timestamp="2026-11-20T00:19:56.721Z" hostname="firefox" tests="1" failures="0" skipped="0" time="2.205" errors="0">
+<testcase name="SEC-02 XSS stocké dans un nom de produit : affiché comme texte, jamais exécuté @QR-SE-02" classname="securite.spec.ts" time="2.205">
+</testcase>
+</testsuite>
+<testsuite name="accessibilite.spec.ts" timestamp="2026-11-20T00:19:56.721Z" hostname="mobile" tests="2" failures="0" skipped="2" time="0.01" errors="0">
+<testcase name="UX-01 accessibilité : catalogue, fiche produit et panier, avec contenu @QR-US-01" classname="accessibilite.spec.ts">
+<properties>
+<property name="skip" value="axe runs once, on desktop chromium">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="UX-01 accessibilité : back-office (commandes, produits, dialogue, erreurs de champ) @QR-US-01" classname="accessibilite.spec.ts">
+<properties>
+<property name="skip" value="axe runs once, on desktop chromium">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="parcours.spec.ts" timestamp="2026-11-20T00:19:56.721Z" hostname="mobile" tests="5" failures="0" skipped="0" time="11.862" errors="0">
+<testcase name="E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04" classname="parcours.spec.ts" time="2.586">
+</testcase>
+<testcase name="E2E-02 refus pour rupture de stock @BR-01" classname="parcours.spec.ts" time="1.662">
+</testcase>
+<testcase name="E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05" classname="parcours.spec.ts" time="2.197">
+</testcase>
+<testcase name="E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02" classname="parcours.spec.ts" time="2.914">
+</testcase>
+<testcase name="E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09" classname="parcours.spec.ts" time="2.503">
+</testcase>
+</testsuite>
+<testsuite name="securite.spec.ts" timestamp="2026-11-20T00:19:56.721Z" hostname="mobile" tests="1" failures="0" skipped="0" time="0.99" errors="0">
+<testcase name="SEC-02 XSS stocké dans un nom de produit : affiché comme texte, jamais exécuté @QR-SE-02" classname="securite.spec.ts" time="0.99">
 </testcase>
 </testsuite>
 </testsuites>

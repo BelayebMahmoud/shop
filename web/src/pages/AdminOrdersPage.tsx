@@ -2,12 +2,18 @@ import { useCallback, useEffect, useState } from 'react';
 import { ApiError, changeStatus, getOrders, money, type Order, type OrderStatus } from '../api';
 import { NEXT, STATUS_LABEL } from '../workflow';
 
+const PAGE_SIZE = 50; // ANO-09: one page at a time, filtered by the API
+
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[] | null>(null);
   const [status, setStatus] = useState<OrderStatus | ''>('');
+  const [offset, setOffset] = useState(0);
   const [message, setMessage] = useState<{ kind: 'status' | 'alert'; text: string } | null>(null);
 
-  const load = useCallback(() => getOrders().then(setOrders), []);
+  const load = useCallback(
+    () => getOrders({ status: status || undefined, limit: PAGE_SIZE, offset }).then(setOrders),
+    [status, offset],
+  );
   useEffect(() => { load(); }, [load]);
 
   const move = async (order: Order, to: OrderStatus) => {
@@ -21,13 +27,13 @@ export default function AdminOrdersPage() {
     load();
   };
 
-  const shown = orders?.filter(o => !status || o.status === status) ?? null;
+  const shown = orders;
   return (
     <main>
       <h1>Commandes (back-office)</h1>
       <label>
         Statut{' '}
-        <select value={status} onChange={e => setStatus(e.target.value as OrderStatus | '')}>
+        <select value={status} onChange={e => { setStatus(e.target.value as OrderStatus | ''); setOffset(0); }}>
           <option value="">Tous</option>
           {Object.entries(STATUS_LABEL).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
         </select>
@@ -62,6 +68,15 @@ export default function AdminOrdersPage() {
           </tbody>
         </table>
       )}
+      <div className="pager">
+        <button type="button" disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - PAGE_SIZE))}>
+          Commandes plus récentes
+        </button>
+        <span>Commandes {offset + 1} à {offset + (shown?.length ?? 0)}</span>
+        <button type="button" disabled={(shown?.length ?? 0) < PAGE_SIZE} onClick={() => setOffset(offset + PAGE_SIZE)}>
+          Commandes plus anciennes
+        </button>
+      </div>
     </main>
   );
 }

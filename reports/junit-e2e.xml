@@ -1,26 +1,28 @@
-<testsuites id="" name="" tests="24" failures="0" skipped="6" errors="7" time="109.258045">
-<testsuite name="accessibilite.spec.ts" timestamp="2026-11-19T22:20:44.610Z" hostname="chromium" tests="3" failures="0" skipped="0" time="5.144" errors="0">
-<testcase name="UX-01 accessibilité : catalogue @QR-US-01" classname="accessibilite.spec.ts" time="1.366">
+<testsuites id="" name="" tests="16" failures="0" skipped="2" errors="0" time="39.431508">
+<testsuite name="accessibilite.spec.ts" timestamp="2026-11-20T00:20:30.087Z" hostname="chromium" tests="2" failures="0" skipped="0" time="6.173" errors="0">
+<testcase name="UX-01 accessibilité : catalogue, fiche produit et panier, avec contenu @QR-US-01" classname="accessibilite.spec.ts" time="2.409">
 </testcase>
-<testcase name="UX-01 accessibilité : fiche produit et panier @QR-US-01" classname="accessibilite.spec.ts" time="1.728">
-</testcase>
-<testcase name="UX-01 accessibilité : back-office commandes et gestion des produits @QR-US-01" classname="accessibilite.spec.ts" time="2.05">
+<testcase name="UX-01 accessibilité : back-office (commandes, produits, dialogue, erreurs de champ) @QR-US-01" classname="accessibilite.spec.ts" time="3.764">
 </testcase>
 </testsuite>
-<testsuite name="parcours.spec.ts" timestamp="2026-11-19T22:20:44.610Z" hostname="chromium" tests="5" failures="0" skipped="0" time="9.054" errors="0">
-<testcase name="E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04" classname="parcours.spec.ts" time="1.801">
+<testsuite name="parcours.spec.ts" timestamp="2026-11-20T00:20:30.087Z" hostname="chromium" tests="5" failures="0" skipped="0" time="8.429" errors="0">
+<testcase name="E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04" classname="parcours.spec.ts" time="1.825">
 </testcase>
-<testcase name="E2E-02 refus pour rupture de stock @BR-01" classname="parcours.spec.ts" time="1.472">
+<testcase name="E2E-02 refus pour rupture de stock @BR-01" classname="parcours.spec.ts" time="1.573">
 </testcase>
-<testcase name="E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05" classname="parcours.spec.ts" time="1.681">
+<testcase name="E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05" classname="parcours.spec.ts" time="1.611">
 </testcase>
-<testcase name="E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02" classname="parcours.spec.ts" time="2.063">
+<testcase name="E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02" classname="parcours.spec.ts" time="1.538">
 </testcase>
-<testcase name="E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09" classname="parcours.spec.ts" time="2.037">
+<testcase name="E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09" classname="parcours.spec.ts" time="1.882">
 </testcase>
 </testsuite>
-<testsuite name="accessibilite.spec.ts" timestamp="2026-11-19T22:20:44.610Z" hostname="firefox" tests="3" failures="0" skipped="3" time="0.002" errors="0">
-<testcase name="UX-01 accessibilité : catalogue @QR-US-01" classname="accessibilite.spec.ts">
+<testsuite name="securite.spec.ts" timestamp="2026-11-20T00:20:30.087Z" hostname="chromium" tests="1" failures="0" skipped="0" time="0.902" errors="0">
+<testcase name="SEC-02 XSS stocké dans un nom de produit : affiché comme texte, jamais exécuté @QR-SE-02" classname="securite.spec.ts" time="0.902">
+</testcase>
+</testsuite>
+<testsuite name="accessibilite.spec.ts" timestamp="2026-11-20T00:20:30.087Z" hostname="mobile" tests="2" failures="0" skipped="2" time="0.001" errors="0">
+<testcase name="UX-01 accessibilité : catalogue, fiche produit et panier, avec contenu @QR-US-01" classname="accessibilite.spec.ts">
 <properties>
 <property name="skip" value="axe runs once, on desktop chromium">
 </property>
@@ -28,15 +30,7 @@
 <skipped>
 </skipped>
 </testcase>
-<testcase name="UX-01 accessibilité : fiche produit et panier @QR-US-01" classname="accessibilite.spec.ts">
-<properties>
-<property name="skip" value="axe runs once, on desktop chromium">
-</property>
-</properties>
-<skipped>
-</skipped>
-</testcase>
-<testcase name="UX-01 accessibilité : back-office commandes et gestion des produits @QR-US-01" classname="accessibilite.spec.ts">
+<testcase name="UX-01 accessibilité : back-office (commandes, produits, dialogue, erreurs de champ) @QR-US-01" classname="accessibilite.spec.ts">
 <properties>
 <property name="skip" value="axe runs once, on desktop chromium">
 </property>
@@ -45,379 +39,20 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="parcours.spec.ts" timestamp="2026-11-19T22:20:44.610Z" hostname="firefox" tests="5" failures="0" skipped="0" time="0.006" errors="5">
-<testcase name="E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04" classname="parcours.spec.ts" time="0">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\web\test-results\parcours-E2E-01-parcours-c-bbfb2-nde-FR-01-FR-06-FR-10-BR-04-firefox\error-context.md]]
-
-[[ATTACHMENT|..\web\test-results\parcours-E2E-01-parcours-c-bbfb2-nde-FR-01-FR-06-FR-10-BR-04-firefox\trace.zip]]
-]]>
-</system-out>
-<error message="browserType.launch: spawn UNKNOWN" type="Error">
-<![CDATA[  [firefox] › parcours.spec.ts:10:1 › E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04 
-
-    Error: browserType.launch: spawn UNKNOWN
-    Call log:
-      - <launching> C:\Users\Mahmoud\AppData\Local\ms-playwright\firefox-1572\firefox\firefox.exe -no-remote -headless -profile C:\Users\Mahmoud\AppData\Local\Temp\playwright_firefoxdev_profile-y3hA7t -juggler-pipe -silent
-
-
-    Error Context: ..\test-results\parcours-E2E-01-parcours-c-bbfb2-nde-FR-01-FR-06-FR-10-BR-04-firefox\error-context.md
-
-    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\test-results\parcours-E2E-01-parcours-c-bbfb2-nde-FR-01-FR-06-FR-10-BR-04-firefox\trace.zip
-    Usage:
-
-        npx playwright show-trace ..\test-results\parcours-E2E-01-parcours-c-bbfb2-nde-FR-01-FR-06-FR-10-BR-04-firefox\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</error>
+<testsuite name="parcours.spec.ts" timestamp="2026-11-20T00:20:30.087Z" hostname="mobile" tests="5" failures="0" skipped="0" time="8.861" errors="0">
+<testcase name="E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04" classname="parcours.spec.ts" time="2.305">
 </testcase>
-<testcase name="E2E-02 refus pour rupture de stock @BR-01" classname="parcours.spec.ts" time="0.001">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\web\test-results\parcours-E2E-02-refus-pour-rupture-de-stock-BR-01-firefox\error-context.md]]
-
-[[ATTACHMENT|..\web\test-results\parcours-E2E-02-refus-pour-rupture-de-stock-BR-01-firefox\trace.zip]]
-]]>
-</system-out>
-<error message="browserType.launch: spawn UNKNOWN" type="Error">
-<![CDATA[  [firefox] › parcours.spec.ts:37:1 › E2E-02 refus pour rupture de stock @BR-01 ────────────────────
-
-    Error: browserType.launch: spawn UNKNOWN
-    Call log:
-      - <launching> C:\Users\Mahmoud\AppData\Local\ms-playwright\firefox-1572\firefox\firefox.exe -no-remote -headless -profile C:\Users\Mahmoud\AppData\Local\Temp\playwright_firefoxdev_profile-nyRy6W -juggler-pipe -silent
-
-
-    Error Context: ..\test-results\parcours-E2E-02-refus-pour-rupture-de-stock-BR-01-firefox\error-context.md
-
-    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\test-results\parcours-E2E-02-refus-pour-rupture-de-stock-BR-01-firefox\trace.zip
-    Usage:
-
-        npx playwright show-trace ..\test-results\parcours-E2E-02-refus-pour-rupture-de-stock-BR-01-firefox\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</error>
+<testcase name="E2E-02 refus pour rupture de stock @BR-01" classname="parcours.spec.ts" time="1.56">
 </testcase>
-<testcase name="E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05" classname="parcours.spec.ts" time="0.002">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\web\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-firefox\error-context.md]]
-
-[[ATTACHMENT|..\web\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-firefox\trace.zip]]
-]]>
-</system-out>
-<error message="browserType.launch: spawn UNKNOWN" type="Error">
-<![CDATA[  [firefox] › parcours.spec.ts:57:1 › E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05 
-
-    Error: browserType.launch: spawn UNKNOWN
-    Call log:
-      - <launching> C:\Users\Mahmoud\AppData\Local\ms-playwright\firefox-1572\firefox\firefox.exe -no-remote -headless -profile C:\Users\Mahmoud\AppData\Local\Temp\playwright_firefoxdev_profile-NxrEYY -juggler-pipe -silent
-
-
-    Error Context: ..\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-firefox\error-context.md
-
-    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-firefox\trace.zip
-    Usage:
-
-        npx playwright show-trace ..\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-firefox\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</error>
+<testcase name="E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05" classname="parcours.spec.ts" time="1.753">
 </testcase>
-<testcase name="E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02" classname="parcours.spec.ts" time="0.002">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\web\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-firefox\error-context.md]]
-
-[[ATTACHMENT|..\web\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-firefox\trace.zip]]
-]]>
-</system-out>
-<error message="browserType.launch: spawn UNKNOWN" type="Error">
-<![CDATA[  [firefox] › parcours.spec.ts:84:1 › E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02 
-
-    Error: browserType.launch: spawn UNKNOWN
-    Call log:
-      - <launching> C:\Users\Mahmoud\AppData\Local\ms-playwright\firefox-1572\firefox\firefox.exe -no-remote -headless -profile C:\Users\Mahmoud\AppData\Local\Temp\playwright_firefoxdev_profile-m4SJVS -juggler-pipe -silent
-
-
-    Error Context: ..\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-firefox\error-context.md
-
-    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-firefox\trace.zip
-    Usage:
-
-        npx playwright show-trace ..\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-firefox\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</error>
+<testcase name="E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02" classname="parcours.spec.ts" time="1.517">
 </testcase>
-<testcase name="E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09" classname="parcours.spec.ts" time="0.001">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\web\test-results\parcours-E2E-05-filtres-du-c413c-indicateurs-que-l’API-FR-09-firefox\error-context.md]]
-
-[[ATTACHMENT|..\web\test-results\parcours-E2E-05-filtres-du-c413c-indicateurs-que-l’API-FR-09-firefox\trace.zip]]
-]]>
-</system-out>
-<error message="browserType.launch: spawn UNKNOWN" type="Error">
-<![CDATA[  [firefox] › parcours.spec.ts:123:1 › E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09 
-
-    Error: browserType.launch: spawn UNKNOWN
-    Call log:
-      - <launching> C:\Users\Mahmoud\AppData\Local\ms-playwright\firefox-1572\firefox\firefox.exe -no-remote -headless -profile C:\Users\Mahmoud\AppData\Local\Temp\playwright_firefoxdev_profile-9R4oqN -juggler-pipe -silent
-
-
-    Error Context: ..\test-results\parcours-E2E-05-filtres-du-c413c-indicateurs-que-l’API-FR-09-firefox\error-context.md
-
-    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\test-results\parcours-E2E-05-filtres-du-c413c-indicateurs-que-l’API-FR-09-firefox\trace.zip
-    Usage:
-
-        npx playwright show-trace ..\test-results\parcours-E2E-05-filtres-du-c413c-indicateurs-que-l’API-FR-09-firefox\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</error>
+<testcase name="E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09" classname="parcours.spec.ts" time="1.726">
 </testcase>
 </testsuite>
-<testsuite name="accessibilite.spec.ts" timestamp="2026-11-19T22:20:44.610Z" hostname="mobile" tests="3" failures="0" skipped="3" time="0.003" errors="0">
-<testcase name="UX-01 accessibilité : catalogue @QR-US-01" classname="accessibilite.spec.ts">
-<properties>
-<property name="skip" value="axe runs once, on desktop chromium">
-</property>
-</properties>
-<skipped>
-</skipped>
-</testcase>
-<testcase name="UX-01 accessibilité : fiche produit et panier @QR-US-01" classname="accessibilite.spec.ts">
-<properties>
-<property name="skip" value="axe runs once, on desktop chromium">
-</property>
-</properties>
-<skipped>
-</skipped>
-</testcase>
-<testcase name="UX-01 accessibilité : back-office commandes et gestion des produits @QR-US-01" classname="accessibilite.spec.ts">
-<properties>
-<property name="skip" value="axe runs once, on desktop chromium">
-</property>
-</properties>
-<skipped>
-</skipped>
-</testcase>
-</testsuite>
-<testsuite name="parcours.spec.ts" timestamp="2026-11-19T22:20:44.610Z" hostname="mobile" tests="5" failures="0" skipped="0" time="67.27" errors="2">
-<testcase name="E2E-01 parcours client complet : recherche, fiche, panier, connexion, commande @FR-01 @FR-06 @FR-10 @BR-04" classname="parcours.spec.ts" time="1.767">
-</testcase>
-<testcase name="E2E-02 refus pour rupture de stock @BR-01" classname="parcours.spec.ts" time="1.439">
-</testcase>
-<testcase name="E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05" classname="parcours.spec.ts" time="30.859">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\web\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-mobile\error-context.md]]
-
-[[ATTACHMENT|..\web\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-mobile\trace.zip]]
-]]>
-</system-out>
-<error message="Test timeout of 30000ms exceeded." type="Error">
-<![CDATA[  [mobile] › parcours.spec.ts:57:1 › E2E-03 le personnel fait avancer une commande, seules les transitions permises sont proposées @FR-07 @BR-05 
-
-    Test timeout of 30000ms exceeded.
-
-    Error: locator.click: Test timeout of 30000ms exceeded.
-    Browser logs:
-
-    <launching> C:\Users\Mahmoud\AppData\Local\ms-playwright\chromium_headless_shell-1255\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\Mahmoud\AppData\Local\Temp\playwright_chromiumdev_profile-3QwP4b --remote-debugging-pipe --no-startup-window
-    <launched> pid=5844
-    [pid=5844] <gracefully close start>
-    Call log:
-      - waiting for locator('tr[data-order-id="6"]').getByRole('button', { name: /Marquer payée/ })
-        - locator resolved to <button type="button" aria-label="Marquer payée — commande n° 6">Marquer payée</button>
-      - attempting click action
-        2 × waiting for element to be visible, enabled and stable
-          - element is visible, enabled and stable
-          - scrolling into view if needed
-          - done scrolling
-          - <td data-testid="status">Passée</td> intercepts pointer events
-        - retrying click action
-        - waiting 20ms
-        - waiting for element to be visible, enabled and stable
-        - element is visible, enabled and stable
-        - scrolling into view if needed
-        - done scrolling
-        - <td data-testid="status">Passée</td> intercepts pointer events
-      2 × retrying click action
-          - waiting 100ms
-          - waiting for element to be visible, enabled and stable
-          - element is visible, enabled and stable
-          - scrolling into view if needed
-          - done scrolling
-          - <h1>Commandes (back-office)</h1> intercepts pointer events
-      13 × retrying click action
-           - waiting 500ms
-           - waiting for element to be visible, enabled and stable
-           - element is visible, enabled and stable
-           - scrolling into view if needed
-           - done scrolling
-           - <td data-testid="status">Passée</td> intercepts pointer events
-         - retrying click action
-           - waiting 500ms
-           - waiting for element to be visible, enabled and stable
-           - element is visible, enabled and stable
-           - scrolling into view if needed
-           - done scrolling
-           - <td data-testid="status">Passée</td> intercepts pointer events
-         - retrying click action
-           - waiting 500ms
-           - waiting for element to be visible, enabled and stable
-           - element is visible, enabled and stable
-           - scrolling into view if needed
-           - done scrolling
-           - <h1>Commandes (back-office)</h1> intercepts pointer events
-         - retrying click action
-           - waiting 500ms
-           - waiting for element to be visible, enabled and stable
-           - element is visible, enabled and stable
-           - scrolling into view if needed
-           - done scrolling
-           - <h1>Commandes (back-office)</h1> intercepts pointer events
-      - retrying click action
-        - waiting 500ms
-        - waiting for element to be visible, enabled and stable
-        - element is visible, enabled and stable
-        - scrolling into view if needed
-        - done scrolling
-        - <td data-testid="status">Passée</td> intercepts pointer events
-      - retrying click action
-        - waiting 500ms
-        - waiting for element to be visible, enabled and stable
-
-
-      70 |   await expect(row.getByTestId('status')).toHaveText('Passée');
-      71 |   await expect(buttons).toHaveText(['Marquer payée', 'Annuler']);
-    > 72 |   await row.getByRole('button', { name: /Marquer payée/ }).click();
-         |                                                            ^
-      73 |
-      74 |   await expect(row.getByTestId('status')).toHaveText('Payée');
-      75 |   await expect(buttons).toHaveText(['Marquer expédiée', 'Annuler']);
-        at C:\Users\Mahmoud\Downloads\shop-mvp-starter\shop\web\e2e\parcours.spec.ts:72:60
-
-    Error Context: ..\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-mobile\error-context.md
-
-    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-mobile\trace.zip
-    Usage:
-
-        npx playwright show-trace ..\test-results\parcours-E2E-03-le-personn-0767f--sont-proposées-FR-07-BR-05-mobile\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</error>
-</testcase>
-<testcase name="E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02" classname="parcours.spec.ts" time="31.054">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\web\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-mobile\error-context.md]]
-
-[[ATTACHMENT|..\web\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-mobile\trace.zip]]
-]]>
-</system-out>
-<error message="Test timeout of 30000ms exceeded." type="Error">
-<![CDATA[  [mobile] › parcours.spec.ts:84:1 › E2E-04 créer puis supprimer un produit avec confirmation, erreur affichée sous le champ @FR-04 @QR-US-02 
-
-    Test timeout of 30000ms exceeded.
-
-    Error: locator.click: Test timeout of 30000ms exceeded.
-    Browser logs:
-
-    <launching> C:\Users\Mahmoud\AppData\Local\ms-playwright\chromium_headless_shell-1255\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\Mahmoud\AppData\Local\Temp\playwright_chromiumdev_profile-3iZD5L --remote-debugging-pipe --no-startup-window
-    <launched> pid=25036
-    [pid=25036] <gracefully close start>
-    Call log:
-      - waiting for getByRole('row').filter({ hasText: 'Agenda mobile-7-mwo47lne-320614' }).getByRole('button', { name: 'Supprimer Agenda mobile-7-mwo47lne-320614' })
-        - locator resolved to <button type="button" class="danger" aria-label="Supprimer Agenda mobile-7-mwo47lne-320614">Supprimer</button>
-      - attempting click action
-        2 × waiting for element to be visible, enabled and stable
-          - element is visible, enabled and stable
-          - scrolling into view if needed
-          - done scrolling
-          - <td class="actions">…</td> from <tr data-product-id="17">…</tr> subtree intercepts pointer events
-        - retrying click action
-        - waiting 20ms
-        2 × waiting for element to be visible, enabled and stable
-          - element is visible, enabled and stable
-          - scrolling into view if needed
-          - done scrolling
-          - <td>9</td> from <tr data-product-id="17">…</tr> subtree intercepts pointer events
-        - retrying click action
-          - waiting 100ms
-        13 × waiting for element to be visible, enabled and stable
-           - element is visible, enabled and stable
-           - scrolling into view if needed
-           - done scrolling
-           - <th scope="col">Actions</th> from <thead>…</thead> subtree intercepts pointer events
-         - retrying click action
-           - waiting 500ms
-           - waiting for element to be visible, enabled and stable
-           - element is visible, enabled and stable
-           - scrolling into view if needed
-           - done scrolling
-           - <button type="button" aria-label="Modifier Agenda mobile-7-mwo47lne-320614">Modifier</button> intercepts pointer events
-         - retrying click action
-           - waiting 500ms
-           - waiting for element to be visible, enabled and stable
-           - element is visible, enabled and stable
-           - scrolling into view if needed
-           - done scrolling
-           - <th scope="col">Actions</th> from <thead>…</thead> subtree intercepts pointer events
-         - retrying click action
-           - waiting 500ms
-           - waiting for element to be visible, enabled and stable
-           - element is visible, enabled and stable
-           - scrolling into view if needed
-           - done scrolling
-           - <th scope="col">Actions</th> from <thead>…</thead> subtree intercepts pointer events
-         - retrying click action
-           - waiting 500ms
-        - waiting for element to be visible, enabled and stable
-        - element is visible, enabled and stable
-        - scrolling into view if needed
-        - done scrolling
-        - <th scope="col">Actions</th> from <thead>…</thead> subtree intercepts pointer events
-      - retrying click action
-        - waiting 500ms
-        - waiting for element to be visible, enabled and stable
-
-
-      107 |   await page.getByRole('searchbox', { name: 'Filtrer' }).fill(id);
-      108 |   const row = page.getByRole('row').filter({ hasText: name });
-    > 109 |   await row.getByRole('button', { name: `Supprimer ${name}` }).click();
-          |                                                                ^
-      110 |   const dialog = page.getByRole('dialog', { name: 'Supprimer le produit ?' });
-      111 |   await expect(dialog).toBeVisible();
-      112 |   await dialog.getByRole('button', { name: 'Annuler' }).click();
-        at C:\Users\Mahmoud\Downloads\shop-mvp-starter\shop\web\e2e\parcours.spec.ts:109:64
-
-    Error Context: ..\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-mobile\error-context.md
-
-    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
-    ..\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-mobile\trace.zip
-    Usage:
-
-        npx playwright show-trace ..\test-results\parcours-E2E-04-créer-puis-996d5-ous-le-champ-FR-04-QR-US-02-mobile\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</error>
-</testcase>
-<testcase name="E2E-05 filtres du tableau de bord : mêmes indicateurs que l’API @FR-09" classname="parcours.spec.ts" time="2.151">
+<testsuite name="securite.spec.ts" timestamp="2026-11-20T00:20:30.087Z" hostname="mobile" tests="1" failures="0" skipped="0" time="0.853" errors="0">
+<testcase name="SEC-02 XSS stocké dans un nom de produit : affiché comme texte, jamais exécuté @QR-SE-02" classname="securite.spec.ts" time="0.853">
 </testcase>
 </testsuite>
 </testsuites>

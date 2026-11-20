@@ -1,6 +1,8 @@
 """Orders: FR-06 (customer), FR-07 (back-office), FR-08 workflow."""
 
-from fastapi import APIRouter, Depends, status
+from typing import Literal
+
+from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user, get_db, require_roles
@@ -38,13 +40,16 @@ def create_order(body: OrderCreate, user: User = Depends(require_roles(CUSTOMER)
     return to_out(orders.place_order(db, user, lines))
 
 
-@router.get(
-    "",
-    response_model=list[OrderOut],
-    responses=errors(401),
-)
-def list_orders(user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[OrderOut]:
-    return [to_out(o) for o in orders.list_orders(db, user)]
+@router.get("", response_model=list[OrderOut], responses=errors(401, 422))
+def list_orders(
+    status: Literal["PLACED", "PAID", "SHIPPED", "DELIVERED", "CANCELLED"] | None = None,
+    limit: int = Query(50, ge=1, le=200),
+    offset: int = Query(0, ge=0, le=1_000_000_000),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> list[OrderOut]:
+    """A customer sees their own orders, STAFF and ADMIN all orders; most recent first, paginated."""
+    return [to_out(o) for o in orders.list_orders(db, user, status, limit, offset)]
 
 
 @router.get("/{order_id}", response_model=OrderOut, responses=errors(401, 404, 422))

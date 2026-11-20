@@ -90,7 +90,8 @@ export const deleteProduct = (id: number) => api<null>(`/products/${id}`, { meth
 // ---------------------------------------------------------------- orders
 export const createOrder = (items: { product_id: number; quantity: number }[]) =>
   api<Order>('/orders', { method: 'POST', body: JSON.stringify({ items }) });
-export const getOrders = () => api<Order[]>('/orders');
+export const getOrders = (f: { status?: OrderStatus; limit?: number; offset?: number } = {}) =>
+  api<Order[]>(`/orders${query({ status: f.status, limit: f.limit, offset: f.offset })}`);
 export const cancelOrder = (id: number) => api<Order>(`/orders/${id}/cancel`, { method: 'POST' });
 export const changeStatus = (id: number, status: OrderStatus) =>
   api<Order>(`/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) });

@@ -45,11 +45,14 @@ def place_order(db: Session, user: User, lines: list[Line]) -> Order:
     return order
 
 
-def list_orders(db: Session, user: User) -> list[Order]:
+def list_orders(db: Session, user: User, status: str | None = None, limit: int = 50, offset: int = 0) -> list[Order]:
+    """Most recent first, one page at a time (ANO-09: the back-office list must not grow with every order)."""
     stmt = select(Order).order_by(Order.id.desc())
     if user.role not in BACK_OFFICE:
         stmt = stmt.where(Order.user_id == user.id)
-    return list(db.scalars(stmt).all())
+    if status is not None:
+        stmt = stmt.where(Order.status == status)
+    return list(db.scalars(stmt.limit(limit).offset(offset)).all())
 
 
 def get_order(db: Session, user: User, order_id: int, lock: bool = False) -> Order:
