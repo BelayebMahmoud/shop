@@ -156,7 +156,7 @@ Commit des corrections : commit « phase 3 » (voir `git log`).
   fonction. **Défaut** : `compute` concentrait tous les filtres. **Défaillance** : aucune pour l'utilisateur ; coût de
   maintenance (analysabilité, modifiabilité).
 - **Correction** : trois fonctions à responsabilité unique (`_counts_and_revenue`, `_top_sold`, `_low_stock`).
-- **Confirmation** : radon → 129 blocs, moyenne 1,83 ; xenon → code de sortie 0 (aucun bloc au-delà du rang B) ;
+- **Confirmation** : radon → 129 blocs, moyenne 1,84 (1,837) ; xenon → code de sortie 0 (aucun bloc au-delà du rang B) ;
   import-linter : 2 contrats tenus. **Non-régression** : IT-11, IT-12, TA-17 et les suites unitaires, d'intégration
   et d'API → 101 réussis ; `make check` complet en fin de phase.
 

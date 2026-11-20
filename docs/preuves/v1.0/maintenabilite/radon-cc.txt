@@ -67,12 +67,12 @@ backend\app\api\routes\catalog.py
     F 78:0 update_product - A (1)
     F 85:0 delete_product - A (1)
 backend\app\api\routes\orders.py
-    F 18:0 to_out - A (2)
-    F 36:0 create_order - A (2)
-    F 46:0 list_orders - A (2)
-    F 51:0 get_order - A (1)
-    F 56:0 cancel_order - A (1)
-    F 61:0 change_status - A (1)
+    F 20:0 to_out - A (2)
+    F 38:0 create_order - A (2)
+    F 44:0 list_orders - A (2)
+    F 56:0 get_order - A (1)
+    F 61:0 cancel_order - A (1)
+    F 66:0 change_status - A (1)
 backend\app\core\config.py
     C 5:0 Settings - A (1)
 backend\app\core\db.py
@@ -125,10 +125,10 @@ backend\app\services\errors.py
     C 25:0 Conflict - A (1)
 backend\app\services\orders.py
     F 20:0 place_order - A (5)
-    F 55:0 get_order - A (5)
-    F 66:0 change_status - A (5)
+    F 58:0 get_order - A (5)
+    F 69:0 change_status - A (5)
+    F 48:0 list_orders - A (3)
     F 14:0 _lock_products - A (2)
-    F 48:0 list_orders - A (2)
 backend\app\services\order_rules.py
     F 25:0 validate_lines - A (5)
     F 42:0 check_stock - A (4)
@@ -156,4 +156,4 @@ backend\app\services\workflow.py
     F 45:0 cancel_restock - A (1)
 
 129 blocks (classes, functions, methods) analyzed.
-Average complexity: A (1.8294573643410852)
+Average complexity: A (1.8372093023255813)

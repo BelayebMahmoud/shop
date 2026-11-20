@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python.EXE",
+    "-m",
+    "xenon",
+    "--max-absolute",
+    "B",
+    "--max-modules",
+    "A",
+    "--max-average",
+    "A",
+    "backend/app"
+  ],
+  "exit_code": 0,
+  "started_utc": "2026-11-20T07:10:51+00:00"
+}

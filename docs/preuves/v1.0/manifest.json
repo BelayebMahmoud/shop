@@ -1,11 +1,11 @@
 {
   "version": "v1.0",
-  "frozen_at": "2026-11-20T07:58:12+01:00",
-  "commit": "99a818ce550ddf9b5c60ba641de2ab3b5b88b32b",
-  "commit_short": "99a818c",
-  "code_changes_since_commit": "non disponible",
+  "frozen_at": "2026-11-20T08:52:16+01:00",
+  "commit": "aa22690cfd843f1f68d298fff5c801b0d41a9334",
+  "commit_short": "aa22690",
+  "uncommitted_changes_to_code": "",
   "source": "reports/",
-  "file_count": 106,
+  "file_count": 126,
   "tools_native": {
     "python": "Python 3.15.2",
     "pytest": "pytest 9.2.0",
@@ -18,6 +18,14 @@
     "semgrep": "1.185.0",
     "zap": "2.17.0",
     "syft": "1.57.2",
-    "docker": "29.9.3"
+    "api-python": "3.13.18",
+    "bandit": "1.9.4",
+    "gitleaks": "8.30.1",
+    "hadolint": "2.15.1",
+    "k6": "2.4.0",
+    "mutmut": "3.8.1",
+    "postgres": "16.16",
+    "trivy": "0.76.2",
+    "web-nginx": "1.31.7"
   }
 }

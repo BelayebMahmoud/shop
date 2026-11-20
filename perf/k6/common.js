@@ -17,10 +17,11 @@ export function login() {
 export const pick = list => list[Math.floor(Math.random() * list.length)];
 export const randInt = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
 
-/** k6 writes its own evidence: the full summary as JSON in reports/perf/<name>.json (mounted at /out). */
+/** k6 writes its own evidence: the full summary as JSON in reports/perf/<name>.json (mounted at /out).
+ *  setup_data holds the test user's JWT: it is left out so no token lands in the evidence. */
 export function summaryTo(name) {
   return data => ({
-    [`/out/${name}.json`]: JSON.stringify(data, null, 2),
+    [`/out/${name}.json`]: JSON.stringify({ ...data, setup_data: data.setup_data ? '(omis : jeton)' : undefined }, null, 2),
     stdout: textSummary(data, { indent: ' ', enableColors: false }),
   });
 }

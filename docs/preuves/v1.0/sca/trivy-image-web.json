@@ -3,18 +3,18 @@
   "Trivy": {
     "Version": "0.76.2"
   },
-  "ReportID": "01a1f5fd-f905-73ef-8984-5b7a25364bb0",
-  "CreatedAt": "2026-11-19T22:47:04.709264512Z",
-  "ArtifactID": "sha256:57f692717d4e2a6eca7dd749d9d34627859488e409af91b7c669f8e3f610cb55",
+  "ReportID": "01a1f7da-1482-7c9e-9a80-3313b8d5c249",
+  "CreatedAt": "2026-11-20T07:27:06.882831931Z",
+  "ArtifactID": "sha256:433550a4e1a25e5bfa1310487ed2b93dcde6709fad79ff81c78c2566c21b92cb",
   "ArtifactName": "shop-web",
   "ArtifactType": "container_image",
   "Metadata": {
-    "Size": 74068992,
+    "Size": 74070016,
     "OS": {
       "Family": "alpine",
       "Name": "3.24.2"
     },
-    "ImageID": "sha256:a3a0a8f66e3b900e9c3cfc75f4f4081bfc1a18ca93555301357861f78d580fc0",
+    "ImageID": "sha256:940ee236fdcadf1f3f3142b440970ed3eb424a2d76e469a402ee97b1238b38af",
     "DiffIDs": [
       "sha256:74d97c428c51a828f9051a7a40a53ff1fc99e54fc30323ce36760701b0b7f711",
       "sha256:10337c50eb8ff21833fe22d27a44cd1fd9d5e4a11b785ab79cf62ea5f015a4cd",
@@ -26,8 +26,8 @@
       "sha256:fe31a85e76dcdb311765105d9620d131b26f835370ca0d8c4fd9190cd00b2f91",
       "sha256:3bb80d59c39bb2920b0d1547f032b6a208305ad550ca6d4454bb1776f2e24854",
       "sha256:d56f5fcc05dead0af66a721c4b54f512e702f28edfb51fe0a7b3b6c4571e4b7d",
-      "sha256:158cb53e236e8b7b3ab5ef75177bfb0ae0e54b030e8c0dbe38abaaf6b6ea6456",
-      "sha256:39fa95931bcf00414dcea70aea38fc90fef710d7c6a58a013a308e766aec124a"
+      "sha256:3e8bca5eef6523eb38530ac107f21a279d2410310cea5ec80aba29495acdab3a",
+      "sha256:0e1d4691ad528fadf4817ee4ad698ed6e211acd6a59b867b7a77442f21dd611c"
     ],
     "RepoTags": [
       "shop-web:latest"
@@ -35,7 +35,7 @@
     "Reference": "shop-web:latest",
     "ImageConfig": {
       "architecture": "amd64",
-      "created": "2026-11-19T22:46:54.219226951Z",
+      "created": "2026-11-20T00:19:20.091162174Z",
       "history": [
         {
           "created": "2026-09-17T20:37:20Z",
@@ -208,23 +208,23 @@
           "empty_layer": true
         },
         {
-          "created": "2026-11-19T22:46:54Z",
+          "created": "2026-11-19T23:38:21Z",
           "created_by": "COPY nginx.conf /etc/nginx/conf.d/default.conf # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-11-19T22:46:54Z",
+          "created": "2026-11-20T00:19:20Z",
           "created_by": "COPY /web/dist /usr/share/nginx/html # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-11-19T22:46:54Z",
+          "created": "2026-11-20T00:19:20Z",
           "created_by": "EXPOSE [8080/tcp]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-11-19T22:46:54Z",
+          "created": "2026-11-20T00:19:20Z",
           "created_by": "HEALTHCHECK {Test:[CMD wget -q -O /dev/null http://127.0.0.1:8080/] Interval:5s Timeout:3s StartPeriod:0s StartInterval:0s Retries:5}",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
@@ -244,8 +244,8 @@
           "sha256:fe31a85e76dcdb311765105d9620d131b26f835370ca0d8c4fd9190cd00b2f91",
           "sha256:3bb80d59c39bb2920b0d1547f032b6a208305ad550ca6d4454bb1776f2e24854",
           "sha256:d56f5fcc05dead0af66a721c4b54f512e702f28edfb51fe0a7b3b6c4571e4b7d",
-          "sha256:158cb53e236e8b7b3ab5ef75177bfb0ae0e54b030e8c0dbe38abaaf6b6ea6456",
-          "sha256:39fa95931bcf00414dcea70aea38fc90fef710d7c6a58a013a308e766aec124a"
+          "sha256:3e8bca5eef6523eb38530ac107f21a279d2410310cea5ec80aba29495acdab3a",
+          "sha256:0e1d4691ad528fadf4817ee4ad698ed6e211acd6a59b867b7a77442f21dd611c"
         ]
       },
       "config": {
@@ -344,11 +344,11 @@
       },
       {
         "Size": 4608,
-        "DiffID": "sha256:158cb53e236e8b7b3ab5ef75177bfb0ae0e54b030e8c0dbe38abaaf6b6ea6456"
+        "DiffID": "sha256:3e8bca5eef6523eb38530ac107f21a279d2410310cea5ec80aba29495acdab3a"
       },
       {
-        "Size": 307712,
-        "DiffID": "sha256:39fa95931bcf00414dcea70aea38fc90fef710d7c6a58a013a308e766aec124a"
+        "Size": 308736,
+        "DiffID": "sha256:0e1d4691ad528fadf4817ee4ad698ed6e211acd6a59b867b7a77442f21dd611c"
       }
     ]
   },

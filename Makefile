@@ -82,7 +82,7 @@ security:  ## summary of SAST/SCA/DAST raw reports -> reports/securite-synthese.
 quality:   ## MA-03, MA-04: complexity (radon, xenon <= B) and layer contracts (import-linter) -> reports/maintenabilite/
 	$(BIN)/python tools/capture.py --out reports/maintenabilite/radon-cc.json -- $(BIN)/python -m radon cc -s -j backend/app
 	$(BIN)/python tools/capture.py --out reports/maintenabilite/radon-cc.txt -- $(BIN)/python -m radon cc -s -a backend/app
-	$(BIN)/python -m xenon --max-absolute B --max-modules A --max-average A backend/app
+	$(BIN)/python tools/capture.py --out reports/maintenabilite/xenon.txt --with-stderr --status -- $(BIN)/python -m xenon --max-absolute B --max-modules A --max-average A backend/app
 	cd backend && $(BIN)/lint-imports --no-cache
 mutation:  ## MA-02: mutmut in Docker, 15-minute time box -> reports/maintenabilite/mutmut-*
 	./scripts/mutation.sh 900

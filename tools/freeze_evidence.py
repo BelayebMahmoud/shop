@@ -37,8 +37,10 @@ def run(cmd: list[str]) -> str:
         out = subprocess.run([exe, *cmd[1:]], check=False, capture_output=True, text=True, timeout=60, cwd=ROOT)
     except (OSError, subprocess.TimeoutExpired) as exc:
         return f"non disponible ({exc.__class__.__name__})"
+    if out.returncode != 0:
+        return f"non disponible (code {out.returncode})"
     text = (out.stdout or out.stderr).strip().splitlines()
-    return text[0] if text else "non disponible"
+    return text[0] if text else ""
 
 
 def from_reports() -> dict[str, str]:
@@ -63,11 +65,17 @@ def from_reports() -> dict[str, str]:
                 if t.get("name") and t.get("version"):
                     found[t["name"]] = t["version"]
             break
-    for rel in ("perf/environnement.txt", "maintenabilite/mutmut-run.txt"):
-        p = REPORTS / rel
-        if p.exists():
-            for m in re.finditer(r"\b(k6|mutmut|trivy|syft|Docker)\b[^\n]*?v?(\d+\.\d+\.\d+)", p.read_text(encoding="utf-8")):
-                found.setdefault(m.group(1).lower(), m.group(2))
+    # reports/versions/<tool>.txt: raw `--version` output captured by scripts/security-scans.sh. A version the tool wrote
+    # into its own report wins (zap.txt starts with the Java version); otherwise the line naming the tool, else the last one.
+    for p in sorted((REPORTS / "versions").glob("*.txt")):
+        lines = [ln for ln in p.read_text(encoding="utf-8", errors="replace").splitlines() if re.search(r"\d+\.\d+", ln)]
+        tool = p.stem.split("-")[-1]
+        named = [ln for ln in lines if re.search(rf"\b{tool}\b", ln, re.IGNORECASE)]
+        versioned = [ln for ln in lines if re.match(r"\s*version\b", ln, re.IGNORECASE)]
+        pick = named[:1] or versioned[:1] or lines[-1:]
+        m = re.search(r"(\d+\.\d+(?:\.\d+)?)", pick[0]) if pick else None
+        if m:
+            found.setdefault(p.stem, m.group(1))
     return found
 
 
@@ -87,7 +95,7 @@ def main(version: str) -> int:
         "frozen_at": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
         "commit": git("rev-parse", "HEAD"),
         "commit_short": git("rev-parse", "--short", "HEAD"),
-        "code_changes_since_commit": git("status", "--porcelain", "--", "backend", "web", "db", "docker-compose.yml"),
+        "uncommitted_changes_to_code": git("status", "--porcelain", "--", "backend", "web", "db", "docker-compose.yml"),
         "source": "reports/",
         "file_count": len(files),
         "tools_native": {k: run(v) for k, v in NATIVE.items()},

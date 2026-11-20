@@ -1,8 +1,8 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.17.0",
-	"@generated": "Thu, 19 Nov 2026 23:42:45",
-	"created": "2026-11-19T23:42:45.656330182Z",
+	"@generated": "Fri, 20 Nov 2026 07:29:54",
+	"created": "2026-11-20T07:29:54.033755210Z",
 	"insights":[
 		{
 			"level": "Medium",
@@ -10,7 +10,7 @@
 			"site": "http://api:8000",
 			"key": "insight.code.4xx",
 			"description": "Percentage of responses with status code 4xx",
-			"statistic": "95"
+			"statistic": "96"
 		},
 		{
 			"level": "Info",
@@ -18,7 +18,7 @@
 			"site": "http://api:8000",
 			"key": "insight.code.2xx",
 			"description": "Percentage of responses with status code 2xx",
-			"statistic": "4"
+			"statistic": "3"
 		},
 		{
 			"level": "Info",
@@ -75,14 +75,6 @@
 			"key": "insight.endpoint.total",
 			"description": "Count of total endpoints",
 			"statistic": "63"
-		},
-		{
-			"level": "Info",
-			"reason": "Informational",
-			"site": "http://api:8000",
-			"key": "insight.response.slow",
-			"description": "Percentage of slow responses",
-			"statistic": "1"
 		}
 	],
 	"site":[ 
@@ -103,34 +95,34 @@
 					"desc": "<p>SQL injection may be possible.</p>",
 					"instances":[ 
 						{
-							"id": "1125",
+							"id": "1279",
 							"uri": "http://api:8000/api/categories",
 							"nodeName": "http:\/\/api:8000\/api\/categories ()({name})",
 							"method": "POST",
 							"param": "name",
-							"attack": "ZAP AND 1=1 -- ",
+							"attack": "ZAP' AND '1'='1' -- ",
 							"evidence": "",
-							"otherinfo": "The page results were successfully manipulated using the boolean conditions [ZAP AND 1=1 -- ] and [ZAP AND 1=2 -- ]\nThe parameter value being modified was stripped from the HTML output for the purposes of the comparison.\nData was returned for the original parameter.\nThe vulnerability was detected by successfully restricting the data originally returned, by manipulating the parameter."
+							"otherinfo": "The page results were successfully manipulated using the boolean conditions [ZAP' AND '1'='1' -- ] and [ZAP' AND '1'='2' -- ]\nThe parameter value being modified was stripped from the HTML output for the purposes of the comparison.\nData was returned for the original parameter.\nThe vulnerability was detected by successfully restricting the data originally returned, by manipulating the parameter."
 						},
 						{
-							"id": "1143",
+							"id": "1305",
 							"uri": "http://api:8000/api/categories/10",
 							"nodeName": "http:\/\/api:8000\/api\/categories\/10 ()({name})",
 							"method": "PUT",
 							"param": "name",
-							"attack": "ZAP OR 1=1 -- ",
+							"attack": "ZAP' OR '1'='1' -- ",
 							"evidence": "",
-							"otherinfo": "The page results were successfully manipulated using the boolean conditions [ZAP AND 1=1 -- ] and [ZAP OR 1=1 -- ]\nThe parameter value being modified was stripped from the HTML output for the purposes of the comparison.\nData was NOT returned for the original parameter.\nThe vulnerability was detected by successfully retrieving more data than originally returned, by manipulating the parameter."
+							"otherinfo": "The page results were successfully manipulated using the boolean conditions [ZAP' AND '1'='1' -- ] and [ZAP' OR '1'='1' -- ]\nThe parameter value being modified was stripped from the HTML output for the purposes of the comparison.\nData was NOT returned for the original parameter.\nThe vulnerability was detected by successfully retrieving more data than originally returned, by manipulating the parameter."
 						}
 					],
 					"count": "2",
 					"systemic": false,
 					"solution": "<p>Do not trust client side input, even if there is client side validation in place.</p><p>In general, type check all data on the server side.</p><p>If the application uses JDBC, use PreparedStatement or CallableStatement, with parameters passed by '?'</p><p>If the application uses ASP, use ADO Command Objects with strong type checking and parameterized queries.</p><p>If database Stored Procedures can be used, use them.</p><p>Do *not* concatenate strings into queries in the stored procedure, or use 'exec', 'exec immediate', or equivalent functionality!</p><p>Do not create dynamic SQL queries using simple string concatenation.</p><p>Escape all data received from the client.</p><p>Apply an 'allow list' of allowed characters, or a 'deny list' of disallowed characters in user input.</p><p>Apply the principle of least privilege by using the least privileged database user possible.</p><p>In particular, avoid using the 'sa' or 'db-owner' database users. This does not eliminate SQL injection, but minimizes its impact.</p><p>Grant the minimum database access that is necessary for the application.</p>",
-					"otherinfo": "<p>The page results were successfully manipulated using the boolean conditions [ZAP AND 1=1 -- ] and [ZAP AND 1=2 -- ]</p><p>The parameter value being modified was stripped from the HTML output for the purposes of the comparison.</p><p>Data was returned for the original parameter.</p><p>The vulnerability was detected by successfully restricting the data originally returned, by manipulating the parameter.</p>",
+					"otherinfo": "<p>The page results were successfully manipulated using the boolean conditions [ZAP' AND '1'='1' -- ] and [ZAP' AND '1'='2' -- ]</p><p>The parameter value being modified was stripped from the HTML output for the purposes of the comparison.</p><p>Data was returned for the original parameter.</p><p>The vulnerability was detected by successfully restricting the data originally returned, by manipulating the parameter.</p>",
 					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</p>",
 					"cweid": "89",
 					"wascid": "19",
-					"sourceid": "1155"
+					"sourceid": "1301"
 				},
 				{
 					"pluginid": "100000",
@@ -153,7 +145,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3855",
+							"id": "4187",
 							"uri": "http://api:8000/api/categories/10/",
 							"nodeName": "http:\/\/api:8000\/api\/categories\/10\/",
 							"method": "DELETE",
@@ -173,7 +165,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3848",
+							"id": "4201",
 							"uri": "http://api:8000/api/products/10/",
 							"nodeName": "http:\/\/api:8000\/api\/products\/10\/",
 							"method": "DELETE",
@@ -183,7 +175,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "38",
+							"id": "42",
 							"uri": "http://api:8000",
 							"nodeName": "http:\/\/api:8000",
 							"method": "GET",
@@ -193,7 +185,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3841",
+							"id": "4178",
 							"uri": "http://api:8000/",
 							"nodeName": "http:\/\/api:8000\/",
 							"method": "GET",
@@ -203,9 +195,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "28",
-							"uri": "http://api:8000/6430080302311007852",
-							"nodeName": "http:\/\/api:8000\/6430080302311007852",
+							"id": "16",
+							"uri": "http://api:8000/4218810044606934207",
+							"nodeName": "http:\/\/api:8000\/4218810044606934207",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -213,7 +205,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "41",
+							"id": "52",
 							"uri": "http://api:8000/api",
 							"nodeName": "http:\/\/api:8000\/api",
 							"method": "GET",
@@ -223,7 +215,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3844",
+							"id": "4183",
 							"uri": "http://api:8000/api/",
 							"nodeName": "http:\/\/api:8000\/api\/",
 							"method": "GET",
@@ -233,9 +225,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "29",
-							"uri": "http://api:8000/api/8019500266905135969",
-							"nodeName": "http:\/\/api:8000\/api\/8019500266905135969",
+							"id": "20",
+							"uri": "http://api:8000/api/1347608004491667398",
+							"nodeName": "http:\/\/api:8000\/api\/1347608004491667398",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -243,7 +235,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "61",
+							"id": "82",
 							"uri": "http://api:8000/api/audit?limit=http%3A%2F%2Fwww.google.com%2F&offset=0",
 							"nodeName": "http:\/\/api:8000\/api\/audit (limit,offset)",
 							"method": "GET",
@@ -253,9 +245,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "30",
-							"uri": "http://api:8000/api/audit/7287168180038368044",
-							"nodeName": "http:\/\/api:8000\/api\/audit\/7287168180038368044",
+							"id": "21",
+							"uri": "http://api:8000/api/audit/4392255166831903985",
+							"nodeName": "http:\/\/api:8000\/api\/audit\/4392255166831903985",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -263,7 +255,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "54",
+							"id": "71",
 							"uri": "http://api:8000/api/auth",
 							"nodeName": "http:\/\/api:8000\/api\/auth",
 							"method": "GET",
@@ -273,7 +265,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3866",
+							"id": "4203",
 							"uri": "http://api:8000/api/auth/",
 							"nodeName": "http:\/\/api:8000\/api\/auth\/",
 							"method": "GET",
@@ -283,9 +275,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "31",
-							"uri": "http://api:8000/api/auth/9047459782149533223",
-							"nodeName": "http:\/\/api:8000\/api\/auth\/9047459782149533223",
+							"id": "22",
+							"uri": "http://api:8000/api/auth/6298850575915372845",
+							"nodeName": "http:\/\/api:8000\/api\/auth\/6298850575915372845",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -293,7 +285,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4342",
+							"id": "4715",
 							"uri": "http://api:8000/api/auth/actuator/health",
 							"nodeName": "http:\/\/api:8000\/api\/auth\/actuator\/health",
 							"method": "GET",
@@ -303,9 +295,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "32",
-							"uri": "http://api:8000/api/categories/1523003663084953824",
-							"nodeName": "http:\/\/api:8000\/api\/categories\/1523003663084953824",
+							"id": "23",
+							"uri": "http://api:8000/api/categories/4999802822618175565",
+							"nodeName": "http:\/\/api:8000\/api\/categories\/4999802822618175565",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -313,7 +305,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "17",
+							"id": "14",
 							"uri": "http://api:8000/api/dashboard?date_from=&date_to=&category_id=",
 							"nodeName": "http:\/\/api:8000\/api\/dashboard (category_id,date_from,date_to)",
 							"method": "GET",
@@ -323,9 +315,19 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "34",
-							"uri": "http://api:8000/api/orders/10/7354212090201542474",
-							"nodeName": "http:\/\/api:8000\/api\/orders\/10\/7354212090201542474",
+							"id": "10",
+							"uri": "http://api:8000/api/orders?status=&limit=50&offset=0",
+							"nodeName": "http:\/\/api:8000\/api\/orders (limit,offset,status)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "422",
+							"otherinfo": ""
+						},
+						{
+							"id": "28",
+							"uri": "http://api:8000/api/orders/10/6748600477958409367",
+							"nodeName": "http:\/\/api:8000\/api\/orders\/10\/6748600477958409367",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -333,9 +335,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "33",
-							"uri": "http://api:8000/api/orders/462780813816530299",
-							"nodeName": "http:\/\/api:8000\/api\/orders\/462780813816530299",
+							"id": "25",
+							"uri": "http://api:8000/api/orders/5348069471490987965",
+							"nodeName": "http:\/\/api:8000\/api\/orders\/5348069471490987965",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -363,7 +365,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3870",
+							"id": "4207",
 							"uri": "http://api:8000/api/products/10/",
 							"nodeName": "http:\/\/api:8000\/api\/products\/10\/",
 							"method": "GET",
@@ -373,9 +375,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "35",
-							"uri": "http://api:8000/api/products/899333687411003328",
-							"nodeName": "http:\/\/api:8000\/api\/products\/899333687411003328",
+							"id": "31",
+							"uri": "http://api:8000/api/products/4043466131694775361",
+							"nodeName": "http:\/\/api:8000\/api\/products\/4043466131694775361",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -383,7 +385,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "68",
+							"id": "98",
 							"uri": "http://api:8000/api/users/10",
 							"nodeName": "http:\/\/api:8000\/api\/users\/10",
 							"method": "GET",
@@ -393,7 +395,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3868",
+							"id": "4205",
 							"uri": "http://api:8000/api/users/10/",
 							"nodeName": "http:\/\/api:8000\/api\/users\/10\/",
 							"method": "GET",
@@ -403,19 +405,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "37",
-							"uri": "http://api:8000/api/users/10/3473963043385687284",
-							"nodeName": "http:\/\/api:8000\/api\/users\/10\/3473963043385687284",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "404",
-							"otherinfo": ""
-						},
-						{
 							"id": "36",
-							"uri": "http://api:8000/api/users/8749281029177284017",
-							"nodeName": "http:\/\/api:8000\/api\/users\/8749281029177284017",
+							"uri": "http://api:8000/api/users/10/1771740253987708981",
+							"nodeName": "http:\/\/api:8000\/api\/users\/10\/1771740253987708981",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -423,7 +415,17 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "12",
+							"id": "34",
+							"uri": "http://api:8000/api/users/3730921225205138971",
+							"nodeName": "http:\/\/api:8000\/api\/users\/3730921225205138971",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13",
 							"uri": "http://api:8000/api/orders/10/status",
 							"nodeName": "http:\/\/api:8000\/api\/orders\/10\/status ()({status})",
 							"method": "PATCH",
@@ -433,7 +435,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "50",
+							"id": "43",
 							"uri": "http://api:8000/api/orders/10/status",
 							"nodeName": "http:\/\/api:8000\/api\/orders\/10\/status ()({status})",
 							"method": "PATCH",
@@ -443,7 +445,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3865",
+							"id": "4193",
 							"uri": "http://api:8000/api/orders/10/status/",
 							"nodeName": "http:\/\/api:8000\/api\/orders\/10\/status\/ ()({status})",
 							"method": "PATCH",
@@ -473,7 +475,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3846",
+							"id": "4182",
 							"uri": "http://api:8000/api/auth/login/",
 							"nodeName": "http:\/\/api:8000\/api\/auth\/login\/ ()(client_id,client_secret,grant_type,password,scope,username)",
 							"method": "POST",
@@ -483,7 +485,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "102",
+							"id": "89",
 							"uri": "http://api:8000/api/auth/register",
 							"nodeName": "http:\/\/api:8000\/api\/auth\/register ()({email,password})",
 							"method": "POST",
@@ -503,7 +505,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3843",
+							"id": "4181",
 							"uri": "http://api:8000/api/auth/register/",
 							"nodeName": "http:\/\/api:8000\/api\/auth\/register\/ ()({email,password})",
 							"method": "POST",
@@ -523,7 +525,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3411",
+							"id": "3701",
 							"uri": "http://api:8000/api/categories",
 							"nodeName": "http:\/\/api:8000\/api\/categories ()({name})",
 							"method": "POST",
@@ -533,7 +535,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3852",
+							"id": "4185",
 							"uri": "http://api:8000/api/categories/",
 							"nodeName": "http:\/\/api:8000\/api\/categories\/ ()({name})",
 							"method": "POST",
@@ -543,7 +545,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "10",
+							"id": "11",
 							"uri": "http://api:8000/api/orders",
 							"nodeName": "http:\/\/api:8000\/api\/orders ()({items:[{product_id,quantity}]})",
 							"method": "POST",
@@ -553,7 +555,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3862",
+							"id": "4197",
 							"uri": "http://api:8000/api/orders/",
 							"nodeName": "http:\/\/api:8000\/api\/orders\/ ()({items:[{product_id,quantity}]})",
 							"method": "POST",
@@ -563,7 +565,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "11",
+							"id": "12",
 							"uri": "http://api:8000/api/orders/10/cancel",
 							"nodeName": "http:\/\/api:8000\/api\/orders\/10\/cancel",
 							"method": "POST",
@@ -573,7 +575,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3856",
+							"id": "4189",
 							"uri": "http://api:8000/api/orders/10/cancel/",
 							"nodeName": "http:\/\/api:8000\/api\/orders\/10\/cancel\/",
 							"method": "POST",
@@ -583,7 +585,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "47",
+							"id": "49",
 							"uri": "http://api:8000/api/products",
 							"nodeName": "http:\/\/api:8000\/api\/products ()({sku,name,description,price_cents,stock,category_id})",
 							"method": "POST",
@@ -603,7 +605,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3860",
+							"id": "4195",
 							"uri": "http://api:8000/api/products/",
 							"nodeName": "http:\/\/api:8000\/api\/products\/ ()({sku,name,description,price_cents,stock,category_id})",
 							"method": "POST",
@@ -613,7 +615,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "2875",
+							"id": "3131",
 							"uri": "http://api:8000/computeMetadata/v1/",
 							"nodeName": "http:\/\/api:8000\/computeMetadata\/v1\/ ()(client_id,client_secret,grant_type,password,scope,username)",
 							"method": "POST",
@@ -623,7 +625,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "2872",
+							"id": "3128",
 							"uri": "http://api:8000/latest/meta-data/",
 							"nodeName": "http:\/\/api:8000\/latest\/meta-data\/ ()(client_id,client_secret,grant_type,password,scope,username)",
 							"method": "POST",
@@ -633,7 +635,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "2895",
+							"id": "3152",
 							"uri": "http://api:8000/metadata/instance",
 							"nodeName": "http:\/\/api:8000\/metadata\/instance ()(client_id,client_secret,grant_type,password,scope,username)",
 							"method": "POST",
@@ -643,7 +645,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "2897",
+							"id": "3154",
 							"uri": "http://api:8000/metadata/v1",
 							"nodeName": "http:\/\/api:8000\/metadata\/v1 ()(client_id,client_secret,grant_type,password,scope,username)",
 							"method": "POST",
@@ -653,7 +655,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "2880",
+							"id": "3136",
 							"uri": "http://api:8000/opc/v1/instance/",
 							"nodeName": "http:\/\/api:8000\/opc\/v1\/instance\/ ()(client_id,client_secret,grant_type,password,scope,username)",
 							"method": "POST",
@@ -663,7 +665,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "2883",
+							"id": "3139",
 							"uri": "http://api:8000/opc/v2/instance/",
 							"nodeName": "http:\/\/api:8000\/opc\/v2\/instance\/ ()(client_id,client_secret,grant_type,password,scope,username)",
 							"method": "POST",
@@ -673,7 +675,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "2900",
+							"id": "3156",
 							"uri": "http://api:8000/openstack/latest/meta_data.json",
 							"nodeName": "http:\/\/api:8000\/openstack\/latest\/meta_data.json ()(client_id,client_secret,grant_type,password,scope,username)",
 							"method": "POST",
@@ -693,7 +695,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3406",
+							"id": "3710",
 							"uri": "http://api:8000/api/categories/10",
 							"nodeName": "http:\/\/api:8000\/api\/categories\/10 ()({name})",
 							"method": "PUT",
@@ -703,7 +705,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3850",
+							"id": "4191",
 							"uri": "http://api:8000/api/categories/10/",
 							"nodeName": "http:\/\/api:8000\/api\/categories\/10\/ ()({name})",
 							"method": "PUT",
@@ -713,7 +715,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "45",
+							"id": "50",
 							"uri": "http://api:8000/api/products/10",
 							"nodeName": "http:\/\/api:8000\/api\/products\/10 ()({sku,name,description,price_cents,stock,category_id})",
 							"method": "PUT",
@@ -733,7 +735,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "3859",
+							"id": "4202",
 							"uri": "http://api:8000/api/products/10/",
 							"nodeName": "http:\/\/api:8000\/api\/products\/10\/ ()({sku,name,description,price_cents,stock,category_id})",
 							"method": "PUT",
@@ -743,7 +745,7 @@
 							"otherinfo": ""
 						}
 					],
-					"count": "60",
+					"count": "61",
 					"systemic": false,
 					"solution": "",
 					"otherinfo": "",
@@ -763,7 +765,7 @@
 					"desc": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>",
 					"instances":[ 
 						{
-							"id": "13",
+							"id": "15",
 							"uri": "http://api:8000/api/auth/login",
 							"nodeName": "http:\/\/api:8000\/api\/auth\/login ()(client_id,client_secret,grant_type,password,scope,username)",
 							"method": "POST",
@@ -793,7 +795,7 @@
 					"desc": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
 					"instances":[ 
 						{
-							"id": "18",
+							"id": "17",
 							"uri": "http://api:8000/api/categories/10",
 							"nodeName": "http:\/\/api:8000\/api\/categories\/10",
 							"method": "DELETE",
@@ -803,9 +805,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "19",
-							"uri": "http://api:8000/api/categories/10",
-							"nodeName": "http:\/\/api:8000\/api\/categories\/10",
+							"id": "24",
+							"uri": "http://api:8000/api/auth/me",
+							"nodeName": "http:\/\/api:8000\/api\/auth\/me",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -813,9 +815,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "14",
-							"uri": "http://api:8000/api/auth/register",
-							"nodeName": "http:\/\/api:8000\/api\/auth\/register ()({email,password})",
+							"id": "19",
+							"uri": "http://api:8000/api/categories",
+							"nodeName": "http:\/\/api:8000\/api\/categories ()({name})",
 							"method": "POST",
 							"param": "",
 							"attack": "",
@@ -823,7 +825,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "16",
+							"id": "26",
 							"uri": "http://api:8000/api/products",
 							"nodeName": "http:\/\/api:8000\/api\/products ()({sku,name,description,price_cents,stock,category_id})",
 							"method": "POST",
@@ -833,7 +835,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "15",
+							"id": "18",
 							"uri": "http://api:8000/api/categories/10",
 							"nodeName": "http:\/\/api:8000\/api\/categories\/10 ()({name})",
 							"method": "PUT",

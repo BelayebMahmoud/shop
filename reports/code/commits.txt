@@ -1,0 +1,8 @@
+aa22690 2026-11-20T07:59:38+01:00 phase 9: commit the frozen HTML coverage report and write freeze files with LF
+3ba3a08 2026-11-20T07:58:58+01:00 phase 9: store frozen evidence byte-exact so sha256sums stay valid
+918f2a4 2026-11-20T07:58:33+01:00 phase 9: traceability matrix, conformity and test reports, final design, frozen evidence v1.0
+99a818c 2026-11-20T01:23:00+01:00 phase 8: mutation 96 %, paginated back-office orders (ANO-09), mobile layout fix (ANO-10), usability en attente
+42084ad 2026-11-20T00:58:46+01:00 phases 6-7: DAST triaged and fixed, 503 on database outage, k6 load/search, REL-01..04, quality gates
+6d14030 2026-11-19T23:55:39+01:00 phase 6 (part 1): SAST/SCA triage with before/after evidence, security summary tool
+d21132a 2026-11-19T23:52:13+01:00 phase 5: containers verified, Firefox and parallel E2E in Docker, hardened images; phase 6 scans started
+80e8c79 2026-11-19T23:33:38+01:00 phase 5 (code): Dockerfiles, Compose stack, nginx security headers, CI, clean-install and Docker E2E scripts

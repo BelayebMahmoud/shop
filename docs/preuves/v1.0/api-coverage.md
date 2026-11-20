@@ -1,6 +1,6 @@
 # Couverture de l'API (route × méthode × code)
 
-Généré par `tools/api_coverage.py` le 2026-11-20T06:57:37+00:00 à partir de `reports/junit-api.xml`, `reports/junit-integration.xml` et du contrat OpenAPI de l'application.
+Généré par `tools/api_coverage.py` le 2026-11-20T07:34:02+00:00 à partir de `reports/junit-api.xml`, `reports/junit-integration.xml` et du contrat OpenAPI de l'application.
 
 - Opérations exercées : 25 / 25
 - Codes documentés obtenus (hors 422 automatique non obtenu) : 74 / 119

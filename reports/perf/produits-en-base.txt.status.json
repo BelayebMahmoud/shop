@@ -1,0 +1,14 @@
+{
+  "command": [
+    "docker.EXE",
+    "compose",
+    "exec",
+    "-T",
+    "db",
+    "sh",
+    "-c",
+    "psql -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\" -tAc \"select count(*) from products\""
+  ],
+  "exit_code": 0,
+  "started_utc": "2026-11-20T07:18:36+00:00"
+}

@@ -1,0 +1,2 @@
+python.exe C:\Users\Mahmoud\Downloads\shop-mvp-starter\shop\backend\.venv\Scripts\bandit.EXE 1.9.4
+  python version = 3.15.2 (tags/v3.15.2:5e58eaa, Oct 25 2026, 17:27:03) [MSC v.1951 64 bit (AMD64)]

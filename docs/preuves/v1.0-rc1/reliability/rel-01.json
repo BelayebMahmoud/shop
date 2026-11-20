@@ -1,0 +1,51 @@
+{
+  "requests": 4022,
+  "status_counts": {
+    "health 200": 444,
+    "order 201": 1784,
+    "list 200": 1783,
+    "list 503": 5,
+    "health 503": 1,
+    "order 503": 4,
+    "health 0": 1
+  },
+  "health_first_not_200": "2026-11-19T23:52:38.901+00:00",
+  "health_back_to_200": "2026-11-19T23:52:41.411+00:00",
+  "recovery_seconds_from_fault": 3.15,
+  "outage_seen_by_client_seconds": 2.51,
+  "health_codes_during_outage": [
+    0,
+    200,
+    503
+  ],
+  "http_500_outside_outage_window": 0,
+  "http_500_total": 0,
+  "window": [
+    "2026-11-19T23:52:38.901+00:00",
+    "2026-11-19T23:52:41.411+00:00"
+  ],
+  "case": "REL-01",
+  "steps": [
+    {
+      "time": "2026-11-19T23:52:08.251+00:00",
+      "step": "probe started (120 s, product 4)"
+    },
+    {
+      "time": "2026-11-19T23:52:38.263+00:00",
+      "step": "fault injected"
+    },
+    {
+      "time": "2026-11-19T23:52:39.522+00:00",
+      "step": "docker compose restart db returned"
+    }
+  ],
+  "orders_acknowledged_201": 1784,
+  "orders_acknowledged_found_in_database": 1784,
+  "consistency": {
+    "orders_without_lines": 0,
+    "orders_with_wrong_subtotal": 0,
+    "orders_with_wrong_total": 0,
+    "negative_stock": 0,
+    "orders_without_audit": 0
+  }
+}

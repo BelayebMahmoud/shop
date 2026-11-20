@@ -3,18 +3,18 @@
   "Trivy": {
     "Version": "0.76.2"
   },
-  "ReportID": "01a1f602-6c9e-7037-8f70-1d32b603b409",
-  "CreatedAt": "2026-11-19T22:51:56.446016344Z",
-  "ArtifactID": "sha256:5c12b3f1065c29e86d429f5ba41eb395266ea0ac0140455c9bb7e8e546b60b37",
+  "ReportID": "01a1f7da-018e-76d9-bf89-313a7b4731b2",
+  "CreatedAt": "2026-11-20T07:27:02.030451143Z",
+  "ArtifactID": "sha256:92ac8cd6e1c36a7660c0e12146f014b013fddc231b4accedf7f6a100afcbcb00",
   "ArtifactName": "shop-api",
   "ArtifactType": "container_image",
   "Metadata": {
-    "Size": 132400640,
+    "Size": 132556288,
     "OS": {
       "Family": "alpine",
       "Name": "3.24.4"
     },
-    "ImageID": "sha256:32611e4c7d7b866a8d3133cef2811a9da5ee28bb5dc9194dc5eb3a82e12e76e4",
+    "ImageID": "sha256:2bc40acd600f48571dfe9f814554589bab6f3c68a459c0aa9bb511c84ddb9c68",
     "DiffIDs": [
       "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064",
       "sha256:243746bedf72c509c73bf0830b139ea014164f998303776315aff78c64d9db02",
@@ -24,8 +24,8 @@
       "sha256:79f3c7a22729291399e058a4cb85f810ba55bd9a410b0619371ca817fe32678f",
       "sha256:5ff1b8eb2c12962180a61dd448f9fabc6bd0fd9b1bc3349e1531bed0095e045d",
       "sha256:131c7cddf1e42e705f39bb13bb633992894e4c194a424daab03c3f65471a870b",
-      "sha256:464e1b441a8f1749f94cb266ad151f6d3444b7cd0a77e8fba0504c8eb5aa481b",
-      "sha256:665f7f7ced5409e06cfb32b67330899be87dcbb845e37301dfe932adff930d79"
+      "sha256:346d446861eaf290d54f178ef7f92e9f341d11e5cc810f796e6aadda52f402a4",
+      "sha256:da72ba4dfac5ebb9f91ac003ecf6e56c08a151cde01940d1b78a2361e51ddbb8"
     ],
     "RepoTags": [
       "shop-api:latest"
@@ -33,7 +33,7 @@
     "Reference": "shop-api:latest",
     "ImageConfig": {
       "architecture": "amd64",
-      "created": "2026-11-19T22:51:44.158431917Z",
+      "created": "2026-11-20T00:14:59.756866712Z",
       "history": [
         {
           "created": "2026-11-05T18:00:28Z",
@@ -124,35 +124,35 @@
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-11-19T22:51:43Z",
+          "created": "2026-11-20T00:14:59Z",
           "created_by": "COPY app ./app # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-11-19T22:51:44Z",
+          "created": "2026-11-20T00:14:59Z",
           "created_by": "RUN /bin/sh -c adduser -S -D -H -u 10001 api # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-11-19T22:51:44Z",
+          "created": "2026-11-20T00:14:59Z",
           "created_by": "USER 10001",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-11-19T22:51:44Z",
+          "created": "2026-11-20T00:14:59Z",
           "created_by": "EXPOSE [8000/tcp]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-11-19T22:51:44Z",
+          "created": "2026-11-20T00:14:59Z",
           "created_by": "HEALTHCHECK {Test:[CMD python -c import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=2).status == 200 else 1)] Interval:5s Timeout:3s StartPeriod:10s StartInterval:0s Retries:5}",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-11-19T22:51:44Z",
+          "created": "2026-11-20T00:14:59Z",
           "created_by": "CMD [\"uvicorn\" \"app.main:app\" \"--host\" \"0.0.0.0\" \"--port\" \"8000\" \"--proxy-headers\"]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
@@ -170,8 +170,8 @@
           "sha256:79f3c7a22729291399e058a4cb85f810ba55bd9a410b0619371ca817fe32678f",
           "sha256:5ff1b8eb2c12962180a61dd448f9fabc6bd0fd9b1bc3349e1531bed0095e045d",
           "sha256:131c7cddf1e42e705f39bb13bb633992894e4c194a424daab03c3f65471a870b",
-          "sha256:464e1b441a8f1749f94cb266ad151f6d3444b7cd0a77e8fba0504c8eb5aa481b",
-          "sha256:665f7f7ced5409e06cfb32b67330899be87dcbb845e37301dfe932adff930d79"
+          "sha256:346d446861eaf290d54f178ef7f92e9f341d11e5cc810f796e6aadda52f402a4",
+          "sha256:da72ba4dfac5ebb9f91ac003ecf6e56c08a151cde01940d1b78a2361e51ddbb8"
         ]
       },
       "config": {
@@ -254,12 +254,12 @@
         "DiffID": "sha256:131c7cddf1e42e705f39bb13bb633992894e4c194a424daab03c3f65471a870b"
       },
       {
-        "Size": 81408,
-        "DiffID": "sha256:464e1b441a8f1749f94cb266ad151f6d3444b7cd0a77e8fba0504c8eb5aa481b"
+        "Size": 237056,
+        "DiffID": "sha256:346d446861eaf290d54f178ef7f92e9f341d11e5cc810f796e6aadda52f402a4"
       },
       {
         "Size": 9216,
-        "DiffID": "sha256:665f7f7ced5409e06cfb32b67330899be87dcbb845e37301dfe932adff930d79"
+        "DiffID": "sha256:da72ba4dfac5ebb9f91ac003ecf6e56c08a151cde01940d1b78a2361e51ddbb8"
       }
     ]
   },

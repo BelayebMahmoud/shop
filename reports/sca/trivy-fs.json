@@ -3,15 +3,15 @@
   "Trivy": {
     "Version": "0.76.2"
   },
-  "ReportID": "01a1f603-d6a7-76c0-a2f3-903cd15037a9",
-  "CreatedAt": "2026-11-19T22:53:29.12744439Z",
-  "ArtifactID": "sha256:231726f0373bac5f77e6f8d25d300e31f2d89912ec90e19914b8e87d6df35225",
+  "ReportID": "01a1f7d9-fe95-7c18-9eaa-098d26ad74bd",
+  "CreatedAt": "2026-11-20T07:27:01.269794788Z",
+  "ArtifactID": "sha256:843f17dbca1b0356b4db7d8fecc0a33c3eaa11b0ae8d183b2efa722b277d9d0b",
   "ArtifactName": "/repo",
   "ArtifactType": "repository",
   "Metadata": {
     "Branch": "main",
-    "Commit": "d21132aa147912dfdc09fa5651d33b351ab13449",
-    "CommitMsg": "phase 5: containers verified, Firefox and parallel E2E in Docker, hardened images; phase 6 scans started\n\n- clean install 27 s with smoke test (PORT-01); E2E chromium/firefox/mobile, 4 workers, 20 passed in Docker\n- ENV-01 confirmed (Docker Desktop port forwarding), ENV-02 bypassed (Firefox in the Playwright image)\n- images: Alpine bases, nginx 1.31.7, apk upgrade, pip removed from runtime: Trivy 0 vulnerabilities on both\n- SAST (Bandit 0, gitleaks 0, Semgrep 19/20 fixed), SCA (pip-audit 0/31, npm 0, SBOMs), SEC-01..SEC-04 tests\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
+    "Commit": "aa22690cfd843f1f68d298fff5c801b0d41a9334",
+    "CommitMsg": "phase 9: commit the frozen HTML coverage report and write freeze files with LF\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e",
     "Author": "Mahmoud \u003cmahmoudbelayeb@gmail.com\u003e",
     "Committer": "Mahmoud \u003cmahmoudbelayeb@gmail.com\u003e"
   },

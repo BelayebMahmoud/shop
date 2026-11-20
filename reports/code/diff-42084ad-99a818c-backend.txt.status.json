@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git.EXE",
+    "diff",
+    "--stat",
+    "42084ad",
+    "99a818c",
+    "--",
+    "backend/app"
+  ],
+  "exit_code": 0,
+  "started_utc": "2026-11-20T07:51:09+00:00"
+}

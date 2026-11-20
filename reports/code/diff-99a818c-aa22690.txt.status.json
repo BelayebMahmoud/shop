@@ -1,0 +1,17 @@
+{
+  "command": [
+    "git.EXE",
+    "diff",
+    "--exit-code",
+    "--stat",
+    "99a818c",
+    "aa22690",
+    "--",
+    "backend",
+    "web",
+    "db",
+    "docker-compose.yml"
+  ],
+  "exit_code": 0,
+  "started_utc": "2026-11-20T07:51:09+00:00"
+}

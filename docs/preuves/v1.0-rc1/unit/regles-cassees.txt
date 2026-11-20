@@ -1,0 +1,14 @@
+# Rules broken on purpose — 2026-11-19T18:36:46+00:00
+
+BR-04 negative guard < 0 -> <= 0       -> 1 failed, 55 passed in 0.16s | failing cases: CT-52
+BR-03 max lines 50 -> 51               -> 1 failed, 55 passed in 0.11s | failing cases: CT-09
+BR-05 ADMIN removed from back office   -> 1 failed, 55 passed in 0.12s | failing cases: CT-53
+BR-05 customer may ship                -> 1 failed, 55 passed in 0.15s | failing cases: CT-54
+BR-04 tier boundary >= -> >            -> 1 failed, 55 passed in 0.13s | failing cases: CT-12
+BR-04 rounding half-up -> truncate     -> 2 failed, 54 passed in 0.11s | failing cases: CT-14, CT-17
+BR-03 max quantity 99 -> 100           -> 1 failed, 55 passed in 0.10s | failing cases: CT-04
+BR-01 stock check < -> <=              -> 1 failed, 55 passed in 0.11s | failing cases: CT-44
+BR-05 allow SHIPPED -> CANCELLED       -> 3 failed, 53 passed in 0.14s | failing cases: CT-30, CT-43, CT-56
+BR-05 customer may cancel PAID         -> 1 failed, 55 passed in 0.11s | failing cases: CT-41
+FR-09 low stock < -> <=                -> 1 failed, 55 passed in 0.09s | failing cases: CT-48
+after restore: 56 passed in 0.05s

@@ -1,0 +1,67 @@
+{
+    "@remix-run/route-pattern@0.22.1": {
+        "licenses": "MIT",
+        "repository": "https://github.com/remix-run/remix",
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\@remix-run\\route-pattern",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\@remix-run\\route-pattern\\LICENSE"
+    },
+    "@types/react-dom@19.3.0": {
+        "licenses": "MIT",
+        "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\@types\\react-dom",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\@types\\react-dom\\LICENSE"
+    },
+    "@types/react@19.3.0": {
+        "licenses": "MIT",
+        "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped",
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\@types\\react",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\@types\\react\\LICENSE"
+    },
+    "cookie-es@3.1.1": {
+        "licenses": "MIT",
+        "repository": "https://github.com/unjs/cookie-es",
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\cookie-es",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\cookie-es\\LICENSE"
+    },
+    "csstype@3.2.4": {
+        "licenses": "MIT",
+        "repository": "https://github.com/frenic/csstype",
+        "publisher": "Fredrik Nicol",
+        "email": "fredrik.nicol@gmail.com",
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\csstype",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\csstype\\LICENSE"
+    },
+    "react-dom@19.3.1": {
+        "licenses": "MIT",
+        "repository": "https://github.com/react/react",
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\react-dom",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\react-dom\\LICENSE"
+    },
+    "react-router@8.5.2": {
+        "licenses": "MIT",
+        "repository": "https://github.com/remix-run/react-router",
+        "publisher": "Remix Software",
+        "email": "hello@remix.run",
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\react-router",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\react-router\\LICENSE.md"
+    },
+    "react@19.3.1": {
+        "licenses": "MIT",
+        "repository": "https://github.com/react/react",
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\react",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\react\\LICENSE"
+    },
+    "scheduler@0.28.0": {
+        "licenses": "MIT",
+        "repository": "https://github.com/react/react",
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\scheduler",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\node_modules\\scheduler\\LICENSE"
+    },
+    "web@0.0.0": {
+        "licenses": "UNLICENSED",
+        "private": true,
+        "path": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web",
+        "licenseFile": "C:\\Users\\Mahmoud\\Downloads\\shop-mvp-starter\\shop\\web\\README.md"
+    }
+}
+

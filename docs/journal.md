@@ -190,3 +190,23 @@
   (commit 99a818c, versions lues des outils), `sha256sums.txt`. Tous les liens des rapports vers les preuves résolus.
 - Écarts : UX-02/UX-03 (séances du 20/11) et PORT-02 (seconde machine) en attente ; versions de k6, Trivy et mutmut
   non lues automatiquement par le gel (non écrites dans leurs rapports) — elles figurent dans les journaux de phase.
+
+## Phase 10 — Audit des preuves et version 1.0 (20/11/2026, 06:50–09:10)
+
+- Audit indépendant par le sous-agent `evidence-auditor` (revue de code, pas un résultat d'outil), passe 1 sur le gel
+  initial : environ 162 affirmations vérifiées, 17 non étayées ou divergentes. Principales : installation propre et
+  scan Trivy fs mesurés sur des commits plus anciens (`80e8c79`, `d21132a`), xenon sans sortie, versions d'outils
+  absentes des preuves, arrondis et paramètres cités sans source.
+- Corrections par exécution réelle sur `aa22690` : scans de sécurité regroupés dans `scripts/security-scans.sh` et
+  relancés (versions des outils lues dans `reports/versions/`) ; installation propre PASS en 29 s ; règles cassées
+  rejouées (59 et 186 tests) ; xenon avec code de sortie conservé (`tools/capture.py --status`) ; preuve d'identité du
+  code (`reports/code/`). Le reste corrigé dans les documents (sources citées, valeurs alignées sur les fichiers).
+- Nouveaux constats de la relance, triés : Semgrep S21 et S22 (faux positifs, outils locaux) ; gitleaks 242 constats
+  dans les rapports de preuve — G1 et G2 faux positifs, G3 vrais (4 jetons JWT de test expirés dans les résumés k6).
+  G3 corrigé pour l'avenir (`perf/k6/common.js`) ; **résidu accepté par le groupe le 20/11/2026 à 08:40**.
+- Passe 2 sur le nouveau gel : 16 des 17 points résolus, 11 nouveaux écarts mineurs (arrondi 1,84, 29 s, colonne
+  commit de la matrice, codes de santé REL-01, lignes Bandit, licences, horaires de mesure perf/fiabilité, jetons
+  présents aussi dans les preuves gelées) — tous corrigés dans les documents ou par une preuve ajoutée.
+- Gel : le premier gel est conservé tel quel sous `docs/preuves/v1.0-rc1/` (`git mv`, contenu et empreintes
+  inchangés) ; nouveau gel `docs/preuves/v1.0/` par `tools/freeze_evidence.py`. Matrice : 34 PASS, 2 PARTIAL, 0 FAIL.
+- En attente (inchangé) : UX-02/UX-03 (séances du 20/11) et PORT-02 (seconde machine).

@@ -1,9 +1,27 @@
 # Faux positifs justifiés par écrit dans docs/securite/triage.md (décisions, pas des résultats).
 # tools/trace.py les retire du décompte des alertes bloquantes ; tout autre constat High/Medium reste bloquant.
+# Un constat vrai n'entre ici qu'après acceptation écrite du groupe (G3 : acceptée le 20/11/2026 à 08:40).
 semgrep:
   - rule: dangerous-subprocess-use-tainted-env-args
     path: tools/capture.py
     triage: S20
+  - rule: dangerous-subprocess-use-tainted-env-args
+    path: tools/perf_run.py
+    triage: S21
+  - rule: dangerous-subprocess-use-tainted-env-args
+    path: tools/reliability.py
+    triage: S22
+gitleaks:
+  - rule: generic-api-key
+    path: "*/dast/zap-api*"
+    triage: G1
+  - rule: generic-api-key
+    path: "*/sca/trivy-image-api*.json"
+    triage: G2
+  - rule: jwt
+    path: "*/perf/*.json"
+    triage: G3
+    acceptation: "risque résiduel accepté par le groupe le 20/11/2026 à 08:40 (jetons de test expirés, historique local)"
 zap:
   - pluginid: "40018"
     triage: Z4

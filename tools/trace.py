@@ -11,6 +11,7 @@ Usage: backend/.venv/Scripts/python tools/trace.py --requirements docs/exigences
 
 import argparse
 import csv
+import fnmatch
 import json
 import re
 import subprocess
@@ -105,10 +106,15 @@ def sast_case(reports: Path, justified: dict) -> tuple[str, str, str]:
     allowed = {(j["rule"], j["path"]) for j in justified.get("semgrep", [])}
     blocking = [r for r in semgrep["results"] if (r["check_id"].split(".")[-1], r["path"]) not in allowed]
     high = [r for r in bandit["results"] if r["issue_severity"] in ("HIGH", "MEDIUM")]
-    ok = not blocking and not high and not leaks
+    leak_rules = justified.get("gitleaks", [])
+    open_leaks = [
+        x for x in leaks if not any(x["RuleID"] == j["rule"] and fnmatch.fnmatch(x["File"], j["path"]) for j in leak_rules)
+    ]
+    ok = not blocking and not high and not open_leaks
     justified_count = len(semgrep["results"]) - len(blocking)
     detail = (
-        f"Bandit {len(bandit['results'])}, Semgrep {len(semgrep['results'])} ({justified_count} justifié), gitleaks {len(leaks)}"
+        f"Bandit {len(bandit['results'])}, Semgrep {len(semgrep['results'])} ({justified_count} justifié), "
+        f"gitleaks {len(leaks)} ({len(leaks) - len(open_leaks)} justifié)"
     )
     return (PASS if ok else FAIL), detail, "reports/sast/"
 
@@ -372,7 +378,7 @@ def main() -> int:
         "verdict",
         "mesure",
         "preuve",
-        "commit",
+        "commit de génération",
     ]
     with open(out / "matrice.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f, delimiter=";")
@@ -387,7 +393,9 @@ def main() -> int:
         "# Matrice de traçabilité (générée)",
         "",
         f"Générée par `tools/trace.py` le {datetime.now(UTC).isoformat(timespec='seconds')}, commit `{commit}`, à partir de "
-        "`docs/exigences.yaml` et des rapports bruts de `reports/`. Ne pas modifier à la main : relancer `/trace`.",
+        "`docs/exigences.yaml` et des rapports bruts de `reports/` (copiés à l'identique dans `docs/preuves/<version>/` "
+        "au gel, avec empreintes SHA-256). La colonne « commit de génération » date la matrice, pas la mesure : le "
+        "commit de chaque mesure est indiqué dans `docs/conformite.md`. Ne pas modifier à la main : relancer `/trace`.",
         "",
         "## Synthèse par exigence",
         "",

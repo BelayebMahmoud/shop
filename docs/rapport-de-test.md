@@ -4,7 +4,8 @@ Version 1.0 du 20/11/2026, activité « Clôturer » de la fiche 1. Plan : [`pla
 Cas : [`cahier-de-test.md`](cahier-de-test.md) (136 cas). Défauts : [`anomalies.md`](anomalies.md).
 Conformité par caractéristique : [`conformite.md`](conformite.md). Matrice : [`tracabilite/matrice.md`](tracabilite/matrice.md).
 Toutes les valeurs ci-dessous viennent des rapports bruts gelés dans [`preuves/v1.0/`](preuves/v1.0/) (commit de
-mesure et versions des outils dans `preuves/v1.0/manifest.json`).
+gel et versions des outils dans `preuves/v1.0/manifest.json` et `preuves/v1.0/versions/` ; commit de chaque mesure :
+[`conformite.md`](conformite.md), en-tête).
 
 ## 1. Périmètre testé
 
@@ -50,7 +51,10 @@ Origine des défauts du produit : Schemathesis en a trouvé 5 (ANO-01 à ANO-05 
 plage et caractère NUL, types JSON, en-tête `Allow`, codes non documentés) ; le projet E2E mobile 2 (ANO-07, ANO-10) ;
 la base chargée par les essais de fiabilité 1 (ANO-09, liste des commandes non paginée) ; radon 1 (ANO-08,
 complexité 11). Défauts de sécurité corrigés pendant le tri (registre [`securite/triage.md`](securite/triage.md)) :
-images Docker (3 Critical et 118 High → 0), en-têtes HTTP manquants (5 alertes Low ZAP → 0), 1 constat Semgrep.
+images Docker (3 Critical et 118 High → 0), en-têtes HTTP manquants (5 alertes Low ZAP → 0), 19 constats Semgrep
+(17 actions CI non épinglées, parseur XML, en-tête `Host`). Après relance : 3 ERROR Semgrep justifiées (S20 à S22,
+outils locaux) ; gitleaks : 4 jetons de test expirés dans les résumés k6 (G3, corrigé pour les prochaines mesures,
+résidu — ces 4 jetons dans `perf/smoke.json` et `perf/load.json` des preuves et dans l'historique Git local — accepté par le groupe le 20/11/2026).
 
 Aucune anomalie bloquante ou majeure n'est ouverte.
 
@@ -60,14 +64,14 @@ Aucune anomalie bloquante ou majeure n'est ouverte.
 | --- | --- | --- | --- |
 | 1 | 100 % des FR et BR P0 au PASS | 19/19 au PASS (matrice) | atteint |
 | 2 | Chaque cible QR atteinte ou écart documenté | 12/14 QR au PASS ; QR-US-02 et QR-PO-01 au PARTIAL, écarts documentés dans [`conformite.md` § 11](conformite.md#11-écarts) | atteint (avec écarts documentés) |
-| 3 | Sécurité : 0 High, 0 Medium non justifiée, Low justifiées, après relance | 0 High non traitée (1 faux positif prouvé par test SEC-01-zap-40018), 0 Medium, 0 Low ; 0 vulnérabilité de dépendance ou d'image ([`securite-synthese.md`](preuves/v1.0/securite-synthese.md)) | atteint |
+| 3 | Sécurité : 0 High, 0 Medium non justifiée, Low justifiées, après relance | 0 High non traitée : ZAP 40018 faux positif prouvé par test SEC-01-zap-40018, 3 ERROR Semgrep (S20 à S22) faux positifs justifiés ; 0 Medium, 0 Low ; 0 vulnérabilité de dépendance ou d'image ([`securite-synthese.md`](preuves/v1.0/securite-synthese.md)) | atteint |
 | 4 | Aucune anomalie bloquante ou majeure ouverte | 0 ouverte | atteint |
-| 5 | Chaque nombre figure dans un fichier brut de `preuves/v1.0/` | preuves gelées avec empreintes SHA-256 ; vérification indépendante par le sous-agent `evidence-auditor` (revue de code, [`journal.md`](journal.md)) | atteint |
+| 5 | Chaque nombre figure dans un fichier brut de `preuves/v1.0/` | preuves gelées avec empreintes SHA-256 ; vérification indépendante par le sous-agent `evidence-auditor` en deux passes, constats et corrections consignés dans [`journal.md`](journal.md) (phase 10 ; revue de code, pas un résultat d'outil) | atteint |
 
 Indicateurs principaux : couverture `app/services` 99,4 % (388/391 instructions, 96/96 branches) ; mutation 96 %
 (128/133, 5 survivants justifiés) ; complexité maximale 9 ; p95 77,39 ms (liste), 49,41 ms (détail), 64,32 ms
 (recherche), 0 % d'erreurs ; reprise après panne 3,15 s et 3,27 s, 0 commande perdue ; axe-core 0 violation ;
-installation propre 27 s ; couverture de l'API 25/25 opérations, 74/119 codes de réponse documentés exercés
+installation propre 29 s ; couverture de l'API 25/25 opérations, 74/119 codes de réponse documentés exercés
 ([`api-coverage.md`](preuves/v1.0/api-coverage.md)).
 
 **Décision de clôture** : la campagne peut être clôturée pour la version 1.0 avec deux réserves — la recette
@@ -79,7 +83,7 @@ leur exécution, sans modifier les autres résultats.
 1. **Le test de contrat paie tôt.** Schemathesis a trouvé à lui seul la moitié des défauts du produit, dont les deux
    erreurs 500 ; à lancer dès que l'API existe, pas en fin de campagne.
 2. **Un test qui ne peut pas échouer ne prouve rien.** DT-01 n'a été vu qu'en cassant la règle volontairement
-   (`tools/break_rules.py`) ; la mutation (77 % → 96 %) a ensuite montré des assertions trop vagues. Casser la règle
+   (`tools/break_rules.py`) ; la mutation (102/133 au premier passage, noté dans [`journal.md`](journal.md) — rapport brut non conservé — puis 128/133) a ensuite montré des assertions trop vagues. Casser la règle
    fait désormais partie de l'écriture de chaque test.
 3. **Les données réalistes révèlent d'autres défauts.** ANO-09 et DT-02 n'apparaissaient pas sur une base presque
    vide ; les E2E sont rejoués sur la base volumineuse (50 000 produits, plusieurs milliers de commandes).

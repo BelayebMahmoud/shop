@@ -1,0 +1,9 @@
+Found Java version 17.0.21
+Available memory: 7794 MB
+Using JVM args: -Xmx1948m
+334 [main] INFO  org.parosproxy.paros.Constant - Copying default configuration to /home/zap/.ZAP/config.xml
+404 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/session
+405 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/dirbuster
+406 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/fuzzers
+406 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/plugin
+2.17.0
