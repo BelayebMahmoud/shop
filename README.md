@@ -19,6 +19,7 @@ Guide complet (prérequis, tests, dépannage) : [docs/installation.md](docs/inst
 
 | Document | Rôle |
 | --- | --- |
+| [docs/livrables.md](docs/livrables.md) | **Livrables du cahier § 8 : où trouver chacun** |
 | [docs/exigences.yaml](docs/exigences.yaml), [docs/exigences.md](docs/exigences.md) | Exigences FR, BR, QR et scénarios Soit/Quand/Alors |
 | [docs/plan-de-test.md](docs/plan-de-test.md), [docs/cahier-de-test.md](docs/cahier-de-test.md) | Plan et cahier de test |
 | [docs/conception.md](docs/conception.md) | Architecture, modèle de données, matrice des droits |
