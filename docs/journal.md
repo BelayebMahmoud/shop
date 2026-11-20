@@ -177,3 +177,16 @@
   commandes non paginée → pagination et filtre côté API, TA-38) et ANO-10 (débordement de page sur téléphone).
   E2E finaux : Docker 20/20 sur 3 navigateurs, poste 14/14.
 - Utilisabilité : séances au 20/11/2026 (en attente). Seconde machine : en attente.
+
+## Phase 9 — Clôture : traçabilité, conformité, rapport de test, gel des preuves (20/11/2026, 01:40–02:20)
+
+- Fait : matrice générée (`make trace`) — 36 exigences, 34 PASS, 2 PARTIAL (QR-US-02, QR-PO-01), 0 FAIL ; cahier
+  rempli (136 cas) ; `docs/conformite.md` (8 caractéristiques, qualité en utilisation, correspondance 2011 → 2023,
+  écarts) ; `docs/rapport-de-test.md` (périmètre, cas par niveau, défauts, critères de sortie, leçons) ;
+  `docs/conception.md` §7 (architecture finale, changements liés aux anomalies).
+- `make check` relancé avant le gel : 59 unitaires, 17 intégration, 169 API, 8 sécurité, 3 fiabilité, 25 contrat,
+  0 échec ; couverture `app/services` 99,4 % ; API 25/25 opérations ; docs « no problems ».
+- Preuves gelées par `tools/freeze_evidence.py v1.0` : 106 fichiers dans `docs/preuves/v1.0/`, `manifest.json`
+  (commit 99a818c, versions lues des outils), `sha256sums.txt`. Tous les liens des rapports vers les preuves résolus.
+- Écarts : UX-02/UX-03 (séances du 20/11) et PORT-02 (seconde machine) en attente ; versions de k6, Trivy et mutmut
+  non lues automatiquement par le gel (non écrites dans leurs rapports) — elles figurent dans les journaux de phase.

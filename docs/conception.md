@@ -1,6 +1,6 @@
 # Rapport de conception — Gestion commerciale
 
-Version de conception (phase 1). Le document est complété en phase 9 avec l'architecture finale.
+Version 1.0 du 20/11/2026 : conception de la phase 1, complétée en phase 9 avec l'architecture finale (§7).
 Exigences : [`exigences.yaml`](exigences.yaml). Plan de test : [`plan-de-test.md`](plan-de-test.md).
 
 ## 1. Choix de la pile technique
@@ -14,8 +14,8 @@ Exigences : [`exigences.yaml`](exigences.yaml). Plan de test : [`plan-de-test.md
 ## 2. Architecture en couches
 
 Règle (QR-MA-02) : `api → services → models`, sans import inverse ; complexité cyclomatique <= 10 ;
-configuration uniquement par variables d'environnement. Le MVP actuel (`app/routers`) est réorganisé en phase 2
-sans changement de comportement.
+configuration uniquement par variables d'environnement. Le MVP initial (`app/routers`) a été réorganisé en phase 2
+sans changement de comportement ; la règle est vérifiée par import-linter (2 contrats tenus).
 
 ```mermaid
 flowchart TB
@@ -208,7 +208,7 @@ lignes, stock et audit dans une seule transaction.
 ## 6. Utilisation de Claude Code
 
 L'application, les tests et les documents sont produits avec Claude Code (modèle Claude Opus 5.5), piloté par
-un membre du groupe qui valide chaque phase. Cette section est complétée en phase 9.
+un membre du groupe qui valide chaque phase (11 phases, un commit chacune).
 
 | Aspect | Mise en œuvre |
 | --- | --- |
@@ -218,3 +218,33 @@ un membre du groupe qui valide chaque phase. Cette section est complétée en ph
 | Revue indépendante | Sous-agents `test-reviewer` (avant chaque commit de phase) et `evidence-auditor` (avant remise), dans un contexte qui n'a pas produit le travail. Leurs constats sont des revues de code, jamais des résultats d'outil. |
 | Contrôle humain | Une phase = un commit ; le pilote lit le diff et la sortie réelle des outils avant de valider ; les risques de sécurité ne sont acceptés que par le groupe. |
 | Limites | Les propositions de Claude (questions Q-01 à Q-12) ne deviennent des règles qu'après validation humaine ; les résultats d'utilisabilité et l'installation sur une seconde machine viennent de personnes, pas de l'outil. |
+| Apport mesuré | Les défauts ont été trouvés par des outils exécutés (Schemathesis, Playwright mobile, radon, règles cassées, mutation) et non par affirmation ; les revues de Claude (`/security-review`, sous-agents) sont consignées comme revues de code dans [`securite/triage.md`](securite/triage.md) et [`journal.md`](journal.md). |
+
+## 7. Architecture finale et écarts par rapport à la conception initiale
+
+La structure du §2 est conservée. Changements apportés pendant la campagne, chacun lié à son anomalie :
+
+| Changement | Emplacement | Origine |
+| --- | --- | --- |
+| Types d'entrée bornés (identifiant <= 2^53-1, refus des booléens comme entiers, refus du caractère NUL, dates ISO strictes) partagés par toutes les routes | `app/api/types.py` | ANO-01, ANO-02, ANO-03 |
+| Gestionnaire d'erreurs central : 405 avec en-tête `Allow` complet (table des routes lue depuis OpenAPI), 503 `DATABASE_UNAVAILABLE` avec `Retry-After` si la base tombe, 500 générique sans détail interne | `app/api/errors.py`, `app/api/route_table.py` | ANO-04, QR-RE-01 |
+| Codes d'erreur documentés route par route dans le contrat | `app/api/responses.py` | ANO-05 |
+| Tableau de bord découpé en trois fonctions (complexité 11 → 9 au plus) | `app/services/dashboard.py` | ANO-08 |
+| Liste des commandes paginée et filtrée par statut côté API (`limit` 1 à 200, `offset`) | `app/services/orders.py`, `routes/orders.py`, `web/src/pages/AdminOrdersPage.tsx` | ANO-09 |
+| Mise en page mobile : tableaux défilants, champs bornés, mots longs coupés | `web/src/index.css` | ANO-07, ANO-10 |
+| Identifiants en `BIGINT` côté ORM | `app/core/db.py` (`type_annotation_map`) | ANO-01 |
+| En-têtes de sécurité (CSP, COOP/COEP/CORP, nosniff, Referrer-Policy, Permissions-Policy) dans nginx et l'API | `web/nginx.conf`, `app/main.py` | tri ZAP |
+| Images durcies : Alpine mise à jour, pip et setuptools retirés, utilisateurs non root (10001, 101), healthchecks | `backend/Dockerfile`, `web/Dockerfile`, `docker-compose.yml` | tri Trivy |
+| `/api/health` répond 503 quand la base est indisponible ; politique `restart: unless-stopped` | `app/main.py`, `docker-compose.yml` | QR-RE-01 |
+
+```mermaid
+flowchart LR
+    U[Navigateur] -->|HTTP| N["web : nginx-unprivileged 1.31.7<br/>dist/ + en-têtes de sécurité"]
+    N -->|/api| A["api : Python 3.13 Alpine, uvicorn<br/>routes → services → models"]
+    A --> D[("db : PostgreSQL 16<br/>volume nommé")]
+    A -. healthcheck /api/health .- A
+    D -. pg_isready .- D
+```
+
+Mesures de l'architecture finale : [`conformite.md`](conformite.md) §7 (couches, complexité, couverture, mutation)
+et §8 (installation).
